@@ -1,13 +1,10 @@
 import {
-  Button,
   StyleSheet,
   Text,
-  View,
-  TextInput,
-  Image,
   KeyboardAvoidingView,
   Platform,
-  TouchableOpacity,
+  ImageBackground,
+  SafeAreaView,
 } from "react-native";
 
 export default function HomePage({ navigation }) {
@@ -15,12 +12,13 @@ export default function HomePage({ navigation }) {
     <KeyboardAvoidingView
       style={{ ...styles.container, justifyContent: "flex-start" }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}>
-      <Image
+      <ImageBackground
         style={styles.image}
         source={require("../assets/homescreen-background.jpg")}
       />
-      <Text style={styles.text1}>Welcome to Ystra</Text>
-      <Text style={styles.text2}>Bring your art to home</Text>
+      <SafeAreaView style={styles.container}></SafeAreaView>
+      <Text style={styles.welcomtext}>Welcome to Ystra</Text>
+      <Text style={styles.sentencetext}>Bring your art to home</Text>
     </KeyboardAvoidingView>
   );
 }
@@ -30,10 +28,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
-  },
-  title: {
-    textAlign: "center",
-    marginVertical: 8,
   },
   image: {
     width: "111.5%",
