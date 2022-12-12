@@ -6,6 +6,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // Import de HomePage
 import HomeScreen from "./screens/HomeScreen";
+import RegisterLogin from "./screens/RegisterLogin";
+
 //ajoutez la création de la navigation par Stack et par BottomTab
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -14,7 +16,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        <Stack.Screen name="resgisterlogin" component={RegisterLogin} />
       </Stack.Navigator>
     </NavigationContainer>
   );

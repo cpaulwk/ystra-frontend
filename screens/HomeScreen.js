@@ -19,33 +19,39 @@ export default function HomePage({ navigation }) {
         style={styles.image}
         source={require("../assets/homescreen-background.jpg")}
       />
-      <Text style={styles.text}>Welcome to Ystra</Text>
+      <Text style={styles.text1}>Welcome to Ystra</Text>
+      <Text style={styles.text2}>Bring your art to home</Text>
     </KeyboardAvoidingView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
   },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
   title: {
-    width: "80%",
-    fontSize: 38,
-    fontWeight: "600",
+    textAlign: "center",
+    marginVertical: 8,
   },
-  text: {
+  image: {
+    width: "111.5%",
+    height: "100%",
+    position: "absolute",
+  },
+  welcomtext: {
     fontSize: 30,
     opacity: 0.65,
     fontWeight: "bold",
     color: "black",
-    position: "absolute",
-    bottom: 530,
+    bottom: 550,
+  },
+  sentencetext: {
+    fontSize: 20,
+    opacity: 0.65,
+    fontWeight: "bold",
+    color: "black",
+    bottom: 525,
   },
 });
