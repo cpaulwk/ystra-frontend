@@ -10,7 +10,18 @@ import {
   ImageBackground,
 } from "react-native";
 
+import { useState, useEffect } from "react";
+
 export default function HomePage({ navigation }) {
+  const [showButtons, setShowButtons] = useState(false); // état initial pour cacher les boutons
+  const [showRegisterPage, setshowRegisterPage] = useState(false); // état initial lors du click sur register
+  const [showLoginPage, setShowLoginPage] = useState(false); // état initial lors du click sur signin
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowButtons(true); // màj de l'état après 2 secondes pour afficher les boutons
+    }, 2000);
+  }, []);
   return (
     <KeyboardAvoidingView
       style={{ ...styles.container, justifyContent: "flex-start" }}
@@ -20,32 +31,37 @@ export default function HomePage({ navigation }) {
         source={require("../assets/homescreen-background.jpg")}
       />
       <SafeAreaView style={styles.container}>
-        <View>
-          <Text style={styles.title}></Text>
-          <TouchableOpacity
-            style={styles.buttonregister}
-            onPress={() => Alert.alert("Button pressed")}>
-            <Button
-              title="Register"
-              color="white"
-              onPress={() => Alert.alert("Simple Button pressed")}
-            />
-          </TouchableOpacity>
-        </View>
-        <View>
-          <Text style={styles.title}></Text>
-          <TouchableOpacity
-            style={styles.buttonsignin}
-            onPress={() => Alert.alert("Button pressed")}>
-            <Button
-              title="Sign in"
-              color="white"
-              onPress={() => Alert.alert("Simple Button pressed")}
-            />
-          </TouchableOpacity>
-        </View>
+        {showButtons && (
+          <>
+            <View style={styles.buttoncontainer}>
+              <View>
+                <Text style={styles.title}></Text>
+                <TouchableOpacity
+                  style={styles.buttonregister}
+                  onPress={() => Alert.alert("Button pressed")}>
+                  <Button
+                    title="Register"
+                    color="white"
+                    onPress={() => Alert.alert("Simple Button pressed")}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View>
+                <Text style={styles.title}></Text>
+                <TouchableOpacity
+                  style={styles.buttonsignin}
+                  onPress={() => Alert.alert("Button pressed")}>
+                  <Button
+                    title="Login"
+                    color="white"
+                    onPress={() => Alert.alert("Simple Button pressed")}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        )}
       </SafeAreaView>
-
       <Text style={styles.welcomtext}>Welcome to Ystra</Text>
       <Text style={styles.sentencetext}>Bring your art to home</Text>
     </KeyboardAvoidingView>

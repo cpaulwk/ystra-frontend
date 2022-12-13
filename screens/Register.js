@@ -7,101 +7,124 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
-  ImageBackground,
   TextInput,
+  Alert,
 } from "react-native";
 
+import { useState, useEffect } from "react";
+
 export default function HomePage({ navigation }) {
+  const [showButtons, setShowButtons] = useState(false); // état initial pour cacher les boutons
+  const [showRegisterPage, setshowRegisterPage] = useState(false); // état initial lors du click sur register
+  const [showLoginPage, setShowLoginPage] = useState(false); // état initial lors du click sur signin
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowButtons(true); // màj de l'état après 2 secondes pour afficher les boutons
+    }, 1000);
+  }, []);
   return (
     <KeyboardAvoidingView
       style={{ ...styles.container, justifyContent: "flex-start" }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}>
-      <ImageBackground
-        style={styles.image}
-        source={require("../assets/homescreen-background.jpg")}
-      />
+      {/* export du composant register avec 3 inputs  + 2 boutons */}
+      <View style={styles.registercontainer}>
+        <Text style={styles.beforeinputtext}>Username</Text>
+        <TextInput placeholder="Username" style={styles.input} />
+        <Text style={styles.beforeinputtext}>Email</Text>
+        <TextInput placeholder="Email" style={styles.input} />
+        <Text style={styles.beforeinputtext}>Password</Text>
+        <TextInput placeholder="Password" style={styles.input} />
+      </View>
       <SafeAreaView style={styles.container}>
-        <View style={styles.inputcontainer}>
-          <Text style={styles.beforeinputtext}>Username</Text>
-          <TextInput placeholder="Username" style={styles.input} />
-          <Text style={styles.beforeinputtext}>Email</Text>
-          <TextInput placeholder="Email" style={styles.input} />
-          <Text style={styles.beforeinputtext}>Password</Text>
-          <TextInput placeholder="Password" style={styles.input} />
-        </View>
         <View style={styles.buttoncontainer}>
-          <TouchableOpacity
-            style={styles.buttonregister}
-            onPress={() => Alert.alert("Button pressed")}>
-            <Button
-              title="Register"
-              color="white"
-              onPress={() => Alert.alert("Simple Button pressed")}
-            />
-          </TouchableOpacity>
-
-          <Text style={styles.ortext}>or</Text>
-          <TouchableOpacity
-            style={styles.buttongoogle}
-            onPress={() => Alert.alert("Button pressed")}>
-            <Button
-              title="Register with Google"
-              color="white"
-              onPress={() => Alert.alert("Simple Button pressed")}
-            />
-          </TouchableOpacity>
+          <View>
+            <Text style={styles.title}></Text>
+            <TouchableOpacity
+              style={styles.buttonregister}
+              onPress={() => Alert.alert("Button pressed")}>
+              <Button
+                title="Register"
+                color="white"
+                onPress={() => Alert.alert("Simple Button pressed")}
+              />
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text style={styles.title}></Text>
+            <TouchableOpacity
+              style={styles.buttonsignin}
+              onPress={() => Alert.alert("Button pressed")}>
+              <Button
+                title="Register with Google"
+                color="white"
+                onPress={() => Alert.alert("Simple Button pressed")}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </SafeAreaView>
-      <Text style={styles.keeptext}>Keep your own art</Text>
     </KeyboardAvoidingView>
   );
 }
+{
+  /* fin de l'import */
+}
+
 const styles = StyleSheet.create({
-  view: {},
   container: {
     flex: 1,
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
   },
+  title: {
+    textAlign: "center",
+    marginVertical: 8,
+  },
   image: {
     width: "111.5%",
     height: "100%",
     position: "absolute",
   },
-  keeptext: {
+  welcomtext: {
     fontSize: 30,
     opacity: 0.65,
     fontWeight: "bold",
     color: "black",
     bottom: 550,
   },
-  ortext: {
-    fontSize: 25,
-    opacity: 1,
+  sentencetext: {
+    fontSize: 20,
+    opacity: 0.65,
     fontWeight: "bold",
     color: "black",
-    textAlign: "center",
+    bottom: 525,
   },
   buttoncontainer: {
-    marginTop: 180,
+    marginBottom: 0,
   },
   buttonregister: {
     opacity: 0.9,
+    marginTop: 75,
     backgroundColor: "black",
     borderWidth: 0,
     borderRadius: 10,
     padding: 10,
     width: 350,
   },
-  buttongoogle: {
+  buttonsignin: {
     opacity: 0.93,
-    marginTop: 5,
+    marginTop: 10,
     backgroundColor: "#2C6DB4",
     borderWidth: 0,
     borderRadius: 10,
     padding: 10,
     width: 350,
+  },
+  registercontainer: {
+    flex: 1,
+    marginTop: 330,
   },
   input: {
     borderWidth: 1,
@@ -114,13 +137,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#FFFFFF",
     fontSize: 16,
-  },
-  inputcontainer: {
-    flex: 1,
-    marginTop: 250,
-    // opacity: 0.5,
-
-    // backgroundColor: "white",
   },
   beforeinputtext: {
     marginBottom: -10,
