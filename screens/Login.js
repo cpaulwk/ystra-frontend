@@ -23,9 +23,7 @@ export default function HomePage({ navigation }) {
       <SafeAreaView style={styles.container}>
         <View style={styles.inputcontainer}>
           <Text style={styles.beforeinputtext}>Username</Text>
-          <TextInput placeholder="Username" style={styles.input} />
-          <Text style={styles.beforeinputtext}>Email</Text>
-          <TextInput placeholder="Email" style={styles.input} />
+          <TextInput placeholder="Email or Username" style={styles.input} />
           <Text style={styles.beforeinputtext}>Password</Text>
           <TextInput placeholder="Password" style={styles.input} />
         </View>
@@ -40,7 +38,7 @@ export default function HomePage({ navigation }) {
             />
           </TouchableOpacity>
 
-          <Text style={styles.ortext}>or</Text>
+          <Text style={styles.ortext}>━━━━━ or ━━━━━</Text>
           <TouchableOpacity
             style={styles.buttongoogle}
             onPress={() => Alert.alert("Button pressed")}>

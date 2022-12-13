@@ -9,6 +9,8 @@ import { useNavigation } from "@react-navigation/native";
 import HomeScreen from "./screens/HomeScreen";
 import RegisterLogin from "./screens/RegisterLogin";
 import Register from "./screens/Register";
+import Login from "./screens/Login";
+
 //ajoutez la création de la navigation par Stack et par BottomTab
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,47 +30,11 @@ export default function App({ navigation }) {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Resgisterlogin" component={RegisterLogin} /> */}
-        <Stack.Screen name="Register" component={Register} />
+        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        {/* <Stack.Screen name="Resgisterlogin" component={RegisterLogin} /> */}
+        {/* <Stack.Screen name="Register" component={Register} /> */}
+        <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
-
-// const TabNavigator = () => {
-//   return (
-//     <Tab.Navigator
-//       screenOptions={({ route }) => ({
-//         tabBarIcon: ({ color, size }) => {
-//           let iconName = "";
-
-//           if (route.name === "Map") {
-//             iconName = "map-pin";
-//           } else if (route.name === "Navigation") {
-//             iconName = "location-arrow";
-//           } else if (route.name === "Home") {
-//             iconName = "home";
-//           }
-
-//           return <FontAwesome name={iconName} size={size} color={color} />;
-//         },
-//         tabBarActiveTintColor: "#ec6e5b",
-//         tabBarInactiveTintColor: "#335561",
-//         headerShown: false,
-//       })}>
-//       <Tab.Screen name="Map" component={MapScreen} />
-//       <Tab.Screen name="Home" component={HomeScreen} />
-//       <Tab.Screen name="Navigation" component={NavigationScreen} />
-//     </Tab.Navigator>
-//   );
-// };
