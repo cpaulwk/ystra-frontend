@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
+  ImageBackground,
   TextInput,
   Alert,
 } from "react-native";
@@ -21,101 +22,107 @@ export default function HomePage({ navigation }) {
   useEffect(() => {
     setTimeout(() => {
       setShowButtons(true); // màj de l'état après 2 secondes pour afficher les boutons
-    }, 1000);
+    }, 2000);
   }, []);
   return (
     <KeyboardAvoidingView
-      style={{ ...styles.container, justifyContent: "flex-start" }}
+      style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}>
-      {/* export du composant register avec 3 inputs  + 2 boutons */}
-      <View style={styles.registercontainer}>
-        <Text style={styles.beforeinputtext}>Username</Text>
-        <TextInput placeholder="Username" style={styles.input} />
-        <Text style={styles.beforeinputtext}>Email</Text>
-        <TextInput placeholder="Email" style={styles.input} />
-        <Text style={styles.beforeinputtext}>Password</Text>
-        <TextInput placeholder="Password" style={styles.input} />
-      </View>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.buttoncontainer}>
-          <View>
-            <Text style={styles.title}></Text>
-            <TouchableOpacity
-              style={styles.buttonregister}
-              onPress={() => Alert.alert("Button pressed")}>
-              <Button
-                title="Register"
-                color="white"
-                onPress={() => Alert.alert("Simple Button pressed")}
-              />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <Text style={styles.title}></Text>
-            <TouchableOpacity
-              style={styles.buttonsignin}
-              onPress={() => Alert.alert("Button pressed")}>
-              <Button
-                title="Register with Google"
-                color="white"
-                onPress={() => Alert.alert("Simple Button pressed")}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </SafeAreaView>
+      <ImageBackground
+        style={styles.image}
+        source={require("../assets/homescreen-background.jpg")}>
+        <SafeAreaView style={styles.contents}>
+          {showButtons && (
+            <>
+              {/* import du composant register avec 3 inputs  + 2 boutons */}
+
+              <View style={styles.registercontainer}>
+                <View style={styles.welcomemessage}>
+                  <Text style={styles.welcomtext}>Welcome to Ystra</Text>
+                  <Text style={styles.sentencetext}>
+                    Bring your art to home
+                  </Text>
+                </View>
+                <View style={styles.inputcontainer}>
+                  <Text style={styles.beforeinputtext}>Username</Text>
+                  <TextInput placeholder="Username" style={styles.input} />
+                  <Text style={styles.beforeinputtext}>Email</Text>
+                  <TextInput placeholder="Email" style={styles.input} />
+                  <Text style={styles.beforeinputtext}>Password</Text>
+                  <TextInput placeholder="Password" style={styles.input} />
+                </View>
+                <View style={styles.buttoncontainer}>
+                  <TouchableOpacity style={styles.blackbutton}>
+                    <Button title="Register" color="white" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.bluebutton}>
+                    <Button title="Register with Google" color="white" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              {/* fin de l'import  */}
+            </>
+          )}
+        </SafeAreaView>
+      </ImageBackground>
     </KeyboardAvoidingView>
   );
 }
-{
-  /* fin de l'import */
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "transparent",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
-  title: {
-    textAlign: "center",
-    marginVertical: 8,
+
+  contents: {
+    flex: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: "100%",
   },
   image: {
     width: "111.5%",
     height: "100%",
-    position: "absolute",
+  },
+  welcomemessage: {
+    flex: "column",
+    height: "20%",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: "45%",
   },
   welcomtext: {
-    fontSize: 30,
+    fontSize: 40,
     opacity: 0.65,
     fontWeight: "bold",
     color: "black",
-    bottom: 550,
+    marginBottom: 30,
   },
   sentencetext: {
     fontSize: 20,
     opacity: 0.65,
     fontWeight: "bold",
     color: "black",
-    bottom: 525,
   },
   buttoncontainer: {
-    marginBottom: 0,
+    flex: "column",
+    marginBottom: 30,
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
-  buttonregister: {
+  blackbutton: {
     opacity: 0.9,
-    marginTop: 75,
+    marginBottom: 20,
     backgroundColor: "black",
     borderWidth: 0,
     borderRadius: 10,
     padding: 10,
     width: 350,
   },
-  buttonsignin: {
+  bluebutton: {
     opacity: 0.93,
-    marginTop: 10,
+    marginTop: 20,
     backgroundColor: "#2C6DB4",
     borderWidth: 0,
     borderRadius: 10,
