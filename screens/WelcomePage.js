@@ -217,10 +217,10 @@ const styles = StyleSheet.create({
     opacity: 0.93,
     width: 330,
     marginTop: 15,
-    marginBottom: 15,
     borderRadius: 10,
     backgroundColor: "#FFFFFF",
     fontSize: 16,
+    margin: 10,
   },
   beforeinputtext: {
     marginBottom: -10,
