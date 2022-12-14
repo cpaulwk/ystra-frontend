@@ -5,10 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-// Import de HomePage
-import Home from "./screens/WelcomePage";
-import Register from "./screens/Register";
-import Login from "./screens/Login";
 
 //ajoutez la création de la navigation par Stack et par BottomTab
 const Stack = createNativeStackNavigator();

@@ -24,7 +24,8 @@ export default function HomePage({ navigation }) {
         style={styles.blackbutton}
         onPress={() => {
           setShowPages(1); // navigation vers REGISTER
-        }}>
+        }}
+      >
         <Text style={styles.textbutton}> Register</Text>
       </TouchableOpacity>
 
@@ -32,7 +33,8 @@ export default function HomePage({ navigation }) {
         style={styles.bluebutton}
         onPress={() => {
           setShowPages(2); // navigation vers la page de connexion
-        }}>
+        }}
+      >
         <Text style={styles.textbutton}> Login</Text>
       </TouchableOpacity>
     </View>
@@ -65,7 +67,8 @@ export default function HomePage({ navigation }) {
           style={styles.blackbutton}
           onPress={() => {
             setShowPages(0); // DOIT VALIDER L'ENREGISTREMENT
-          }}>
+          }}
+        >
           <Text style={styles.textbutton}> Validate</Text>
         </TouchableOpacity>
 
@@ -73,7 +76,8 @@ export default function HomePage({ navigation }) {
           style={styles.bluebutton}
           onPress={() => {
             setShowPages(0); // OUVRE API SIGNUP GOOGLE
-          }}>
+          }}
+        >
           <Text style={styles.textbutton}> Register with Google</Text>
         </TouchableOpacity>
       </View>
@@ -95,7 +99,8 @@ export default function HomePage({ navigation }) {
             style={styles.blackbutton}
             onPress={() => {
               setShowPages(0); // DOIT VALIDER CONNEXION
-            }}>
+            }}
+          >
             <Text style={styles.textbutton}> Validate</Text>
           </TouchableOpacity>
 
@@ -103,7 +108,8 @@ export default function HomePage({ navigation }) {
             style={styles.bluebutton}
             onPress={() => {
               setShowPages(0); // OUVRE API LOGIN GOOGLE
-            }}>
+            }}
+          >
             <Text style={styles.textbutton}> Login with Google</Text>
           </TouchableOpacity>
         </View>
@@ -115,10 +121,12 @@ export default function HomePage({ navigation }) {
     <ImageBackground
       style={styles.backgroundimage}
       source={require("../assets/homescreen-background.jpg")}
-      resizeMode="stretch">
+      resizeMode="stretch"
+    >
       <KeyboardAvoidingView
         style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <SafeAreaView style={styles.contents}>
           <Image
             style={styles.logo}
