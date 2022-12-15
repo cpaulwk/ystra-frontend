@@ -15,7 +15,7 @@ import {
 
 import { useState, useEffect } from "react";
 
-export default function HomePage({ navigation }) {
+export default function WelcomePage({ navigation }) {
   const [showPages, setShowPages] = useState(0);
 
   let welcomeblock = (
@@ -23,6 +23,7 @@ export default function HomePage({ navigation }) {
       <TouchableOpacity
         style={styles.blackbutton}
         onPress={() => {
+          navigation.navigate("TabNavigator");
           setShowPages(1); // navigation vers REGISTER
         }}
       >
@@ -117,6 +118,10 @@ export default function HomePage({ navigation }) {
     );
   }
 
+  const goTab = () => {
+    navigation.navigate("TabNavigator");
+  };
+
   return (
     <ImageBackground
       style={styles.backgroundimage}
@@ -153,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   contents: {
-    flex: "column",
+    // flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
     height: "100%",
@@ -192,7 +197,7 @@ const styles = StyleSheet.create({
     marginBottom: 285,
   },
   buttoncontainer: {
-    flex: "column",
+    flex: 1,
     marginBottom: 30,
     justifyContent: "flex-end",
     alignItems: "center",
