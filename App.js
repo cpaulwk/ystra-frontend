@@ -11,7 +11,9 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 //import de useEffect
 import React, { useEffect } from "react";
-import WelcomePage from "./screens/WelcomePage";
+// import WelcomePage from "./screens/WelcomePage";
+// import WelcomePage from "./screens/WelcomePageTailwind";
+import WelcomePage from "./screens/WelcomePage2";
 //
 export default function App({ navigation }) {
   return (
