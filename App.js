@@ -15,7 +15,8 @@ import Basket2FillIcon from "react-native-bootstrap-icons/icons/basket2-fill";
 import PersonCircleIcon from "react-native-bootstrap-icons/icons/person-circle";
 
 // Import de HomePage
-import Welcome from "./screens/Welcome";
+// import Welcome from "./screens/Welcome";
+import Welcome from "./screens/WelcomeTailwind";
 import Home from "./screens/Home";
 import Gallery from "./screens/Gallery";
 import Basket from "./screens/Basket";
@@ -94,4 +95,3 @@ const styles = StyleSheet.create({
     height: "30%",
   },
 });
-
