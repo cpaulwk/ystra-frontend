@@ -37,7 +37,7 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ color, size, focused }) => {
           let iconName = "";
 
           if (route.name === "Home") {
@@ -45,10 +45,18 @@ const TabNavigator = () => {
             return <HouseFillIcon size={size} color={color} />;
           } else if (route.name === "Gallery") {
             //iconName = 'shopping-basket';//'BsBasket2Fill';
+            if (focused) {
+              return (
+                <Image
+                  style={{ width: size, height: size, color: color }}
+                  source={require("./assets/logoystra.png")}
+                />
+              );
+            }
             return (
               <Image
                 style={{ width: size, height: size, color: color }}
-                source={require("./assets/LOGOOFF.png")}
+                source={require("./assets/logoystraoff.png")}
               />
             );
           } else if (route.name === "Basket") {
@@ -62,11 +70,10 @@ const TabNavigator = () => {
           // return <HouseFillIcon size={size} color={color}/>
           // return <FontAwesome name={'camera'} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "#2196f3",
+        tabBarActiveTintColor: "#2c6db4",
         tabBarInactiveTintColor: "gray",
         headerShown: false,
-      })}
-    >
+      })}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Gallery" component={Gallery} />
       <Tab.Screen name="Basket" component={Basket} />

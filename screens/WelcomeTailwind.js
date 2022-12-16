@@ -13,12 +13,13 @@ import {
   Image,
 } from "react-native";
 import tw from "twrnc";
-import CheckCircleFillIcon from "react-native-bootstrap-icons/icons/check-circle-fill";
-import CameraFillIcon from "react-native-bootstrap-icons/icons/camera-fill";
 
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../reducers/user";
 
 export default function Welcome({ navigation }) {
+  const dispatch = useDispatch();
   const [showPages, setShowPages] = useState(0);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -38,6 +39,7 @@ export default function Welcome({ navigation }) {
       .then((data) => {
         console.log(data);
         if (data.result === true) {
+          dispatch(login({ userName: username, token: data.token }));
           navigation.navigate("TabNavigator", { screen: "Home" });
         } else {
           //message d'erreur
@@ -61,6 +63,7 @@ export default function Welcome({ navigation }) {
       .then((data) => {
         console.log(data);
         if (data.result === true) {
+          dispatch(login({ userName: username, token: data.token }));
           navigation.navigate("TabNavigator", { screen: "Home" });
         } else {
           //message d'erreur
@@ -91,8 +94,7 @@ export default function Welcome({ navigation }) {
           style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
           onPress={() => {
             setShowPages(1); // navigation vers REGISTER
-          }}
-        >
+          }}>
           <Text style={tw`text-4 text-white font-semibold`}>Register</Text>
         </TouchableOpacity>
 
@@ -100,8 +102,7 @@ export default function Welcome({ navigation }) {
           style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
           onPress={() => {
             setShowPages(2); // navigation vers la page de connexion
-          }}
-        >
+          }}>
           <Text style={tw`text-4 text-white font-semibold`}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -114,8 +115,7 @@ export default function Welcome({ navigation }) {
         {/* Text and Fields */}
         <View style={tw`flex items-center w-full px-[1%]`}>
           <Text
-            style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}
-          >
+            style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}>
             Keep your own art
           </Text>
           <View style={tw`flex items-center mt-4.5 w-[90%]`}>
@@ -148,8 +148,7 @@ export default function Welcome({ navigation }) {
         <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
           <TouchableOpacity
             style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
-            onPress={() => handleRegister()}
-          >
+            onPress={() => handleRegister()}>
             <Text style={tw`text-4 text-white font-semibold`}>Validate</Text>
           </TouchableOpacity>
 
@@ -157,8 +156,7 @@ export default function Welcome({ navigation }) {
             style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
             onPress={() => {
               setShowPages(2); // navigation vers la page de connexion
-            }}
-          >
+            }}>
             <Text style={tw`text-4 text-white font-semibold`}>
               Register with Google
             </Text>
@@ -188,8 +186,7 @@ export default function Welcome({ navigation }) {
         <View style={styles.buttoncontainer}>
           <TouchableOpacity
             style={styles.blackbutton}
-            onPress={() => handleLogin()}
-          >
+            onPress={() => handleLogin()}>
             <Text style={styles.textbutton}> Validate</Text>
           </TouchableOpacity>
 
@@ -197,8 +194,7 @@ export default function Welcome({ navigation }) {
             style={styles.bluebutton}
             onPress={() => {
               setShowPages(0); // OUVRE API LOGIN GOOGLE
-            }}
-          >
+            }}>
             <Text style={styles.textbutton}> Login with Google</Text>
           </TouchableOpacity>
         </View>
@@ -210,12 +206,10 @@ export default function Welcome({ navigation }) {
     <ImageBackground
       style={tw`flex-1`}
       source={require("../assets/background.jpg")}
-      resizeMode="cover"
-    >
+      resizeMode="cover">
       <KeyboardAvoidingView
         style={tw`flex items-center h-full w-full`}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+        behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <Image
           style={tw`h-27.125 w-35 mt-16.25`}
           source={require("../assets/logoystra.png")}
