@@ -12,14 +12,15 @@ import {
   Alert,
   Image,
 } from "react-native";
-import Svg from "react-native-svg";
 import tw from "twrnc";
-import CameraFillIcon from "react-native-bootstrap-icons/icons/camera-fill";
 import ChevronLeftIcon from "react-native-bootstrap-icons/icons/chevron-left";
 
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../reducers/user";
 
 export default function Welcome({ navigation }) {
+  const dispatch = useDispatch();
   const [showPages, setShowPages] = useState(0);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -45,7 +46,9 @@ export default function Welcome({ navigation }) {
       .then((data) => {
         console.log(data);
         if (data.result === true) {
+          setCanReturn(false);
           setShowPages(3);
+          dispatch(login({ userName: username, token: data.token }));
         } else {
           //message d'erreur
         }
@@ -56,7 +59,6 @@ export default function Welcome({ navigation }) {
   };
 
   const handleConfirmation = () => {
-    setCanReturn(false);
     navigation.navigate("TabNavigator", { screen: "Home" });
   };
 
@@ -73,6 +75,7 @@ export default function Welcome({ navigation }) {
       .then((data) => {
         console.log(data);
         if (data.result === true) {
+          dispatch(login({ userName: username, token: data.token }));
           setCanReturn(false);
           navigation.navigate("TabNavigator", { screen: "Home" });
         } else {
