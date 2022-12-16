@@ -12,9 +12,10 @@ import {
   Alert,
   Image,
 } from "react-native";
+import Svg from "react-native-svg";
 import tw from "twrnc";
-import CheckCircleFillIcon from "react-native-bootstrap-icons/icons/check-circle-fill";
 import CameraFillIcon from "react-native-bootstrap-icons/icons/camera-fill";
+import ChevronLeftIcon from "react-native-bootstrap-icons/icons/chevron-left";
 
 import { useState, useEffect } from "react";
 
@@ -23,6 +24,12 @@ export default function Welcome({ navigation }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [canReturn, setCanReturn] = useState(false);
+
+  const handleReturn = () => {
+    setCanReturn(false);
+    setShowPages(0);
+  };
 
   const handleRegister = () => {
     fetch("https://ystra-backend.vercel.app/users/signup", {
@@ -38,6 +45,7 @@ export default function Welcome({ navigation }) {
       .then((data) => {
         console.log(data);
         if (data.result === true) {
+          setCanReturn(false);
           navigation.navigate("TabNavigator", { screen: "Home" });
         } else {
           //message d'erreur
@@ -61,6 +69,7 @@ export default function Welcome({ navigation }) {
       .then((data) => {
         console.log(data);
         if (data.result === true) {
+          setCanReturn(false);
           navigation.navigate("TabNavigator", { screen: "Home" });
         } else {
           //message d'erreur
@@ -70,6 +79,12 @@ export default function Welcome({ navigation }) {
         // gérer les erreurs
       });
   };
+
+  const returnButton = (
+    <View
+      style={tw`absolute top-10 bottom-10 border bg-white h-10 w-10`}
+    ></View>
+  );
 
   let welcomeBlock = (
     <View style={tw`flex-1 justify-between items-center w-full`}>
@@ -90,6 +105,7 @@ export default function Welcome({ navigation }) {
         <TouchableOpacity
           style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
           onPress={() => {
+            setCanReturn(true);
             setShowPages(1); // navigation vers REGISTER
           }}
         >
@@ -99,7 +115,8 @@ export default function Welcome({ navigation }) {
         <TouchableOpacity
           style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
           onPress={() => {
-            setShowPages(2); // navigation vers la page de connexion
+            setCanReturn(true);
+            setShowPages(2); // navigation vers LOGIN
           }}
         >
           <Text style={tw`text-4 text-white font-semibold`}>Login</Text>
@@ -148,58 +165,109 @@ export default function Welcome({ navigation }) {
         <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
           <TouchableOpacity
             style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
-            onPress={() => handleRegister()}
+            onPress={() => setShowPages(3)}
           >
-            <Text style={tw`text-4 text-white font-semibold`}>Validate</Text>
+            <Text style={tw`text-4 text-white font-semibold`}>Sign up</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
             onPress={() => {
-              setShowPages(2); // navigation vers la page de connexion
+              setCanReturn(true);
+              setShowPages(1); // navigation vers la page de connexion
             }}
           >
             <Text style={tw`text-4 text-white font-semibold`}>
-              Register with Google
+              Sign up with Google
             </Text>
           </TouchableOpacity>
         </View>
       </View>
     );
   }
+
   if (showPages === 2) {
     welcomeBlock = (
       // LOGIN BLOCK
-      <View style={styles.logincontainer}>
-        <Text style={styles.beforeinputtext}>Username</Text>
-        <TextInput
-          placeholder="Username or Email"
-          style={styles.input}
-          value={username}
-          onChangeText={(value) => setUsername(value)}
-        />
-        <Text style={styles.beforeinputtext}>Password</Text>
-        <TextInput
-          placeholder="Password"
-          style={styles.input}
-          value={password}
-          onChangeText={(value) => setPassword(value)}
-        />
-        <View style={styles.buttoncontainer}>
+      <View style={tw`flex-1 justify-between items-center w-full`}>
+        {/* Text and Fields */}
+        <View style={tw`flex items-center w-full px-[1%]`}>
+          <Text
+            style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}
+          >
+            Keep your own art
+          </Text>
+          <View style={tw`flex items-center mt-4.5 w-[90%]`}>
+            <Text style={tw`text-4 w-full mb-2 mt-5 font-bold`}>
+              Email or username
+            </Text>
+            <TextInput
+              placeholder="Username"
+              value={username}
+              onChangeText={(value) => setUsername(value)}
+              style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
+            />
+            <Text style={tw`text-4 w-full mb-2 mt-5 font-bold`}>Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              placeholder="Password"
+              value={password}
+              onChangeText={(value) => setPassword(value)}
+              style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
+            />
+          </View>
+        </View>
+
+        {/* Buttons */}
+        <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
           <TouchableOpacity
-            style={styles.blackbutton}
+            style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
             onPress={() => handleLogin()}
           >
-            <Text style={styles.textbutton}> Validate</Text>
+            <Text style={tw`text-4 text-white font-semibold`}>Sign in</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.bluebutton}
+            style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
             onPress={() => {
-              setShowPages(0); // OUVRE API LOGIN GOOGLE
+              setCanReturn(true);
+              setShowPages(2); // navigation vers la page de connexion
             }}
           >
-            <Text style={styles.textbutton}> Login with Google</Text>
+            <Text style={tw`text-4 text-white font-semibold`}>
+              Sign in with Google
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
+  if (showPages === 3) {
+    welcomeBlock = (
+      // EMAIL CONFIRMATION BLOCK
+      <View style={tw`flex-1 justify-between items-center w-full`}>
+        {/* Text and Fields */}
+        <View style={tw`flex items-center w-full px-[1%] mt-[20%]`}>
+          <Text style={tw`text-10 font-bold opacity-70 mb-[18%]`}>
+            Confirm your email from your inbox
+          </Text>
+          <Text
+            style={tw`text-4 text-[#161E44] w-full font-bold w-[90%] opacity-70 pl-[1%]`}
+          >
+            Resend confirmation
+          </Text>
+        </View>
+        <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
+          <TouchableOpacity
+            style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
+            onPress={() => {
+              handleRegister();
+            }}
+          >
+            <Text style={tw`text-4 text-white font-semibold`}>
+              Proceed to Ystra
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -212,6 +280,14 @@ export default function Welcome({ navigation }) {
       source={require("../assets/background.jpg")}
       resizeMode="cover"
     >
+      {canReturn && (
+        <TouchableOpacity
+          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%]`}
+          onPress={() => handleReturn()}
+        >
+          <ChevronLeftIcon fill="black" />
+        </TouchableOpacity>
+      )}
       <KeyboardAvoidingView
         style={tw`flex items-center h-full w-full`}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
