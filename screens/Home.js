@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export default function Home() {
   const [textQuery,setTextQuery]=useState('');
-  const [resultQuery,setResultQuery]=useState();
+  const [resultQuery,setResultQuery]=useState([]);
   const user= useSelector(state=> state.user.value);
 
 
@@ -17,19 +17,29 @@ export default function Home() {
   //   //   body:JSON.stringify({token:user.token,queryKey:textQuery}),
   //   //   }
   const handleSearch=()=>{
-      fetch(`http://192.168.10.173:3000/gallery/all/${user.token}`).then(response=> response.json())
+
+    console.log(user.token,textQuery)
+
+      fetch(`http://192.168.10.177:3000/renderimages/`,{
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token: user.token,
+          queryKey: textQuery,
+        }),
+      }).then(response=> response.json())
         .then(data=>{
-            // console.log('Boucif',data)
-            setResultQuery(data);
+            console.log('Boucif',data)
+            setResultQuery(data.data);
         })
   }
-    
-    const imageIA= resultQuery?.Images.map((elem,index)=>{
-      console.log('Boucif ==>',elem.imageResult[0].url)
+
+    console.log('resultQuery',resultQuery)
+    const imageIA= resultQuery?.map((elem,index)=>{
       return(
         <View style={styles.photoContainer} key={index}>
-          <Image source={ require('../assets/homescreen-background.jpg') } style={styles.photo}></Image>
-          {/* <Image source={ {uri:elem.imageResult[0].url} } style={styles.photo}></Image> */}
+          {/* <Image source={ require('../assets/homescreen-background.jpg') } style={styles.photo}></Image> */}
+          <Image source={ {uri:elem} } style={styles.photo}></Image>
         </View>
       )
     })
