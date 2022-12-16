@@ -45,8 +45,7 @@ export default function Welcome({ navigation }) {
       .then((data) => {
         console.log(data);
         if (data.result === true) {
-          setCanReturn(false);
-          navigation.navigate("TabNavigator", { screen: "Home" });
+          setShowPages(3);
         } else {
           //message d'erreur
         }
@@ -54,6 +53,11 @@ export default function Welcome({ navigation }) {
       .catch((error) => {
         // gérer les erreurs
       });
+  };
+
+  const handleConfirmation = () => {
+    setCanReturn(false);
+    navigation.navigate("TabNavigator", { screen: "Home" });
   };
 
   const handleLogin = () => {
@@ -165,7 +169,7 @@ export default function Welcome({ navigation }) {
         <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
           <TouchableOpacity
             style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
-            onPress={() => setShowPages(3)}
+            onPress={() => handleRegister()}
           >
             <Text style={tw`text-4 text-white font-semibold`}>Sign up</Text>
           </TouchableOpacity>
@@ -262,7 +266,7 @@ export default function Welcome({ navigation }) {
           <TouchableOpacity
             style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
             onPress={() => {
-              handleRegister();
+              handleConfirmation();
             }}
           >
             <Text style={tw`text-4 text-white font-semibold`}>
