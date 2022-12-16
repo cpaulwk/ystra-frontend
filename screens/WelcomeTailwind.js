@@ -295,16 +295,13 @@ export default function Welcome({ navigation }) {
           <ChevronLeftIcon fill="black" />
         </TouchableOpacity>
       )}
-      <KeyboardAvoidingView
-        style={tw`flex items-center h-full w-full`}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+      <View style={tw`flex items-center h-full w-full`}>
         <Image
           style={tw`h-27.125 w-35 mt-16.25`}
           source={require("../assets/logoystra.png")}
         />
         {welcomeBlock}
-      </KeyboardAvoidingView>
+      </View>
     </ImageBackground>
   );
 }
