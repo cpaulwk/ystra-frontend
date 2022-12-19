@@ -26,10 +26,13 @@ export default function Welcome({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [canReturn, setCanReturn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isBadUserInput, setIsBadUserInput] = useState(false);
 
   const handleReturn = () => {
     setCanReturn(false);
     setShowPages(0);
+    setIsBadUserInput(false);
   };
 
   const handleRegister = () => {
@@ -45,12 +48,14 @@ export default function Welcome({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        if (data.result === true) {
+        if (data.result) {
           setCanReturn(false);
           setShowPages(3);
           dispatch(login({ userName: username, token: data.token }));
         } else {
           //message d'erreur
+          setErrorMessage(data.error);
+          setIsBadUserInput(true);
         }
       })
       .catch((error) => {
@@ -74,12 +79,14 @@ export default function Welcome({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        if (data.result === true) {
+        if (data.result) {
           dispatch(login({ userName: username, token: data.token }));
           setCanReturn(false);
           navigation.navigate("TabNavigator", { screen: "Home" });
         } else {
           //message d'erreur
+          setErrorMessage(data.error);
+          setIsBadUserInput(true);
         }
       })
       .catch((error) => {
@@ -132,6 +139,7 @@ export default function Welcome({ navigation }) {
     </View>
   );
 
+  // WIP
   if (showPages === 1) {
     welcomeBlock = (
       <View style={tw`flex-1 justify-between items-center w-full`}>
@@ -143,14 +151,14 @@ export default function Welcome({ navigation }) {
             Keep your own art
           </Text>
           <View style={tw`flex items-center mt-4.5 w-[90%]`}>
-            <Text style={tw`text-4 w-full mb-2 mt-5 font-bold`}>Username</Text>
+            <Text style={tw`text-4 w-full mt-5 font-bold`}>Username</Text>
             <TextInput
               placeholder="Username"
               value={username}
               onChangeText={(value) => setUsername(value)}
               style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
             />
-            <Text style={tw`text-4 w-full mb-2 mt-5 font-bold`}>Email</Text>
+            <Text style={tw`text-4 w-full mt-5 mb-2 font-bold`}>Email</Text>
             <TextInput
               placeholder="Email"
               value={email}
@@ -165,6 +173,11 @@ export default function Welcome({ navigation }) {
               onChangeText={(value) => setPassword(value)}
               style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
             />
+            <View style={tw`flex-row items-center w-full h-7`}>
+              {isBadUserInput && (
+                <Text style={tw`text-4 text-[#BA0000]`}>{errorMessage}</Text>
+              )}
+            </View>
           </View>
         </View>
 
@@ -222,6 +235,11 @@ export default function Welcome({ navigation }) {
               onChangeText={(value) => setPassword(value)}
               style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
             />
+            <View style={tw`flex-row items-center w-full h-7`}>
+              {isBadUserInput && (
+                <Text style={tw`text-4 text-[#BA0000]`}>{errorMessage}</Text>
+              )}
+            </View>
           </View>
         </View>
 
@@ -295,16 +313,13 @@ export default function Welcome({ navigation }) {
           <ChevronLeftIcon fill="black" />
         </TouchableOpacity>
       )}
-      <KeyboardAvoidingView
-        style={tw`flex items-center h-full w-full`}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+      <View style={tw`flex items-center h-full w-full`}>
         <Image
           style={tw`h-27.125 w-35 mt-16.25`}
           source={require("../assets/logoystra.png")}
         />
         {welcomeBlock}
-      </KeyboardAvoidingView>
+      </View>
     </ImageBackground>
   );
 }
