@@ -79,7 +79,7 @@ export default function Welcome({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        if (data.result === true) {
+        if (data.result) {
           dispatch(login({ userName: username, token: data.token }));
           setCanReturn(false);
           navigation.navigate("TabNavigator", { screen: "Home" });
