@@ -149,7 +149,7 @@ export default function Home({ navigation }) {
   ];
 
   console.log("resultQuery", resultQuery);
-  const imageIA = resultQuery?.map((elem, index) => {
+  const imageIA = resultQueryx?.map((elem, index) => {
     return (
       <View style={tw`items-center w-[48%] h-[48%]`} key={index}>
         {/* <Image source={ require('../assets/homescreen-background.jpg') } style={styles.photo}></Image> */}
