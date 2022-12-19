@@ -53,6 +53,7 @@ export default function Welcome({ navigation }) {
           setShowPages(3);
           dispatch(login({ userName: username, token: data.token }));
         } else {
+          dispatch(login({ userName: username, token: data.token }));
           //message d'erreur
           setErrorMessage(data.error);
           setIsBadUserInput(true);

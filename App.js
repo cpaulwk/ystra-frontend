@@ -21,6 +21,7 @@ import Home from "./screens/Home";
 import Gallery from "./screens/Gallery";
 import Basket from "./screens/Basket";
 import Profile from "./screens/Profile";
+import Cart from "./screens/Cart";
 
 //import Reducers
 import user from "./reducers/user";
@@ -90,6 +91,7 @@ export default function App({ navigation }) {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="Cart" component={Cart} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
