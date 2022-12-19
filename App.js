@@ -60,7 +60,7 @@ const TabNavigator = () => {
                 source={require("./assets/logoystraoff.png")}
               />
             );
-          } else if (route.name === "Basket") {
+          } else if (route.name === "Cart") {
             iconName = "shopping-basket"; //'BsBasket2Fill';
             return <Basket2FillIcon size={size} color={color} />;
           }
@@ -74,10 +74,11 @@ const TabNavigator = () => {
         tabBarActiveTintColor: "#2c6db4",
         tabBarInactiveTintColor: "gray",
         headerShown: false,
-      })}>
+      })}
+    >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Gallery" component={Gallery} />
-      <Tab.Screen name="Basket" component={Basket} />
+      <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
@@ -91,7 +92,7 @@ export default function App({ navigation }) {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
-          <Stack.Screen name="Cart" component={Cart} />
+          <Stack.Screen name="Basket" component={Basket} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

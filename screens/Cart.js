@@ -4,6 +4,20 @@ import tw from "twrnc";
 import React, { useState } from "react";
 
 export default function Basket({ navigation }) {
+  const user = useSelector((state) => state.user.value);
+
+  const showCart = user.basket.map((element, index) => {
+    return (
+      <View style={tw`border flex-row items-center py-5`}>
+        <Image style={tw`h-25 w-25`} source={{ uri: user.newItem.url }} />
+        <View>
+          <Text style={tw`text-4 font-bold opacity-70`}>Size :</Text>
+          <Text style={tw`text-4  font-bold opacity-70`}>Frame :</Text>
+          <Text style={tw`text-4  font-bold opacity-70`}>Finish :</Text>
+        </View>
+      </View>
+    );
+  });
   return (
     <View style={tw`bg-[#F2EFEA] w-full h-full `}>
       <View style={tw`flex justify-center items-center `}>
@@ -12,26 +26,8 @@ export default function Basket({ navigation }) {
             Buy Prints
           </Text>
         </View>
-        <View style={tw` w-full  h-50 border-t-2 border-[#AFAFAF]`}>
-          <Image
-            source={require("../assets/img-Ng8OjQ4XBHSSd2KXIdvKgOJD.png")} // UTILISER USESELECTOR POUR DYNAMISER URL DE L'IMAGE
-            style={tw`mt-12  h-25 w-25`}
-          />
-          <Text style={tw`text-4 font-bold opacity-70`}>Size :</Text>
-          <Text style={tw`text-4  font-bold opacity-70`}>Frame :</Text>
-          <Text style={tw`text-4  font-bold opacity-70`}>Finish :</Text>
-        </View>
-        <View style={tw` w-full  h-50 border-t-2 border-[#AFAFAF]`}>
-          <Image
-            source={require("../assets/img-Ng8OjQ4XBHSSd2KXIdvKgOJD.png")} // UTILISER USESELECTOR POUR DYNAMISER URL DE L'IMAGE
-            style={tw`mt-12  h-25 w-25`}
-          />
-        </View>
-        <View style={tw` w-full  h-50 border-t-2 border-[#AFAFAF]`}>
-          <Image
-            source={require("../assets/img-Ng8OjQ4XBHSSd2KXIdvKgOJD.png")} // UTILISER USESELECTOR POUR DYNAMISER URL DE L'IMAGE
-            style={tw`mt-12  h-25 w-25`}
-          />
+        <View style={tw`w-full  h-50 border-t-2 border-[#AFAFAF]`}>
+          {showCart}
         </View>
         <View>
           {/* <View

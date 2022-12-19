@@ -2,6 +2,8 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import React, { useState } from "react";
+import { addBasketItem } from "../reducers/user";
+import ChevronLeftIcon from "react-native-bootstrap-icons/icons/chevron-left";
 
 export default function Basket({ navigation }) {
   const [selectedOptButton, setSelecteOptdButton] = useState();
@@ -12,78 +14,95 @@ export default function Basket({ navigation }) {
   const user = useSelector((state) => state.user.value);
   // const imageResult = useSelector((state) => state.imageResult.value);
 
-  return (
-    <View style={tw`flex-1 items-center  w-full h-full pt-40`}>
+  const dispatch = useDispatch();
+
+  const handleBasket = (itemId, itemUrl) => {
+    dispatch(addBasketItem(user.newItem));
+    navigation.navigate("TabNavigator", { screen: "Cart" });
+  };
+
+  let showImage = (
+    <View>
+      <Text>No selected item</Text>
+    </View>
+  );
+  if (user.newItem) {
+    showImage = (
       <View>
-        <Image
-          source={require("../assets/img-Ng8OjQ4XBHSSd2KXIdvKgOJD.png")} // UTILISER USESELECTOR POUR DYNAMISER URL DE L'IMAGE
-          style={tw``}
-        />
-        <Image
-          source={require("../assets/goldframe.png")}
-          style={tw`absolute h-60 w-60 mt--1`}
-        />
+        <Image style={tw`h-50 w-50`} source={{ uri: user.newItem.url }} />
       </View>
+    );
+  }
 
+  return (
+    <View style={tw`flex-1 items-center w-full h-full pt-40`}>
+      <TouchableOpacity
+        style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%]`}
+        onPress={() => navigation.navigate("TabNavigator", { screen: "Home" })}
+      >
+        <ChevronLeftIcon fill="black" />
+      </TouchableOpacity>
+      {showImage}
       <View
-        style={tw`w-66 h-11 border-8 rounded-1 border-[#161E44] bg-[#FFFF]  mt-9.5 relative`}
-      />
-
-      <View
-        style={tw` justify-center flex-row  w-[100%] pt-114
-
-absolute`}>
+        style={tw`border flex-row justify-center items-center w-66 h-11 rounded-1 border-[#161E44] bg-[#FFFF]  mt-9.5`}
+      >
         <TouchableOpacity
           style={[
-            tw`flex justify-center items-center`,
+            tw`flex-1 justify-center items-center rounded-1`,
             selectedOptButton === "size"
-              ? tw`bg-[#161E44] w-[23%] h-10  `
-              : tw`bg-[#FFFF] w-[23%] h-10 `,
+              ? tw`bg-[#161E44] w-full h-full`
+              : tw`bg-[#FFFFFF] w-full h-full`,
           ]}
-          onPress={() => setSelecteOptdButton("size")}>
+          onPress={() => setSelecteOptdButton("size")}
+        >
           <Text
             style={[
               tw`text-2xl font-normal`,
               selectedOptButton === "size"
-                ? tw`text-[#FFFF]`
+                ? tw`text-[#FFFFFF]`
                 : tw`text-[#161E44]`,
-            ]}>
+            ]}
+          >
             Size
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
-            tw`flex justify-center items-center`,
+            tw`flex-1 justify-center items-center rounded-1`,
             selectedOptButton === "frame"
-              ? tw`bg-[#161E44] w-[23%]`
-              : tw`bg-[#FFFF] w-[23%]`,
+              ? tw`bg-[#161E44] h-full w-full`
+              : tw`bg-[#FFFFFF] h-full w-full`,
           ]}
-          onPress={() => setSelecteOptdButton("frame")}>
+          onPress={() => setSelecteOptdButton("frame")}
+        >
           <Text
             style={[
               tw`text-2xl font-normal`,
               selectedOptButton === "frame"
-                ? tw`text-[#FFFF]`
+                ? tw`text-[#FFFFFF]`
                 : tw`text-[#161E44]`,
-            ]}>
+            ]}
+          >
             Frame
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
-            tw`flex justify-center items-center`,
+            tw`flex-1 justify-center items-center rounded-1`,
             selectedOptButton === "finish"
-              ? tw`bg-[#161E44] w-[23%]`
-              : tw`bg-[#FFFF] w-[23%]`,
+              ? tw`bg-[#161E44] h-full w-full`
+              : tw`bg-[#FFFFFF] h-full w-full`,
           ]}
-          onPress={() => setSelecteOptdButton("finish")}>
+          onPress={() => setSelecteOptdButton("finish")}
+        >
           <Text
             style={[
               tw`text-2xl font-normal`,
               selectedOptButton === "finish"
-                ? tw`text-[#FFFF]`
+                ? tw`text-[#FFFFFF]`
                 : tw`text-[#161E44]`,
-            ]}>
+            ]}
+          >
             Finish
           </Text>
         </TouchableOpacity>
@@ -95,12 +114,14 @@ absolute`}>
               tw`flex border-2 justify-center items-center rounded-1.75 h-10 w-[12.5%]  border-[#161E44]`,
               selectedSize === "S" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
             ]}
-            onPress={() => setselectedSize("S")}>
+            onPress={() => setselectedSize("S")}
+          >
             <Text
               style={[
                 tw`font-black text-3xl`,
                 selectedSize === "S" ? tw`text-[#FFFF]` : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               S
             </Text>
           </TouchableOpacity>
@@ -109,12 +130,14 @@ absolute`}>
               tw`flex ml-2 border-2 justify-center  items-center rounded-1.75 h-10 w-[12.5%]  ml-9 mr-7 border-[#161E44]`,
               selectedSize === "M" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
             ]}
-            onPress={() => setselectedSize("M")}>
+            onPress={() => setselectedSize("M")}
+          >
             <Text
               style={[
                 tw`font-black text-3xl`,
                 selectedSize === "M" ? tw`text-[#FFFF]` : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               M
             </Text>
           </TouchableOpacity>
@@ -123,12 +146,14 @@ absolute`}>
               tw`flex ml-2 border-2 justify-center items-center rounded-1.75 h-10 w-[12.5%]  border-[#161E44]`,
               selectedSize === "L" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
             ]}
-            onPress={() => setselectedSize("L")}>
+            onPress={() => setselectedSize("L")}
+          >
             <Text
               style={[
                 tw`font-black text-3xl`,
                 selectedSize === "L" ? tw`text-[#FFFF]` : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               L
             </Text>
           </TouchableOpacity>
@@ -141,14 +166,16 @@ absolute`}>
               tw`flex border-2 justify-center items-center rounded-1.75 h-10 w-[12.5%]  border-[#161E44]`,
               selectedFrame === "none" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
             ]}
-            onPress={() => setselectedFrame("none")}>
+            onPress={() => setselectedFrame("none")}
+          >
             <Text
               style={[
                 tw`font-black `,
                 selectedFrame === "none"
                   ? tw`text-[#FFFF]`
                   : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               None
             </Text>
           </TouchableOpacity>
@@ -157,14 +184,16 @@ absolute`}>
               tw`flex ml-2 border-2 justify-center  items-center rounded-1.75 h-10 w-[12.5%]  ml-9 mr-7 border-[#161E44]`,
               selectedFrame === "wood" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
             ]}
-            onPress={() => setselectedFrame("wood")}>
+            onPress={() => setselectedFrame("wood")}
+          >
             <Text
               style={[
                 tw`font-black`,
                 selectedFrame === "wood"
                   ? tw`text-[#FFFF]`
                   : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               Wood
             </Text>
           </TouchableOpacity>
@@ -173,14 +202,16 @@ absolute`}>
               tw`flex ml-2 border-2 justify-center items-center rounded-1.75 h-10 w-[12.5%]  border-[#161E44]`,
               selectedFrame === "gold" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
             ]}
-            onPress={() => setselectedFrame("gold")}>
+            onPress={() => setselectedFrame("gold")}
+          >
             <Text
               style={[
                 tw`font-black`,
                 selectedFrame === "gold"
                   ? tw`text-[#FFFF]`
                   : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               Gold
             </Text>
           </TouchableOpacity>
@@ -193,14 +224,16 @@ absolute`}>
               tw`flex border-2 justify-center items-center rounded-1.75 h-10 w-[12.5%]  border-[#161E44]`,
               selectedFinish === "none" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
             ]}
-            onPress={() => setselectedFinish("none")}>
+            onPress={() => setselectedFinish("none")}
+          >
             <Text
               style={[
                 tw`font-black`,
                 selectedFinish === "none"
                   ? tw`text-[#FFFF]`
                   : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               None
             </Text>
           </TouchableOpacity>
@@ -209,14 +242,16 @@ absolute`}>
               tw`flex ml-2 border-2 justify-center  items-center rounded-1.75 h-10 w-[12.5%]  ml-9 mr-7 border-[#161E44]`,
               selectedFinish === "gloss" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
             ]}
-            onPress={() => setselectedFinish("gloss")}>
+            onPress={() => setselectedFinish("gloss")}
+          >
             <Text
               style={[
                 tw`font-black `,
                 selectedFinish === "gloss"
                   ? tw`text-[#FFFF]`
                   : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               Gloss
             </Text>
           </TouchableOpacity>
@@ -225,20 +260,21 @@ absolute`}>
               tw`flex ml-2 border-2 justify-center items-center rounded-1.75 h-10 w-[12.5%]  border-[#161E44]`,
               selectedFinish === "matte" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
             ]}
-            onPress={() => setselectedFinish("matte")}>
+            onPress={() => setselectedFinish("matte")}
+          >
             <Text
               style={[
                 tw`font-black`,
                 selectedFinish === "matte"
                   ? tw`text-[#FFFF]`
                   : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               Matte
             </Text>
           </TouchableOpacity>
         </View>
       )}
-
       <View style={tw`flex pt-12`}>
         <Text>
           {user.userName} {user.token}
@@ -248,7 +284,8 @@ absolute`}>
       <View style={tw`absolute mt-148 justify-center flex-row w-full pt-16`}>
         <TouchableOpacity
           style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
-          onPress={() => navigation.navigate("Cart")}>
+          onPress={() => handleBasket()}
+        >
           <Text style={tw`font-medium		 text-2xl text-[#FFFF]`}>Add to Cart</Text>
         </TouchableOpacity>
       </View>

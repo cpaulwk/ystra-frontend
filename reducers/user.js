@@ -1,23 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
 const initialState = {
   value: {
     userName: null,
     token: null,
     basket: [],
+    newItem: {},
   },
 };
 // {
 // imageResult_id: { type: mongoose.Schema.Types.ObjectId, ref:'imageresults'},
 // url: string,
-// price: Number, 
+// price: Number,
 // product: {
 //             size: itemSchema,
 //             finish: itemSchema,
 //             frame :itemSchema,
-//         },  
+//         },
 // quantity: Number,
 // }
 
@@ -35,9 +34,12 @@ export const userSlice = createSlice({
       state.value.basket = [];
     },
     addItem: (state, action) => {
+      state.value.newItem = action.payload;
+    },
+    addBasketItem: (state, action) => {
       state.value.basket.push(action.payload);
     },
-    removeItem: (state, action) => {
+    removeBasketItem: (state, action) => {
       state.value.basket = state.value.basket.filter(
         (elem) => elem !== action.payload
       );
@@ -45,6 +47,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { login, logout, addItem, removeItem } = userSlice.actions;
+export const { login, logout, addItem, addBasketItem, removeBasketItem } =
+  userSlice.actions;
 export default userSlice.reducer;
-
