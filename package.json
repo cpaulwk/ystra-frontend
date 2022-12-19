@@ -14,6 +14,8 @@
     "@react-navigation/native-stack": "6",
     "@reduxjs/toolkit": "^1.9.1",
     "expo": "~47.0.8",
+    "expo-file-system": "~15.1.1",
+    "expo-sharing": "~11.0.1",
     "expo-status-bar": "~1.4.2",
     "react": "18.1.0",
     "react-icons": "^4.7.1",

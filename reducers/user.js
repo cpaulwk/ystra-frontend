@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
+
 const initialState = {
   value: {
     userName: null,
@@ -7,6 +9,17 @@ const initialState = {
     basket: [],
   },
 };
+// {
+// imageResult_id: { type: mongoose.Schema.Types.ObjectId, ref:'imageresults'},
+// url: string,
+// price: Number, 
+// product: {
+//             size: itemSchema,
+//             finish: itemSchema,
+//             frame :itemSchema,
+//         },  
+// quantity: Number,
+// }
 
 export const userSlice = createSlice({
   name: "user",

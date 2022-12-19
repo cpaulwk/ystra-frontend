@@ -101,7 +101,7 @@ export default function Welcome({ navigation }) {
   );
 
   let welcomeBlock = (
-    <View style={tw`flex-1 justify-between items-center w-full`}>
+    <View style={tw`flex-1 justify-between items-center w-full h-full`}>
       {/* Text */}
       <View style={tw`flex justify-center items-center `}>
         <View style={tw`flex items-center mt-[23%]`}>
@@ -140,7 +140,7 @@ export default function Welcome({ navigation }) {
   // WIP
   if (showPages === 1) {
     welcomeBlock = (
-      <View style={tw`flex-1 justify-between items-center w-full`}>
+      <View style={tw`flex-1 justify-between items-center w-full h-full`}>
         {/* Text and Fields */}
         <View style={tw`flex items-center w-full px-[1%]`}>
           <Text
@@ -204,7 +204,7 @@ export default function Welcome({ navigation }) {
   if (showPages === 2) {
     welcomeBlock = (
       // LOGIN BLOCK
-      <View style={tw`flex-1 justify-between items-center w-full`}>
+      <View style={tw`flex-1 justify-between items-center w-full h-full`}>
         {/* Text and Fields */}
         <View style={tw`flex items-center w-full px-[1%]`}>
           <Text
