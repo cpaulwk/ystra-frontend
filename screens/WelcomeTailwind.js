@@ -53,6 +53,7 @@ export default function Welcome({ navigation }) {
           setShowPages(3);
           dispatch(login({ userName: username, token: data.token }));
         } else {
+          dispatch(login({ userName: username, token: data.token }));
           //message d'erreur
           setErrorMessage(data.error);
           setIsBadUserInput(true);
@@ -96,8 +97,7 @@ export default function Welcome({ navigation }) {
 
   const returnButton = (
     <View
-      style={tw`absolute top-10 bottom-10 border bg-white h-10 w-10`}
-    ></View>
+      style={tw`absolute top-10 bottom-10 border bg-white h-10 w-10`}></View>
   );
 
   let welcomeBlock = (
@@ -121,8 +121,7 @@ export default function Welcome({ navigation }) {
           onPress={() => {
             setCanReturn(true);
             setShowPages(1); // navigation vers REGISTER
-          }}
-        >
+          }}>
           <Text style={tw`text-4 text-white font-semibold`}>Register</Text>
         </TouchableOpacity>
 
@@ -131,8 +130,7 @@ export default function Welcome({ navigation }) {
           onPress={() => {
             setCanReturn(true);
             setShowPages(2); // navigation vers LOGIN
-          }}
-        >
+          }}>
           <Text style={tw`text-4 text-white font-semibold`}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -146,8 +144,7 @@ export default function Welcome({ navigation }) {
         {/* Text and Fields */}
         <View style={tw`flex items-center w-full px-[1%]`}>
           <Text
-            style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}
-          >
+            style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}>
             Keep your own art
           </Text>
           <View style={tw`flex items-center mt-4.5 w-[90%]`}>
@@ -185,8 +182,7 @@ export default function Welcome({ navigation }) {
         <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
           <TouchableOpacity
             style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
-            onPress={() => handleRegister()}
-          >
+            onPress={() => handleRegister()}>
             <Text style={tw`text-4 text-white font-semibold`}>Sign up</Text>
           </TouchableOpacity>
 
@@ -195,8 +191,7 @@ export default function Welcome({ navigation }) {
             onPress={() => {
               setCanReturn(true);
               setShowPages(1); // navigation vers la page de connexion
-            }}
-          >
+            }}>
             <Text style={tw`text-4 text-white font-semibold`}>
               Sign up with Google
             </Text>
@@ -213,8 +208,7 @@ export default function Welcome({ navigation }) {
         {/* Text and Fields */}
         <View style={tw`flex items-center w-full px-[1%]`}>
           <Text
-            style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}
-          >
+            style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}>
             Keep your own art
           </Text>
           <View style={tw`flex items-center mt-4.5 w-[90%]`}>
@@ -247,8 +241,7 @@ export default function Welcome({ navigation }) {
         <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
           <TouchableOpacity
             style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
-            onPress={() => handleLogin()}
-          >
+            onPress={() => handleLogin()}>
             <Text style={tw`text-4 text-white font-semibold`}>Sign in</Text>
           </TouchableOpacity>
 
@@ -257,8 +250,7 @@ export default function Welcome({ navigation }) {
             onPress={() => {
               setCanReturn(true);
               setShowPages(2); // navigation vers la page de connexion
-            }}
-          >
+            }}>
             <Text style={tw`text-4 text-white font-semibold`}>
               Sign in with Google
             </Text>
@@ -278,8 +270,7 @@ export default function Welcome({ navigation }) {
             Confirm your email from your inbox
           </Text>
           <Text
-            style={tw`text-4 text-[#161E44] w-full font-bold w-[90%] opacity-70 pl-[1%]`}
-          >
+            style={tw`text-4 text-[#161E44] w-full font-bold w-[90%] opacity-70 pl-[1%]`}>
             Resend confirmation
           </Text>
         </View>
@@ -288,8 +279,7 @@ export default function Welcome({ navigation }) {
             style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
             onPress={() => {
               handleConfirmation();
-            }}
-          >
+            }}>
             <Text style={tw`text-4 text-white font-semibold`}>
               Proceed to Ystra
             </Text>
@@ -303,13 +293,11 @@ export default function Welcome({ navigation }) {
     <ImageBackground
       style={tw`flex-1`}
       source={require("../assets/background.jpg")}
-      resizeMode="cover"
-    >
+      resizeMode="cover">
       {canReturn && (
         <TouchableOpacity
           style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%]`}
-          onPress={() => handleReturn()}
-        >
+          onPress={() => handleReturn()}>
           <ChevronLeftIcon fill="black" />
         </TouchableOpacity>
       )}

@@ -21,6 +21,7 @@ import Home from "./screens/Home";
 import Gallery from "./screens/Gallery";
 import Basket from "./screens/Basket";
 import Profile from "./screens/Profile";
+import Cart from "./screens/Cart";
 
 //import Reducers
 import user from "./reducers/user";
@@ -37,7 +38,7 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ color, size, focused }) => {
           let iconName = "";
 
           if (route.name === "Home") {
@@ -45,10 +46,18 @@ const TabNavigator = () => {
             return <HouseFillIcon size={size} color={color} />;
           } else if (route.name === "Gallery") {
             //iconName = 'shopping-basket';//'BsBasket2Fill';
+            if (focused) {
+              return (
+                <Image
+                  style={{ width: size, height: size, color: color }}
+                  source={require("./assets/logoystra.png")}
+                />
+              );
+            }
             return (
               <Image
                 style={{ width: size, height: size, color: color }}
-                source={require("./assets/LOGOOFF.png")}
+                source={require("./assets/logoystraoff.png")}
               />
             );
           } else if (route.name === "Basket") {
@@ -62,11 +71,10 @@ const TabNavigator = () => {
           // return <HouseFillIcon size={size} color={color}/>
           // return <FontAwesome name={'camera'} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "#2196f3",
+        tabBarActiveTintColor: "#2c6db4",
         tabBarInactiveTintColor: "gray",
         headerShown: false,
-      })}
-    >
+      })}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Gallery" component={Gallery} />
       <Tab.Screen name="Basket" component={Basket} />
@@ -83,6 +91,7 @@ export default function App({ navigation }) {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="Cart" component={Cart} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
