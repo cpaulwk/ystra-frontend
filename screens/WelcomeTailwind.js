@@ -37,11 +37,11 @@ export default function Welcome({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.result === true) {
-          dispatch(login({ userName: username, token: data.token }));
           navigation.navigate("TabNavigator", { screen: "Home" });
+          console.log(data);
         } else {
+          dispatch(login({ userName: username, token: data.token }));
           //message d'erreur
         }
       })
