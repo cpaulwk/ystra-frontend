@@ -1,20 +1,32 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addBasketItem } from "../reducers/user";
 import ChevronLeftIcon from "react-native-bootstrap-icons/icons/chevron-left";
 
 export default function Basket({ navigation }) {
-  const [selectedOptButton, setSelecteOptdButton] = useState();
+  const [selectedOptButton, setSelecteOptdButton] = useState("size");
   const [selectedSize, setselectedSize] = useState("S");
   const [selectedFrame, setselectedFrame] = useState("none");
   const [selectedFinish, setselectedFinish] = useState("none");
+  const [total, setTotal]=useState(0);
+  const products = useSelector((state) => state.product.products);
 
   const user = useSelector((state) => state.user.value);
   // const imageResult = useSelector((state) => state.imageResult.value);
 
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    const priceSize= products.find(elem=> elem.nameProduct === selectedSize && elem.typeProduct==='size')
+    const priceFrame= products.find(elem=> elem.nameProduct === selectedFrame && elem.typeProduct==='frame')
+    const priceFinish= products.find(elem=> elem.nameProduct === selectedFinish && elem.typeProduct === 'finish')
+     console.log(selectedFinish,selectedFrame,selectedSize)
+     console.log(priceSize?.priceProduct + priceFrame?.priceProduct + priceFinish?.priceProduct)
+    setTotal(priceSize?.priceProduct + priceFrame?.priceProduct + priceFinish?.priceProduct)
+    
+  },[selectedFinish,selectedFrame,selectedSize])
 
   const handleBasket = (itemId, itemUrl) => {
     dispatch(addBasketItem(user.newItem));
@@ -275,10 +287,10 @@ export default function Basket({ navigation }) {
           </TouchableOpacity>
         </View>
       )}
+
       <View style={tw`flex pt-12`}>
         <Text>
-          {user.userName} {user.token}
-          {"€"}
+          {`${total}€`}
         </Text>
       </View>
       <View style={tw`absolute mt-148 justify-center flex-row w-full pt-16`}>
