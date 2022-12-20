@@ -8,11 +8,14 @@ import {
   StyleSheet,
   TextInput,
   Image,
+  Modal,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import tw from "twrnc";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem } from "../reducers/user";
+import Swiper from "react-native-swiper";
+
 // import { enableES5 } from "immer";
 
 import * as FileSystem from "expo-file-system";
@@ -21,6 +24,8 @@ import * as Sharing from "expo-sharing";
 export default function Home({ navigation }) {
   const [textQuery, setTextQuery] = useState("");
   const [resultQuery, setResultQuery] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
@@ -51,6 +56,7 @@ export default function Home({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         console.log("Boucif", data);
+        setIsSearching(true);
         setResultQuery(data.data);
       });
   };
@@ -151,7 +157,7 @@ export default function Home({ navigation }) {
   //console.log("resultQuery", resultQuery);
   const imageIA = resultQuery.map((elem, index) => {
     return (
-      <View style={tw`items-center w-[48%] h-[48%]`} key={index}>
+      <View style={styles.image} key={index}>
         {/* <Image source={ require('../assets/homescreen-background.jpg') } style={styles.photo}></Image> */}
         <ImageBackground
           style={tw`flex-row justify-end h-full w-full`}
@@ -165,7 +171,7 @@ export default function Home({ navigation }) {
             >
               <FontAwesome
                 name="share-square-o"
-                // size={20}
+                size={20}
                 selectionColor="red"
               />
             </TouchableOpacity>
@@ -176,7 +182,7 @@ export default function Home({ navigation }) {
             >
               <FontAwesome
                 name="heart"
-                // size={20}
+                size={20}
                 color={elem.isSelected ? "red" : "black"}
               />
             </TouchableOpacity>
@@ -187,7 +193,7 @@ export default function Home({ navigation }) {
             >
               <FontAwesome
                 name="shopping-basket"
-                // size={20}
+                size={20}
                 selectionColor="red"
               />
             </TouchableOpacity>
@@ -202,9 +208,9 @@ export default function Home({ navigation }) {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={tw`flex-1 items-center justify-center h-[100%] w-[100%]`}
+      style={tw`bg-[#F2EFEA] flex-1 items-center justify-center h-[100%] w-[100%]`}
     >
-      <View style={tw`flex-row  items-end justify-center w-full h-[25%] `}>
+      <View style={styles.header}>
         <View style={tw`flex-row items-center justify-end w-[90%]`}>
           <TextInput
             style={tw`border h-11 px-1 border-[#AFAFAF] rounded-1 bg-white w-full `}
@@ -218,76 +224,220 @@ export default function Home({ navigation }) {
             onPress={() => handleSearch()}
           >
             <FontAwesome
-              // size="25"
+              size="25"
               style={tw`absolute`}
               name="search"
-              selectionColor="red"
+              selectionColor="#BA0000"
             />
           </TouchableOpacity>
         </View>
       </View>
       <View style={tw`flex-1 items-center w-[90%] mt-[10%]`}>
+        {!isSearching && (
+          <View>
+            <Swiper
+              style={tw``}
+              showsButtons={false}
+              loop={true}
+              autoplay={true}
+              autoplayTimeout={2}
+            >
+              <View
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+              >
+                <Image
+                  style={tw`h-70 w-70 border-8`}
+                  source={require("../assets/SlideShowImage1.png")}
+                />
+                <Text style={tw` text-2xl	font-semibold text-justify	w-65	`}>
+                  “City of paris with the style of Yoshitaka Amano"
+                </Text>
+              </View>
+              <View
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+              >
+                <Image
+                  style={tw`h-70 w-70 border-8`}
+                  source={require("../assets/SlideShowImage2.jpeg")}
+                />
+                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                  “a bowl of soup that is a portal to another dimension as
+                  digital art
+                </Text>
+              </View>
+              <View
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+              >
+                <Image
+                  style={tw`h-70 w-70 border-8`}
+                  source={require("../assets/SlideShowImage3.webp")}
+                />
+                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                  “A futuristic cyborg poster hanging in a neon lit subway
+                  station"
+                </Text>
+              </View>
+              <View
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+              >
+                <Image
+                  style={tw`h-70 w-70 border-8`}
+                  source={require("../assets/SlideShowImage4.webp")}
+                />
+                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                  “A hand-drawn sailboat circled by birds on the sea at sunrise"
+                </Text>
+              </View>
+              <View
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+              >
+                <Image
+                  style={tw`h-70 w-70 border-8`}
+                  source={require("../assets/SlideShowImage5.webp")}
+                />
+                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                  “A photo of an astronaut riding a horse"
+                </Text>
+              </View>
+              <View
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+              >
+                <Image
+                  style={tw`h-70 w-70 border-8`}
+                  source={require("../assets/SlideShowImage6.webp")}
+                />
+                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                  “A synthwave style sunset above the reflecting water of the
+                  sea, digital art"
+                </Text>
+              </View>
+              <View
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+              >
+                <Image
+                  style={tw`h-70 w-70 border-8`}
+                  source={require("../assets/SlideShowImage7.jpeg")}
+                />
+                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                  “An astronaut riding a horse in a photorealistic"
+                </Text>
+              </View>
+              <View
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+              >
+                <Image
+                  style={tw`h-70 w-70 border-8`}
+                  source={require("../assets/SlideShowImage8.jpeg")}
+                />
+                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                  “Banksy meets DALL-E"
+                </Text>
+              </View>
+              <View
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+              >
+                <Image
+                  style={tw`h-70 w-70 border-8`}
+                  source={require("../assets/SlideShowImage9.jpeg")}
+                />
+                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                  “White surfaces design explorations"
+                </Text>
+              </View>
+            </Swiper>
+          </View>
+        )}
         <View
           style={tw`flex-row flex-wrap justify-around content-around w-full aspect-square`}
         >
           {imageIA}
         </View>
       </View>
-
-      <TouchableOpacity onPress={() => handleSearch()} style={tw`my-[5%]`}>
-        {/* <FontAwesome size={40} name="refresh" /> */}
-      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: "100%",
-    width: "100%",
+  header: {
+    backgroundColor: "#F2EFEA",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
-  },
-  searchSection: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "flex-end",
-    backgroundColor: "#fff",
-    borderColor: "red",
-    borderWidth: 1,
-    width: "100%",
     height: "25%",
-  },
-  input: {
-    width: "80%",
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 2,
+    width: "100%",
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 5.3,
+
+    elevation: 18,
   },
 
-  searchIcon: {
-    padding: 10,
-    right: 30,
-    backgroundColor: "#ffffff",
-    opacity: 0.9,
-  },
-  galleryContainer: {
-    flex: 1,
-    width: "100%",
-    backgroundColor: "#F2EFEA",
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  photoContainer: {
+  image: {
+    display: "flex",
     alignItems: "center",
+    height: "48%",
+    width: "48%",
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 5.3,
+
+    elevation: 18,
   },
-  photo: {
-    margin: 10,
-    width: 150,
-    height: 150,
-  },
+  // container: {
+  //   flex: 1,
+  //   height: "100%",
+  //   width: "100%",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   alignContent: "center",
+  // },
+  // searchSection: {
+  //   flexDirection: "row",
+  //   justifyContent: "center",
+  //   alignItems: "flex-end",
+  //   backgroundColor: "#fff",
+  //   borderColor: "red",
+  //   borderWidth: 1,
+  //   width: "100%",
+  //   height: "25%",
+  // },
+  // input: {
+  //   width: "80%",
+  //   borderColor: "gray",
+  //   borderWidth: 1,
+  //   borderRadius: 5,
+  //   padding: 2,
+  // },
+
+  // searchIcon: {
+  //   padding: 10,
+  //   right: 30,
+  //   backgroundColor: "#ffffff",
+  //   opacity: 0.9,
+  // },
+  // galleryContainer: {
+  //   flex: 1,
+  //   width: "100%",
+  //   backgroundColor: "#F2EFEA",
+  //   flexWrap: "wrap",
+  //   flexDirection: "row",
+  //   justifyContent: "center",
+  // },
+  // photoContainer: {
+  //   alignItems: "center",
+  // },
+  // photo: {
+  //   margin: 10,
+  //   width: 150,
+  //   height: 150,
+  // },
 });
