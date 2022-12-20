@@ -25,7 +25,7 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
 
   // const BackAddress='https://ystra-backend.vercel.app';
-  const BackAddress = "http://192.168.10.158:3000";
+  const BackAddress = "http://192.168.10.166:3000";
   // ,{
   //   //   method: 'GET',
   //   //   headers: {
