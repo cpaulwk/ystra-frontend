@@ -25,7 +25,7 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
 
   // const BackAddress='https://ystra-backend.vercel.app';
-  const BackAddress = "http://192.168.10.158:3000";
+  const BackAddress = "http://192.168.1.17:3000";
   // ,{
   //   //   method: 'GET',
   //   //   headers: {
@@ -71,7 +71,7 @@ export default function Home({ navigation }) {
       body: JSON.stringify({
         token: user.token,
         imageId: itemId,
-        isLiked: false,
+        isLiked: isLiked,
       }),
     })
       .then((response) => response.json())
@@ -79,7 +79,7 @@ export default function Home({ navigation }) {
         if (data.result) {
           const x = resultQuery.map((x) => {
             if (x._id === itemId) {
-              x.isSelected = true;
+              x.isSelected = isLiked;
             }
             return x;
           });
@@ -127,29 +127,29 @@ export default function Home({ navigation }) {
 
   let resultQueryx = [
     {
-      url: "http://res.cloudinary.com/dlydp2bz3/image/upload/v1671319927/kggojbovj2mrohbyesmk.png",
-      _id: "639e5179eaf11f2680ab0753",
+      url: "https://res.cloudinary.com/dlydp2bz3/image/upload/v1671466378/jxrzkdyvjtuff8s3ddq3.png",
+      _id: "63a08d89d83e44674a0d7fe0",
       isSelected: false,
     },
     {
-      url: "http://res.cloudinary.com/dlydp2bz3/image/upload/v1671319927/umd0leqqguklz8yzt5vr.png",
-      _id: "639e5179eaf11f2680ab0754",
+      url: "https://res.cloudinary.com/dlydp2bz3/image/upload/v1671466378/vasoosiww88wr833usnk.png",
+      _id: "63a08d89d83e44674a0d7fe3",
       isSelected: false,
     },
     {
-      url: "http://res.cloudinary.com/dlydp2bz3/image/upload/v1671319927/kggojbovj2mrohbyesmk.png",
-      _id: "639e5179eaf11f2680ab0753",
+      url: "https://res.cloudinary.com/dlydp2bz3/image/upload/v1671466378/jxrzkdyvjtuff8s3ddq3.png",
+      _id: "63a08d89d83e44674a0d7fe0",
       isSelected: false,
     },
     {
-      url: "http://res.cloudinary.com/dlydp2bz3/image/upload/v1671319927/umd0leqqguklz8yzt5vr.png",
-      _id: "639e5179eaf11f2680ab0754",
+      url: "https://res.cloudinary.com/dlydp2bz3/image/upload/v1671466378/vasoosiww88wr833usnk.png",
+      _id: "63a08d89d83e44674a0d7fe3",
       isSelected: false,
     },
   ];
 
-  console.log("resultQuery", resultQuery);
-  const imageIA = resultQuery?.map((elem, index) => {
+  //console.log("resultQuery", resultQuery);
+  const imageIA = resultQuery.map((elem, index) => {
     return (
       <View style={tw`items-center w-[48%] h-[48%]`} key={index}>
         {/* <Image source={ require('../assets/homescreen-background.jpg') } style={styles.photo}></Image> */}
@@ -165,7 +165,7 @@ export default function Home({ navigation }) {
             >
               <FontAwesome
                 name="share-square-o"
-                size={20}
+                // size={20}
                 selectionColor="red"
               />
             </TouchableOpacity>
@@ -176,7 +176,7 @@ export default function Home({ navigation }) {
             >
               <FontAwesome
                 name="heart"
-                size={20}
+                // size={20}
                 color={elem.isSelected ? "red" : "black"}
               />
             </TouchableOpacity>
@@ -187,7 +187,7 @@ export default function Home({ navigation }) {
             >
               <FontAwesome
                 name="shopping-basket"
-                size={20}
+                // size={20}
                 selectionColor="red"
               />
             </TouchableOpacity>
@@ -218,7 +218,7 @@ export default function Home({ navigation }) {
             onPress={() => handleSearch()}
           >
             <FontAwesome
-              size="25"
+              // size="25"
               style={tw`absolute`}
               name="search"
               selectionColor="red"
@@ -235,7 +235,7 @@ export default function Home({ navigation }) {
       </View>
 
       <TouchableOpacity onPress={() => handleSearch()} style={tw`my-[5%]`}>
-        <FontAwesome size={40} name="refresh" />
+        {/* <FontAwesome size={40} name="refresh" /> */}
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );

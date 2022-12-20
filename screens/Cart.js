@@ -5,11 +5,11 @@ import React, { useState } from "react";
 
 export default function Basket({ navigation }) {
   const user = useSelector((state) => state.user.value);
-
+  console.log('Boucif --->', user.basket)
   const showCart = user.basket.map((element, index) => {
     return (
       <View style={tw`border flex-row items-center py-5`}>
-        <Image style={tw`h-25 w-25`} source={{ uri: user.newItem.url }} />
+        <Image style={tw`h-25 w-25`} source={{ uri: element.url }} />
         <View>
           <Text style={tw`text-4 font-bold opacity-70`}>Size :</Text>
           <Text style={tw`text-4  font-bold opacity-70`}>Frame :</Text>
