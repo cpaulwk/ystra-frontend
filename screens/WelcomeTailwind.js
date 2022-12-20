@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import tw from "twrnc";
 import ChevronLeftIcon from "react-native-bootstrap-icons/icons/chevron-left";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -146,28 +147,46 @@ export default function Welcome({ navigation }) {
             Keep your own art
           </Text>
           <View style={tw`flex items-center mt-4.5 w-[90%]`}>
-            <Text style={tw`text-4 w-full mt-5 font-bold`}>Username</Text>
-            <TextInput
-              placeholder="Username"
-              value={username}
-              onChangeText={(value) => setUsername(value)}
-              style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
-            />
-            <Text style={tw`text-4 w-full mt-5 mb-2 font-bold`}>Email</Text>
-            <TextInput
-              placeholder="Email"
-              value={email}
-              onChangeText={(value) => setEmail(value)}
-              style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
-            />
-            <Text style={tw`text-4 w-full mb-2 mt-5 font-bold`}>Password</Text>
-            <TextInput
-              secureTextEntry={true}
-              placeholder="Password"
-              value={password}
-              onChangeText={(value) => setPassword(value)}
-              style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
-            />
+            <View style={tw`flex-row items-center mt-5 mb-2`}>
+              <TextInput
+                placeholder="Username"
+                value={username}
+                onChangeText={(value) => setUsername(value)}
+                style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+              />
+              <View
+                style={tw`absolute border-r border-[#AFAFAF] flex justify-center items-center rounded-l-2.5 h-full aspect-square pl-1`}
+              >
+                <FontAwesome name="user" size={20} />
+              </View>
+            </View>
+            <View style={tw`flex-row items-center mt-5 mb-2`}>
+              <TextInput
+                placeholder="Email"
+                value={email}
+                onChangeText={(value) => setEmail(value)}
+                style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+              />
+              <View
+                style={tw`absolute border-r border-[#AFAFAF] flex justify-center items-center rounded-l-2.5 h-full aspect-square pl-1`}
+              >
+                <FontAwesome name="envelope-o" size={20} />
+              </View>
+            </View>
+            <View style={tw`flex-row items-center mt-5 mb-2`}>
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Password"
+                value={password}
+                onChangeText={(value) => setPassword(value)}
+                style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+              />
+              <View
+                style={tw`absolute border-r border-[#AFAFAF] flex justify-center items-center rounded-l-2.5 h-full aspect-square pl-1`}
+              >
+                <FontAwesome name="lock" size={20} />
+              </View>
+            </View>
             <View style={tw`flex-row items-center w-full h-7`}>
               {isBadUserInput && (
                 <Text style={tw`text-4 text-[#BA0000]`}>{errorMessage}</Text>
@@ -213,23 +232,33 @@ export default function Welcome({ navigation }) {
             Keep your own art
           </Text>
           <View style={tw`flex items-center mt-4.5 w-[90%]`}>
-            <Text style={tw`text-4 w-full mb-2 mt-5 font-bold`}>
-              Email or username
-            </Text>
-            <TextInput
-              placeholder="Username"
-              value={username}
-              onChangeText={(value) => setUsername(value)}
-              style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
-            />
-            <Text style={tw`text-4 w-full mb-2 mt-5 font-bold`}>Password</Text>
-            <TextInput
-              secureTextEntry={true}
-              placeholder="Password"
-              value={password}
-              onChangeText={(value) => setPassword(value)}
-              style={tw`border border-[#9ca3af] bg-white p-3 opacity-90 w-full rounded-2.5 text-4`}
-            />
+            <View style={tw`flex-row items-center mt-5 mb-2`}>
+              <TextInput
+                placeholder="Username"
+                value={username}
+                onChangeText={(value) => setUsername(value)}
+                style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+              />
+              <View
+                style={tw`absolute border-r border-[#AFAFAF] flex justify-center items-center rounded-l-2.5 h-full aspect-square pl-1`}
+              >
+                <FontAwesome name="user" size={20} />
+              </View>
+            </View>
+            <View style={tw`flex-row items-center mt-5 mb-2`}>
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Password"
+                value={password}
+                onChangeText={(value) => setPassword(value)}
+                style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+              />
+              <View
+                style={tw`absolute border-r border-[#AFAFAF] flex justify-center items-center rounded-l-2.5 h-full aspect-square pl-1`}
+              >
+                <FontAwesome name="lock" size={20} />
+              </View>
+            </View>
             <View style={tw`flex-row items-center w-full h-7`}>
               {isBadUserInput && (
                 <Text style={tw`text-4 text-[#BA0000]`}>{errorMessage}</Text>
@@ -302,10 +331,10 @@ export default function Welcome({ navigation }) {
     >
       {canReturn && (
         <TouchableOpacity
-          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%]`}
+          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%] opacity-50`}
           onPress={() => handleReturn()}
         >
-          <ChevronLeftIcon fill="black" />
+          <FontAwesome name="chevron-left" size={20} />
         </TouchableOpacity>
       )}
       <View style={tw`flex items-center h-full w-full`}>
