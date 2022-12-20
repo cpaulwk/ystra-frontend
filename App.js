@@ -25,9 +25,10 @@ import Cart from "./screens/Cart";
 
 //import Reducers
 import user from "./reducers/user";
+import product from  "./reducers/product";
 
 const store = configureStore({
-  reducer: { user },
+  reducer: { user,product },
 });
 
 //ajoutez la création de la navigation par Stack et par BottomTab
