@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {
   ImageBackground,
   KeyboardAvoidingView,
@@ -14,6 +14,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import tw from "twrnc";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem } from "../reducers/user";
+import {addProduct} from "../reducers/product"
 import Swiper from "react-native-swiper";
 
 // import { enableES5 } from "immer";
@@ -27,10 +28,23 @@ export default function Home({ navigation }) {
   const [isSearching, setIsSearching] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const user = useSelector((state) => state.user.value);
+  const products = useSelector((state) => state.product.products);
   const dispatch = useDispatch();
 
   // const BackAddress='https://ystra-backend.vercel.app';
-  const BackAddress = "http://192.168.10.166:3000";
+  const BackAddress = "http://192.168.10.176:3000";
+
+  useEffect(()=>{
+      fetch(`${BackAddress}/products/all/${user.token}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            dispatch(addProduct(data.Products));
+          }
+        });
+  },[])
+
+  //console.log(products)
   // ,{
   //   //   method: 'GET',
   //   //   headers: {

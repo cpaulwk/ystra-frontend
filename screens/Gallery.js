@@ -14,10 +14,10 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import tw from "twrnc";
-
+import { addItem } from "../reducers/user";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 
@@ -31,6 +31,7 @@ export default function Gallery({ navigation }) {
     visible: false,
     url: "",
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetch(`${BackAddress}/gallery/all/${user.token}`)
@@ -83,6 +84,24 @@ export default function Gallery({ navigation }) {
       });
   };
 
+  const handleBasket = (itemId, itemUrl) => {
+    const shopp = {
+      imageResult_id: itemId,
+      url: itemUrl,
+      price: 10,
+      product: {
+        size: null,
+        finish: null,
+        frame: null,
+      },
+      quantity: 1,
+    };
+    dispatch(addItem(shopp));
+    navigation.navigate("Basket");
+  };
+
+  
+
   let tempGallery = [];
   const gallery = galleryImages.reverse().forEach((element) => {
     //Images.imageResult
@@ -133,6 +152,7 @@ export default function Gallery({ navigation }) {
                   style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.5 pt-0.2`}
                 >
                   <FontAwesome
+                  onPress={() => handleBasket(item._id, item.url)}
                     name="shopping-basket"
                     size={20}
                     selectionColor="red"
