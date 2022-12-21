@@ -31,12 +31,12 @@ export default function Home({ navigation }) {
   const products = useSelector((state) => state.product.products);
   const dispatch = useDispatch();
 
-  // const BackAddress='https://ystra-backend.vercel.app';
+  const BackAddress1 = "https://ystra-backend.vercel.app";
   //const BackAddress = "http://192.168.1.47:19000";
-  const BackAddress = "http://192.168.1.47:3000";
+  const BackAddress = "http://192.168.10.173:3000";
 
   useEffect(() => {
-    fetch(`${BackAddress}/products/all/${user.token}`)
+    fetch(`${BackAddress1}/products/all/${user.token}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
@@ -71,8 +71,8 @@ export default function Home({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         console.log("Boucif", data);
-        setIsSearching(true);
-        setResultQuery(data.data);
+        setIsSearching(data.result ? true : false);
+        setResultQuery(data.data ? data.data : []);
       });
   };
 
@@ -247,6 +247,7 @@ export default function Home({ navigation }) {
             <Swiper
               style={tw``}
               showsButtons={false}
+              showsPagination={false}
               loop={true}
               autoplay={true}
               autoplayTimeout={2}>
