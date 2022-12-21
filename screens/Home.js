@@ -242,10 +242,9 @@ export default function Home({ navigation }) {
         </View>
       </View>
       <View style={tw`flex-1 items-center w-[90%] mt-[10%]`}>
-        {!isSearching && (
+        {!isLoading && (
           <View>
             <Swiper
-              style={tw``}
               showsButtons={false}
               showsPagination={false}
               loop={true}
