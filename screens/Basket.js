@@ -112,7 +112,8 @@ export default function Basket({ navigation }) {
     <View style={tw`flex-1 justify-between items-center w-full h-full`}>
       <TouchableOpacity
         style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%] opacity-50`}
-        onPress={() => handleReturn()}>
+        onPress={() => handleReturn()}
+      >
         <FontAwesome name="chevron-left" size={20} />
       </TouchableOpacity>
       <View style={tw`flex-1 justify-around items-center w-full pt-40`}>
@@ -120,7 +121,8 @@ export default function Basket({ navigation }) {
           {showImage}
           {/* >WOOD FRAME */}
           <View
-            style={selectedFrame == "wood" ? tw`absolute z-100` : tw`hidden`}>
+            style={selectedFrame == "wood" ? tw`absolute z-100` : tw`hidden`}
+          >
             <Image
               style={tw`h-73 w-73`}
               source={require("../assets/woodframe.png")}
@@ -129,7 +131,8 @@ export default function Basket({ navigation }) {
 
           {/* GOLD FRAME */}
           <View
-            style={selectedFrame == "gold" ? tw`absolute z-100` : tw`hidden`}>
+            style={selectedFrame == "gold" ? tw`absolute z-100` : tw`hidden`}
+          >
             <Image
               style={tw`h-73 w-73`}
               source={require("../assets/goldframe.png")}
@@ -140,7 +143,8 @@ export default function Basket({ navigation }) {
           <View
             style={
               selectedFinish == "gloss" ? tw`absolute opacity-20` : tw`hidden`
-            }>
+            }
+          >
             <Image
               style={tw`h-60 w-60`}
               source={require("../assets/glossfinish.png")}
@@ -151,7 +155,8 @@ export default function Basket({ navigation }) {
           <View
             style={
               selectedFinish == "matte" ? tw`absolute opacity-20` : tw`hidden`
-            }>
+            }
+          >
             <Image
               style={tw`h-60 w-60`}
               source={require("../assets/mattefinish.jpg")}
@@ -159,7 +164,8 @@ export default function Basket({ navigation }) {
           </View>
         </View>
         <View
-          style={tw`flex-row justify-center items-center border-[1.5px] border-[#161E44] bg-white rounded-1 h-11 w-[70%] mt-20`}>
+          style={tw`flex-row justify-center items-center border-[1.5px] border-[#161E44] bg-white rounded-1 h-11 w-[70%] mt-20`}
+        >
           <TouchableOpacity
             style={[
               tw`flex-1 justify-center items-center rounded-r`,
@@ -167,14 +173,16 @@ export default function Basket({ navigation }) {
                 ? tw`bg-[#161E44] w-full h-full border border-[#161E44]`
                 : tw`w-full h-full`,
             ]}
-            onPress={() => setSelecteOptdButton("size")}>
+            onPress={() => setSelecteOptdButton("size")}
+          >
             <Text
               style={[
                 tw`text-2xl font-medium`,
                 selectedOptButton === "size"
                   ? tw`text-[#FFFFFF]`
                   : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               Size
             </Text>
           </TouchableOpacity>
@@ -185,14 +193,16 @@ export default function Basket({ navigation }) {
                 ? tw`bg-[#161E44] w-full h-full border border-[#161E44]`
                 : tw`w-full h-full`,
             ]}
-            onPress={() => setSelecteOptdButton("frame")}>
+            onPress={() => setSelecteOptdButton("frame")}
+          >
             <Text
               style={[
                 tw`text-2xl font-medium`,
                 selectedOptButton === "frame"
                   ? tw`text-[#FFFFFF]`
                   : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               Frame
             </Text>
           </TouchableOpacity>
@@ -203,14 +213,16 @@ export default function Basket({ navigation }) {
                 ? tw`bg-[#161E44] w-full h-full border border-[#161E44]`
                 : tw`w-full h-full`,
             ]}
-            onPress={() => setSelecteOptdButton("finish")}>
+            onPress={() => setSelecteOptdButton("finish")}
+          >
             <Text
               style={[
                 tw`text-2xl font-medium`,
                 selectedOptButton === "finish"
                   ? tw`text-[#FFFFFF]`
                   : tw`text-[#161E44]`,
-              ]}>
+              ]}
+            >
               Finish
             </Text>
           </TouchableOpacity>
@@ -223,14 +235,16 @@ export default function Basket({ navigation }) {
                   tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 aspect-square border-[#161E44]`,
                   selectedSize === "S" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedSize("S")}>
+                onPress={() => setselectedSize("S")}
+              >
                 <Text
                   style={[
                     tw`font-black text-3xl`,
                     selectedSize === "S"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
-                  ]}>
+                  ]}
+                >
                   S
                 </Text>
               </TouchableOpacity>
@@ -239,14 +253,16 @@ export default function Basket({ navigation }) {
                   tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 aspect-square border-[#161E44]`,
                   selectedSize === "M" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedSize("M")}>
+                onPress={() => setselectedSize("M")}
+              >
                 <Text
                   style={[
                     tw`font-black text-3xl`,
                     selectedSize === "M"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
-                  ]}>
+                  ]}
+                >
                   M
                 </Text>
               </TouchableOpacity>
@@ -255,14 +271,16 @@ export default function Basket({ navigation }) {
                   tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 aspect-square border-[#161E44]`,
                   selectedSize === "L" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedSize("L")}>
+                onPress={() => setselectedSize("L")}
+              >
                 <Text
                   style={[
                     tw`font-black text-3xl`,
                     selectedSize === "L"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
-                  ]}>
+                  ]}
+                >
                   L
                 </Text>
               </TouchableOpacity>
@@ -275,14 +293,16 @@ export default function Basket({ navigation }) {
                   tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
                   selectedFrame === "none" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedFrame("none")}>
+                onPress={() => setselectedFrame("none")}
+              >
                 <Text
                   style={[
                     tw`font-black `,
                     selectedFrame === "none"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
-                  ]}>
+                  ]}
+                >
                   None
                 </Text>
               </TouchableOpacity>
@@ -291,14 +311,16 @@ export default function Basket({ navigation }) {
                   tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
                   selectedFrame === "wood" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedFrame("wood")}>
+                onPress={() => setselectedFrame("wood")}
+              >
                 <Text
                   style={[
                     tw`font-black`,
                     selectedFrame === "wood"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
-                  ]}>
+                  ]}
+                >
                   Wood
                 </Text>
               </TouchableOpacity>
@@ -307,14 +329,16 @@ export default function Basket({ navigation }) {
                   tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
                   selectedFrame === "gold" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedFrame("gold")}>
+                onPress={() => setselectedFrame("gold")}
+              >
                 <Text
                   style={[
                     tw`font-black`,
                     selectedFrame === "gold"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
-                  ]}>
+                  ]}
+                >
                   Gold
                 </Text>
               </TouchableOpacity>
@@ -327,14 +351,16 @@ export default function Basket({ navigation }) {
                   tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
                   selectedFinish === "none" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedFinish("none")}>
+                onPress={() => setselectedFinish("none")}
+              >
                 <Text
                   style={[
                     tw`font-black`,
                     selectedFinish === "none"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
-                  ]}>
+                  ]}
+                >
                   None
                 </Text>
               </TouchableOpacity>
@@ -345,14 +371,16 @@ export default function Basket({ navigation }) {
                     ? tw`bg-[#161E44]`
                     : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedFinish("gloss")}>
+                onPress={() => setselectedFinish("gloss")}
+              >
                 <Text
                   style={[
                     tw`font-black `,
                     selectedFinish === "gloss"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
-                  ]}>
+                  ]}
+                >
                   Gloss
                 </Text>
               </TouchableOpacity>
@@ -363,14 +391,16 @@ export default function Basket({ navigation }) {
                     ? tw`bg-[#161E44]`
                     : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedFinish("matte")}>
+                onPress={() => setselectedFinish("matte")}
+              >
                 <Text
                   style={[
                     tw`font-black`,
                     selectedFinish === "matte"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
-                  ]}>
+                  ]}
+                >
                   Matte
                 </Text>
               </TouchableOpacity>
@@ -378,7 +408,8 @@ export default function Basket({ navigation }) {
           )}
         </View>
         <View
-          style={tw`flex-row bg-[#F4F3EE] justify-between w-[80%] rounded-2 border border-[#AFAFAF] mb-10 p-5`}>
+          style={tw`flex-row bg-[#F4F3EE] justify-between w-[80%] rounded-2 border border-[#AFAFAF] mb-10 p-5`}
+        >
           <Text style={tw`text-6 font-medium`}>Total:</Text>
           <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
         </View>
@@ -387,8 +418,9 @@ export default function Basket({ navigation }) {
       <View style={tw`flex-row justify-center w-full mb-[20%]`}>
         <TouchableOpacity
           style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
-          onPress={() => handleBasket()}>
-          <Text style={tw`font-medium		 text-2xl text-[#FFFF]`}>Add to Cart</Text>
+          onPress={() => handleBasket()}
+        >
+          <Text style={tw`font-medium text-2xl text-[#FFFF]`}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
     </View>
