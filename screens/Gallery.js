@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import tw from "twrnc";
 import { addItem } from "../reducers/user";
@@ -100,8 +100,6 @@ export default function Gallery({ navigation }) {
     navigation.navigate("Basket");
   };
 
-  
-
   let tempGallery = [];
   const gallery = galleryImages.reverse().forEach((element) => {
     //Images.imageResult
@@ -115,8 +113,7 @@ export default function Gallery({ navigation }) {
                 onPress={() =>
                   setIsModalVisible({ visible: true, url: item.url })
                 }
-                style={styles.card}
-              >
+                style={styles.card}>
                 <Image
                   style={tw`rounded-2.5 border border-[#AFAFAF] flex-row justify-end h-full w-full`}
                   resizeMode="cover"
@@ -124,11 +121,9 @@ export default function Gallery({ navigation }) {
                 />
               </TouchableOpacity>
               <View
-                style={tw`absolute right-1 flex justify-around h-full mr-2 my-2`}
-              >
+                style={tw`absolute right-1 flex justify-around h-full mr-2 my-2`}>
                 <TouchableOpacity
-                  style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.8 pt-0.2`}
-                >
+                  style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.8 pt-0.2`}>
                   <FontAwesome
                     onPress={() => handleSharing(item.url)}
                     name="share-square-o"
@@ -138,8 +133,7 @@ export default function Gallery({ navigation }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.2 pt-0.2`}
-                >
+                  style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.2 pt-0.2`}>
                   <FontAwesome
                     onPress={() => handleSelected(item._id, !item.isChecked)}
                     style={tw`mb-0.5`}
@@ -149,10 +143,9 @@ export default function Gallery({ navigation }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.5 pt-0.2`}
-                >
+                  style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.5 pt-0.2`}>
                   <FontAwesome
-                  onPress={() => handleBasket(item._id, item.url)}
+                    onPress={() => handleBasket(item._id, item.url)}
                     name="shopping-basket"
                     size={20}
                     selectionColor="red"
@@ -172,12 +165,10 @@ export default function Gallery({ navigation }) {
         style={tw`bg-black w-full h-full`}
         visible={isModalVisible.visible}
         animationType="fade"
-        transparent
-      >
+        transparent>
         <TouchableOpacity
           style={tw`flex-1 w-full justify-center items-center`}
-          onPress={() => setIsModalVisible({ visible: false, url: "" })}
-        >
+          onPress={() => setIsModalVisible({ visible: false, url: "" })}>
           <View style={tw`bg-black h-full w-full opacity-95`}></View>
           <Image
             style={tw`absolute w-[90%] aspect-square`}
@@ -211,7 +202,7 @@ const styles = StyleSheet.create({
   card: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "end",
+    justifyContent: "flex-end",
     alignItems: "center",
     height: "100%",
     width: "100%",
