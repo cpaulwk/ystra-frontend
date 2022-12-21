@@ -233,7 +233,7 @@ export default function Home({ navigation }) {
             style={tw`flex justify-center items-center absolute h-10 w-10`}
             onPress={() => handleSearch()}>
             <FontAwesome
-              size="25"
+              size={25}
               style={tw`absolute`}
               name="search"
               selectionColor="#BA0000"

@@ -36,7 +36,7 @@ export default function Basket({ navigation }) {
     );
   });
   return (
-    <View style={tw`bg-[#F2EFEA] w-full h-full `}>
+    <View style={tw`flex-1 bg-[#F2EFEA]`}>
       <View style={tw`flex justify-center items-center `}>
         <View style={tw`flex items-center mt-[35%]`}>
           <Text style={tw`text-12 mb-[10%] font-bold opacity-70`}>
@@ -49,7 +49,7 @@ export default function Basket({ navigation }) {
           </View>
         </ScrollView>
 
-        <View style={tw`absolute mt-148 justify-center flex-row w-full pt-16`}>
+        <View style={tw`absolute justify-center flex-row w-full`}>
           <TouchableOpacity
             style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%] mt-200 border-[#161E44]`}
             onPress={() => navigation.navigate("Adress")}>
