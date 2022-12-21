@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   ImageBackground,
   KeyboardAvoidingView,
@@ -14,7 +14,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import tw from "twrnc";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem } from "../reducers/user";
-import {addProduct} from "../reducers/product"
+import { addProduct } from "../reducers/product";
 import Swiper from "react-native-swiper";
 
 // import { enableES5 } from "immer";
@@ -32,17 +32,18 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
 
   // const BackAddress='https://ystra-backend.vercel.app';
-  const BackAddress = "http://192.168.10.176:3000";
+  //const BackAddress = "http://192.168.1.47:19000";
+  const BackAddress = "http://192.168.1.47:3000";
 
-  useEffect(()=>{
-      fetch(`${BackAddress}/products/all/${user.token}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.result) {
-            dispatch(addProduct(data.Products));
-          }
-        });
-  },[])
+  useEffect(() => {
+    fetch(`${BackAddress}/products/all/${user.token}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          dispatch(addProduct(data.Products));
+        }
+      });
+  }, []);
 
   //console.log(products)
   // ,{
@@ -176,13 +177,11 @@ export default function Home({ navigation }) {
         <ImageBackground
           style={tw`flex-row justify-end h-full w-full`}
           resizeMode="cover"
-          source={{ uri: elem.url }}
-        >
+          source={{ uri: elem.url }}>
           <View style={tw`flex justify-between mr-2 my-2`}>
             <TouchableOpacity
               onPress={() => handleSharing(elem.url)}
-              style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.8 pt-0.2`}
-            >
+              style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.8 pt-0.2`}>
               <FontAwesome
                 name="share-square-o"
                 size={20}
@@ -192,8 +191,7 @@ export default function Home({ navigation }) {
 
             <TouchableOpacity
               onPress={() => handleSelected(elem._id, !elem.isSelected)}
-              style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.2 pt-0.2`}
-            >
+              style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.2 pt-0.2`}>
               <FontAwesome
                 name="heart"
                 size={20}
@@ -203,8 +201,7 @@ export default function Home({ navigation }) {
 
             <TouchableOpacity
               onPress={() => handleBasket(elem._id, elem.url)}
-              style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.5 pt-0.2`}
-            >
+              style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.5 pt-0.2`}>
               <FontAwesome
                 name="shopping-basket"
                 size={20}
@@ -222,8 +219,7 @@ export default function Home({ navigation }) {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={tw`bg-[#F2EFEA] flex-1 items-center justify-center h-[100%] w-[100%]`}
-    >
+      style={tw`bg-[#F2EFEA] flex-1 items-center justify-center h-[100%] w-[100%]`}>
       <View style={styles.header}>
         <View style={tw`flex-row items-center justify-end w-[90%]`}>
           <TextInput
@@ -235,8 +231,7 @@ export default function Home({ navigation }) {
           />
           <TouchableOpacity
             style={tw`flex justify-center items-center absolute h-10 w-10`}
-            onPress={() => handleSearch()}
-          >
+            onPress={() => handleSearch()}>
             <FontAwesome
               size="25"
               style={tw`absolute`}
@@ -254,11 +249,9 @@ export default function Home({ navigation }) {
               showsButtons={false}
               loop={true}
               autoplay={true}
-              autoplayTimeout={2}
-            >
+              autoplayTimeout={2}>
               <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}>
                 <Image
                   style={tw`h-70 w-70 border-8`}
                   source={require("../assets/SlideShowImage1.png")}
@@ -268,8 +261,7 @@ export default function Home({ navigation }) {
                 </Text>
               </View>
               <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}>
                 <Image
                   style={tw`h-70 w-70 border-8`}
                   source={require("../assets/SlideShowImage2.jpeg")}
@@ -280,8 +272,7 @@ export default function Home({ navigation }) {
                 </Text>
               </View>
               <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}>
                 <Image
                   style={tw`h-70 w-70 border-8`}
                   source={require("../assets/SlideShowImage3.webp")}
@@ -292,8 +283,7 @@ export default function Home({ navigation }) {
                 </Text>
               </View>
               <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}>
                 <Image
                   style={tw`h-70 w-70 border-8`}
                   source={require("../assets/SlideShowImage4.webp")}
@@ -303,8 +293,7 @@ export default function Home({ navigation }) {
                 </Text>
               </View>
               <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}>
                 <Image
                   style={tw`h-70 w-70 border-8`}
                   source={require("../assets/SlideShowImage5.webp")}
@@ -314,8 +303,7 @@ export default function Home({ navigation }) {
                 </Text>
               </View>
               <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}>
                 <Image
                   style={tw`h-70 w-70 border-8`}
                   source={require("../assets/SlideShowImage6.webp")}
@@ -326,8 +314,7 @@ export default function Home({ navigation }) {
                 </Text>
               </View>
               <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}>
                 <Image
                   style={tw`h-70 w-70 border-8`}
                   source={require("../assets/SlideShowImage7.jpeg")}
@@ -337,8 +324,7 @@ export default function Home({ navigation }) {
                 </Text>
               </View>
               <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}>
                 <Image
                   style={tw`h-70 w-70 border-8`}
                   source={require("../assets/SlideShowImage8.jpeg")}
@@ -348,8 +334,7 @@ export default function Home({ navigation }) {
                 </Text>
               </View>
               <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
+                style={tw` px-1 border-red-600 flex items-center h-full w-full`}>
                 <Image
                   style={tw`h-70 w-70 border-8`}
                   source={require("../assets/SlideShowImage9.jpeg")}
@@ -362,8 +347,7 @@ export default function Home({ navigation }) {
           </View>
         )}
         <View
-          style={tw`flex-row flex-wrap justify-around content-around w-full aspect-square`}
-        >
+          style={tw`flex-row flex-wrap justify-around content-around w-full aspect-square`}>
           {imageIA}
         </View>
       </View>
