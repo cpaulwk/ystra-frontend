@@ -36,7 +36,7 @@ export default function Adress({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("toto", user.basket);
+        console.log("toto", data);
       });
   };
   return (
@@ -44,7 +44,8 @@ export default function Adress({ navigation }) {
       {/* Text and Fields */}
       <View style={tw`flex items-center w-full px-[1%]`}>
         <Text
-          style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}>
+          style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}
+        >
           Keep your own art
         </Text>
         <View style={tw`flex items-center mt-4.5 w-[90%]`}>
@@ -119,7 +120,8 @@ export default function Adress({ navigation }) {
       <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
         <TouchableOpacity
           style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
-          onPress={() => handleOrder()}>
+          onPress={() => handleOrder()}
+        >
           <Text style={tw`text-4 text-white font-semibold`}>
             Confirm Adress
           </Text>
