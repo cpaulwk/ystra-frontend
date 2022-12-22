@@ -1,21 +1,24 @@
-import { useState, useEffect } from "react";
 import {
-  ImageBackground,
-  KeyboardAvoidingView,
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
+  ActivityIndicator,
   Image,
+  ImageBackground,
+  Keyboard,
+  KeyboardAvoidingView,
   Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Swiper from "react-native-swiper";
 import tw from "twrnc";
-import { useSelector, useDispatch } from "react-redux";
 import { addItem } from "../reducers/user";
 import { addProduct } from "../reducers/product";
-import Swiper from "react-native-swiper";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 
 // import { enableES5 } from "immer";
 
@@ -25,20 +28,18 @@ import * as Sharing from "expo-sharing";
 export default function Home({ navigation }) {
   const [textQuery, setTextQuery] = useState("");
   const [resultQuery, setResultQuery] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const user = useSelector((state) => state.user.value);
   const products = useSelector((state) => state.product.products);
   const dispatch = useDispatch();
 
-  const BackAddress1 = "https://ystra-backend.vercel.app";
-  //const BackAddress = "http://192.168.1.47:19000";
+  const BackAddress = "https://ystra-backend.vercel.app";
   // const BackAddress = "http://192.168.10.173:3000";
-  // const BackAddress = "http://192.168.1.14:3000";
-  const BackAddress = "http://192.168.10.156:3000";
 
   useEffect(() => {
-    fetch(`${BackAddress1}/products/all/${user.token}`)
+    fetch(`${BackAddress}/products/all/${user.token}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
@@ -56,6 +57,8 @@ export default function Home({ navigation }) {
   //   //   body:JSON.stringify({token:user.token,queryKey:textQuery}),
   //   //   }
   const handleSearch = () => {
+    setIsLoading(true);
+    setIsSearching(true);
     if (!user.token || !textQuery) {
       return;
     }
@@ -75,6 +78,7 @@ export default function Home({ navigation }) {
         console.log("Boucif", data);
         setIsSearching(data.result ? true : false);
         setResultQuery(data.data ? data.data : []);
+        setIsLoading(false);
       });
   };
 
@@ -223,154 +227,164 @@ export default function Home({ navigation }) {
   //   navigation.navigate('TabNavigator');
   // }
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={tw`bg-[#F2EFEA] flex-1 items-center justify-center h-[100%] w-[100%]`}
-    >
-      <View style={styles.header}>
-        <View style={tw`flex-row items-center justify-end w-[90%]`}>
-          <TextInput
-            style={tw`border h-11 px-1 border-[#AFAFAF] rounded-1 bg-white w-full `}
-            placeholder="Enter any words here..."
-            autoCapitalize="none" // https://reactnative.dev/docs/textinput#autocapitalize
-            value={textQuery}
-            onChangeText={(value) => setTextQuery(value)}
-          />
-          <TouchableOpacity
-            style={tw`flex justify-center items-center absolute h-10 w-10`}
-            onPress={() => handleSearch()}
-          >
-            <FontAwesome
-              size={25}
-              style={tw`absolute`}
-              name="search"
-              selectionColor="#BA0000"
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={tw`bg-[#F2EFEA] flex-1 items-center justify-center h-[100%] w-[100%]`}
+      >
+        <View style={styles.header}>
+          <View style={tw`flex-row items-center justify-end w-[90%]`}>
+            <TextInput
+              style={tw`border h-11 px-1 border-[#AFAFAF] rounded-1 bg-white w-full `}
+              placeholder="Enter any words here..."
+              autoCapitalize="none" // https://reactnative.dev/docs/textinput#autocapitalize
+              value={textQuery}
+              onChangeText={(value) => setTextQuery(value)}
             />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={tw`flex-1 items-center w-[90%] mt-[10%]`}>
-        {!isSearching && (
-          <View>
-            <Swiper
-              showsButtons={false}
-              showsPagination={false}
-              loop={true}
-              autoplay={true}
-              autoplayTimeout={2}
+            <TouchableOpacity
+              style={tw`flex justify-center items-center absolute h-10 w-10`}
+              onPress={() => handleSearch()}
             >
-              <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
-                <Image
-                  style={tw`h-70 w-70 border-8`}
-                  source={require("../assets/SlideShowImage1.png")}
-                />
-                <Text style={tw` text-2xl	font-semibold text-justify	w-65	`}>
-                  “City of paris with the style of Yoshitaka Amano"
-                </Text>
-              </View>
-              <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
-                <Image
-                  style={tw`h-70 w-70 border-8`}
-                  source={require("../assets/SlideShowImage2.jpeg")}
-                />
-                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
-                  “a bowl of soup that is a portal to another dimension as
-                  digital art
-                </Text>
-              </View>
-              <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
-                <Image
-                  style={tw`h-70 w-70 border-8`}
-                  source={require("../assets/SlideShowImage3.webp")}
-                />
-                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
-                  “A futuristic cyborg poster hanging in a neon lit subway
-                  station"
-                </Text>
-              </View>
-              <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
-                <Image
-                  style={tw`h-70 w-70 border-8`}
-                  source={require("../assets/SlideShowImage4.webp")}
-                />
-                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
-                  “A hand-drawn sailboat circled by birds on the sea at sunrise"
-                </Text>
-              </View>
-              <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
-                <Image
-                  style={tw`h-70 w-70 border-8`}
-                  source={require("../assets/SlideShowImage5.webp")}
-                />
-                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
-                  “A photo of an astronaut riding a horse"
-                </Text>
-              </View>
-              <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
-                <Image
-                  style={tw`h-70 w-70 border-8`}
-                  source={require("../assets/SlideShowImage6.webp")}
-                />
-                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
-                  “A synthwave style sunset above the reflecting water of the
-                  sea, digital art"
-                </Text>
-              </View>
-              <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
-                <Image
-                  style={tw`h-70 w-70 border-8`}
-                  source={require("../assets/SlideShowImage7.jpeg")}
-                />
-                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
-                  “An astronaut riding a horse in a photorealistic"
-                </Text>
-              </View>
-              <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
-                <Image
-                  style={tw`h-70 w-70 border-8`}
-                  source={require("../assets/SlideShowImage8.jpeg")}
-                />
-                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
-                  “Banksy meets DALL-E"
-                </Text>
-              </View>
-              <View
-                style={tw` px-1 border-red-600 flex items-center h-full w-full`}
-              >
-                <Image
-                  style={tw`h-70 w-70 border-8`}
-                  source={require("../assets/SlideShowImage9.jpeg")}
-                />
-                <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
-                  “White surfaces design explorations"
-                </Text>
-              </View>
-            </Swiper>
+              <FontAwesome
+                size={25}
+                style={tw`absolute`}
+                name="search"
+                selectionColor="#BA0000"
+              />
+            </TouchableOpacity>
           </View>
-        )}
-        <View
-          style={tw`flex-row flex-wrap justify-around content-around w-full aspect-square`}
-        >
-          {imageIA}
         </View>
-      </View>
-    </KeyboardAvoidingView>
+        <View style={tw`flex-1 items-center w-[90%] mt-[10%]`}>
+          {isLoading && (
+            <View style={tw`flex-1 justify-center items-center`}>
+              <ActivityIndicator size="large" />
+            </View>
+          )}
+          {!isSearching && (
+            <View>
+              <Swiper
+                showsButtons={false}
+                showsPagination={false}
+                loop={true}
+                autoplay={true}
+                autoplayTimeout={2}
+              >
+                <View
+                  style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+                >
+                  <Image
+                    style={tw`h-70 w-70 border-8`}
+                    source={require("../assets/SlideShowImage1.png")}
+                  />
+                  <Text style={tw` text-2xl	font-semibold text-justify	w-65	`}>
+                    “City of paris with the style of Yoshitaka Amano"
+                  </Text>
+                </View>
+                <View
+                  style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+                >
+                  <Image
+                    style={tw`h-70 w-70 border-8`}
+                    source={require("../assets/SlideShowImage2.jpeg")}
+                  />
+                  <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                    “a bowl of soup that is a portal to another dimension as
+                    digital art
+                  </Text>
+                </View>
+                <View
+                  style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+                >
+                  <Image
+                    style={tw`h-70 w-70 border-8`}
+                    source={require("../assets/SlideShowImage3.webp")}
+                  />
+                  <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                    “A futuristic cyborg poster hanging in a neon lit subway
+                    station"
+                  </Text>
+                </View>
+                <View
+                  style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+                >
+                  <Image
+                    style={tw`h-70 w-70 border-8`}
+                    source={require("../assets/SlideShowImage4.webp")}
+                  />
+                  <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                    “A hand-drawn sailboat circled by birds on the sea at
+                    sunrise"
+                  </Text>
+                </View>
+                <View
+                  style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+                >
+                  <Image
+                    style={tw`h-70 w-70 border-8`}
+                    source={require("../assets/SlideShowImage5.webp")}
+                  />
+                  <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                    “A photo of an astronaut riding a horse"
+                  </Text>
+                </View>
+                <View
+                  style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+                >
+                  <Image
+                    style={tw`h-70 w-70 border-8`}
+                    source={require("../assets/SlideShowImage6.webp")}
+                  />
+                  <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                    “A synthwave style sunset above the reflecting water of the
+                    sea, digital art"
+                  </Text>
+                </View>
+                <View
+                  style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+                >
+                  <Image
+                    style={tw`h-70 w-70 border-8`}
+                    source={require("../assets/SlideShowImage7.jpeg")}
+                  />
+                  <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                    “An astronaut riding a horse in a photorealistic"
+                  </Text>
+                </View>
+                <View
+                  style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+                >
+                  <Image
+                    style={tw`h-70 w-70 border-8`}
+                    source={require("../assets/SlideShowImage8.jpeg")}
+                  />
+                  <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                    “Banksy meets DALL-E"
+                  </Text>
+                </View>
+                <View
+                  style={tw` px-1 border-red-600 flex items-center h-full w-full`}
+                >
+                  <Image
+                    style={tw`h-70 w-70 border-8`}
+                    source={require("../assets/SlideShowImage9.jpeg")}
+                  />
+                  <Text style={tw`text-2xl	font-semibold text-justify	w-65	`}>
+                    “White surfaces design explorations"
+                  </Text>
+                </View>
+              </Swiper>
+            </View>
+          )}
+          {!isLoading && (
+            <View
+              style={tw`flex-row flex-wrap justify-around content-around w-full aspect-square`}
+            >
+              {imageIA}
+            </View>
+          )}
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 

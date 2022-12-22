@@ -91,7 +91,7 @@ export default function Basket({ navigation }) {
     additem.price = total;
     dispatch(addBasketItem(additem));
 
-    navigation.navigate("Adress");
+    navigation.navigate("TabNavigator", { screen: "Cart" });
     // navigation.navigate("OrderConfirmation");
   };
 
@@ -121,14 +121,14 @@ export default function Basket({ navigation }) {
           {showImage}
           {/* DARK FRAME */}
           <View
-            style={selectedFrame == "wood" ? tw`absolute z-100` : tw`hidden`}
+            style={selectedFrame == "dark" ? tw`absolute z-100` : tw`hidden`}
           >
             <View style={tw`h-78 w-78 border-[2]`}></View>
           </View>
 
           {/* LIGHT FRAME */}
           <View
-            style={selectedFrame == "gold" ? tw`absolute z-100` : tw`hidden`}
+            style={selectedFrame == "light" ? tw`absolute z-100` : tw`hidden`}
           >
             <View style={tw`h-78 w-78 border-[2] border-[#f9e8d5]`}></View>
           </View>
@@ -303,14 +303,14 @@ export default function Basket({ navigation }) {
               <TouchableOpacity
                 style={[
                   tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
-                  selectedFrame === "wood" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
+                  selectedFrame === "dark" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedFrame("wood")}
+                onPress={() => setselectedFrame("dark")}
               >
                 <Text
                   style={[
                     tw`font-black`,
-                    selectedFrame === "wood"
+                    selectedFrame === "dark"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
                   ]}
@@ -321,14 +321,14 @@ export default function Basket({ navigation }) {
               <TouchableOpacity
                 style={[
                   tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
-                  selectedFrame === "gold" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
+                  selectedFrame === "light" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
                 ]}
-                onPress={() => setselectedFrame("gold")}
+                onPress={() => setselectedFrame("light")}
               >
                 <Text
                   style={[
                     tw`font-black`,
-                    selectedFrame === "gold"
+                    selectedFrame === "light"
                       ? tw`text-[#FFFF]`
                       : tw`text-[#161E44]`,
                   ]}

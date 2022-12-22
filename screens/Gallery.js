@@ -24,7 +24,6 @@ import * as Sharing from "expo-sharing";
 export default function Gallery({ navigation }) {
   const user = useSelector((state) => state.user.value);
   const isFocused = useIsFocused();
-  const BackAddress = "https://ystra-backend.vercel.app";
   const [galleryImages, setGalleryImages] = useState([]);
   const [isFavoriteView, setIsFavoriteView] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState({
@@ -32,6 +31,8 @@ export default function Gallery({ navigation }) {
     url: "",
   });
   const dispatch = useDispatch();
+
+  const BackAddress = "https://ystra-backend.vercel.app";
 
   useEffect(() => {
     fetch(`${BackAddress}/gallery/all/${user.token}`)
