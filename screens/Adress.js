@@ -2,26 +2,32 @@ import {
   View,
   Text,
   TouchableOpacity,
+  StyleSheet,
+  Switch,
   ScrollView,
   TextInput,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import React, { useState } from "react";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function Adress({ navigation }) {
+  const [canReturn, setCanReturn] = useState(false);
+  const handleReturn = () => {
+    setCanReturn(false);
+    navigation.navigate("Cart");
+  };
   const user = useSelector((state) => state.user.value);
-  const [adressInput, setsAdressInput] = useState({
-    firstName: "",
-    lastName: "",
-    streetName: "",
-    streetName2: "",
-    city: "",
-    zipCode: "",
-    state: "",
-    country: "",
-    offer: false,
-  });
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [streetName, setStreetName] = useState("");
+  const [streetName2, setStreetName2] = useState("");
+  const [city, setCity] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
+
   const handleOrder = () => {
     if (!user.token) {
       return;
@@ -36,75 +42,102 @@ export default function Adress({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("toto", data);
+        console.log("toto", user.basket);
       });
+    navigation.navigate("CreditCards");
   };
   return (
-    <View style={tw`flex-1 justify-between items-center w-full h-full`}>
-      {/* Text and Fields */}
-      <View style={tw`flex items-center w-full px-[1%]`}>
-        <Text
-          style={tw`flex flex-row items-center text-10 font-bold opacity-70 mt-7.5`}
+    <View
+      style={tw`flex-1 justify-between items-center w-full h-full bg-[#F2EFEA] 	`}
+    >
+      <View style={styles.switch}>
+        <View style={tw`flex-row justify-center items-center w-full`}>
+          <Text
+            style={tw`flex flex-row items-center text-6 font-bold opacity-70 mt-0 top-[-30%]`}
+          >
+            Shipping Address
+          </Text>
+        </View>
+      </View>
+      <View style={tw`flex items-center w-full px-[1%] bg-[#F2EFEA]	`}>
+        <TouchableOpacity
+          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[-27%] opacity-50`}
+          onPress={() => handleReturn()}
         >
-          Keep your own art
-        </Text>
-        <View style={tw`flex items-center mt-4.5 w-[90%]`}>
-          <View style={tw`flex-row items-center mt-5 mb-2`}>
-            <TextInput
-              placeholder="firstName"
-              value={adressInput.firstName}
-              style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
-            />
-          </View>
-          <View style={tw`flex-row items-center mt-5 mb-2`}>
-            <TextInput
-              placeholder="lastName"
-              value={adressInput.lastName}
-              style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
-            />
-          </View>
-          <View style={tw`flex-row items-center mt-5 mb-2`}>
-            <TextInput
-              placeholder="streetName"
-              value={adressInput.streetName}
-              style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
-            />
-          </View>
-          <View style={tw`flex-row items-center mt-5 mb-2`}>
-            <TextInput
-              placeholder="streetName2"
-              value={adressInput.streetName2}
-              style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
-            />
-          </View>
-          <View style={tw`flex-row w-100`}>
-            <View style={tw`flex-row items-center mt-5 mb-2 w-40`}>
+          <FontAwesome name="chevron-left" size={20} />
+        </TouchableOpacity>
+        <View style={tw`flex items-center mt-4.5 w-[87%]`}>
+          <View
+            style={tw`flex-row justify-between w-80 content-center	items-center	`}
+          >
+            <View style={tw`flex-row items-center mt-5 mb-2 w-[45%] `}>
               <TextInput
-                placeholder="city"
-                value={adressInput.city}
+                placeholder="Firstname  "
+                value={firstName}
                 style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+                onChangeText={(value) => setFirstName(value)}
               />
             </View>
-            <View style={tw`flex-row items-center mt-5 mb-2 w-40`}>
+            <View style={tw`flex-row items-center mt-5 mb-2 w-[45%]  `}>
               <TextInput
-                placeholder="zipCode"
-                value={adressInput.zipCode}
-                style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+                placeholder="Lastname"
+                value={lastName}
+                style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4 `}
+                onChangeText={(value) => setLastName(value)}
               />
             </View>
           </View>
+
+          <View style={tw`flex-row items-center mt-5 mb-2  `}>
+            <TextInput
+              placeholder="Street name"
+              value={streetName}
+              style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+              onChangeText={(value) => setStreetName(value)}
+            />
+          </View>
+          <View style={tw`flex-row items-center mt-5 mb-2 `}>
+            <TextInput
+              placeholder="Additional address information"
+              value={streetName2}
+              style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+              onChangeText={(value) => setStreetName2(value)}
+            />
+          </View>
+          <View
+            style={tw`flex-row justify-between w-80 content-center	items-center	`}
+          >
+            <View style={tw`flex-row items-center mt-5 mb-2 w-[45%] `}>
+              <TextInput
+                placeholder="City"
+                value={city}
+                style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5  text-4`}
+                onChangeText={(value) => setCity(value)}
+              />
+            </View>
+            <View style={tw`flex-row items-center mt-5 mb-2 w-[45%] `}>
+              <TextInput
+                placeholder="Zip code"
+                value={zipCode}
+                style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+                onChangeText={(value) => setZipCode(value)}
+              />
+            </View>
+          </View>
           <View style={tw`flex-row items-center mt-5 mb-2`}>
             <TextInput
-              placeholder="state"
-              value={adressInput.state}
+              placeholder="State"
+              value={state}
               style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+              onChangeText={(value) => setState(value)}
             />
           </View>
           <View style={tw`flex-row items-center mt-5 mb-2`}>
             <TextInput
-              placeholder="country"
-              value={adressInput.country}
+              placeholder="Country"
+              value={country}
               style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+              onChangeText={(value) => setCountry(value)}
             />
           </View>
 
@@ -117,16 +150,55 @@ export default function Adress({ navigation }) {
       </View>
 
       {/* Buttons */}
-      <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
+      <View style={tw`flex items-center mb-[10%] w-full px-[1%] 	`}>
         <TouchableOpacity
-          style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
+          style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15 bg-[#2C6DB4]`}
           onPress={() => handleOrder()}
         >
-          <Text style={tw`text-4 text-white font-semibold`}>
-            Confirm Adress
+          <Text style={tw`text-4 text-white font-semibold  `}>
+            Confirm Address
           </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 5.3,
+
+    elevation: 18,
+  },
+  switch: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "#F2EFEA",
+    paddingBottom: 20,
+    height: "15%",
+    width: "100%",
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 5.3,
+
+    elevation: 18,
+  },
+});

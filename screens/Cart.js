@@ -87,7 +87,7 @@ export default function Basket({ navigation }) {
             style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-full border-[#161E44]`}
             onPress={() => navigation.navigate("Adress")}
           >
-            <Text style={tw`font-medium	 text-2xl text-[#FFFF]`}>Pay</Text>
+            <Text style={tw`font-medium	text-2xl text-[#FFFF]`}>Pay</Text>
           </TouchableOpacity>
         </View>
       </View>
