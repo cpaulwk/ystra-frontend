@@ -30,20 +30,30 @@ export const orderSlice = createSlice({
   reducers: {
     addBasket: (state, action) => {
       state.value.basket = action.payload;
+      console.log(state.value.basket);
     },
     addAdress: (state, action) => {
       state.value.addressDelivery = action.payload;
       state.value.addressBilling = action.payload;
     },
     addToken: (state, action) => {
-      state.value.token = action.payload.token;
+      state.value.token = action.payload;
+      console.log("token", state.value.token);
     },
     addpayment: (state, action) => {
       state.value.paymentType = action.payload;
     },
+    removeOrder: (state, action) => {
+      state.value.user = null;
+      state.value.token = null;
+      state.value.basket = [];
+      state.value.addressBilling = null;
+      state.value.addressDelivery = null;
+      state.value.paymentType = null;
+    },
   },
 });
 
-export const { login, logout, addItem, addBasketItem, removeBasketItem } =
+export const { addBasket, addAdress, addToken, addpayment, removeOrder } =
   orderSlice.actions;
 export default orderSlice.reducer;

@@ -8,17 +8,6 @@ const initialState = {
     newItem: {},
   },
 };
-// {
-// imageResult_id: { type: mongoose.Schema.Types.ObjectId, ref:'imageresults'},
-// url: string,
-// price: Number,
-// product: {
-//             size: itemSchema,
-//             finish: itemSchema,
-//             frame :itemSchema,
-//         },
-// quantity: Number,
-// }
 
 export const userSlice = createSlice({
   name: "user",
@@ -44,9 +33,18 @@ export const userSlice = createSlice({
         (elem) => elem !== action.payload
       );
     },
+    cleanBasket: (state, action) => {
+      state.value.basket = [];
+    },
   },
 });
 
-export const { login, logout, addItem, addBasketItem, removeBasketItem } =
-  userSlice.actions;
+export const {
+  login,
+  logout,
+  addItem,
+  addBasketItem,
+  removeBasketItem,
+  cleanBasket,
+} = userSlice.actions;
 export default userSlice.reducer;
