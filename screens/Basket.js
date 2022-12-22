@@ -103,7 +103,7 @@ export default function Basket({ navigation }) {
   if (user.newItem) {
     showImage = (
       <View>
-        <Image style={tw`h-60 w-60`} source={{ uri: user.newItem.url }} />
+        <Image style={tw`h-75 w-75`} source={{ uri: user.newItem.url }} />
       </View>
     );
   }
@@ -119,24 +119,18 @@ export default function Basket({ navigation }) {
       <View style={tw`flex-1 justify-around items-center w-full pt-40`}>
         <View style={tw`flex justify-center items-center rounded-1 w-full`}>
           {showImage}
-          {/* >WOOD FRAME */}
+          {/* DARK FRAME */}
           <View
             style={selectedFrame == "wood" ? tw`absolute z-100` : tw`hidden`}
           >
-            <Image
-              style={tw`h-73 w-73`}
-              source={require("../assets/woodframe.png")}
-            />
+            <View style={tw`h-78 w-78 border-[2]`}></View>
           </View>
 
-          {/* GOLD FRAME */}
+          {/* LIGHT FRAME */}
           <View
             style={selectedFrame == "gold" ? tw`absolute z-100` : tw`hidden`}
           >
-            <Image
-              style={tw`h-73 w-73`}
-              source={require("../assets/goldframe.png")}
-            />
+            <View style={tw`h-78 w-78 border-[2] border-[#f9e8d5]`}></View>
           </View>
 
           {/* >GLOSSY EFFECT */}
@@ -146,7 +140,7 @@ export default function Basket({ navigation }) {
             }
           >
             <Image
-              style={tw`h-60 w-60`}
+              style={tw`h-78 w-78`}
               source={require("../assets/glossfinish.png")}
             />
           </View>
@@ -158,7 +152,7 @@ export default function Basket({ navigation }) {
             }
           >
             <Image
-              style={tw`h-60 w-60`}
+              style={tw`h-78 w-78`}
               source={require("../assets/mattefinish.jpg")}
             />
           </View>
@@ -321,7 +315,7 @@ export default function Basket({ navigation }) {
                       : tw`text-[#161E44]`,
                   ]}
                 >
-                  Wood
+                  Dark
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -339,7 +333,7 @@ export default function Basket({ navigation }) {
                       : tw`text-[#161E44]`,
                   ]}
                 >
-                  Gold
+                  Light
                 </Text>
               </TouchableOpacity>
             </View>
