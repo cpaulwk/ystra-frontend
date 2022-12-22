@@ -91,7 +91,7 @@ export default function Basket({ navigation }) {
     additem.price = total;
     dispatch(addBasketItem(additem));
 
-    navigation.navigate("TabNavigator", { screen: "Cart" });
+    navigation.navigate("Adress");
     // navigation.navigate("OrderConfirmation");
   };
 
@@ -109,7 +109,7 @@ export default function Basket({ navigation }) {
   }
 
   return (
-    <View style={tw`flex-1 justify-between items-center w-full h-full`}>
+    <View style={tw`flex-1 justify-between items-center`}>
       <TouchableOpacity
         style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%] opacity-50`}
         onPress={() => handleReturn()}

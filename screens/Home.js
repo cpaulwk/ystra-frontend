@@ -33,7 +33,9 @@ export default function Home({ navigation }) {
 
   const BackAddress1 = "https://ystra-backend.vercel.app";
   //const BackAddress = "http://192.168.1.47:19000";
-  const BackAddress = "http://192.168.10.173:3000";
+  // const BackAddress = "http://192.168.10.173:3000";
+  // const BackAddress = "http://192.168.1.14:3000";
+  const BackAddress = "http://192.168.10.156:3000";
 
   useEffect(() => {
     fetch(`${BackAddress1}/products/all/${user.token}`)

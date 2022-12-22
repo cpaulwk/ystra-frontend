@@ -25,6 +25,7 @@ import Cart from "./screens/Cart";
 import Payment from "./screens/Payment";
 import Adress from "./screens/Adress";
 import OrderConfirmation from "./screens/OrderConfirmation";
+import CreditCards from "./screens/CreditCards";
 
 //import Reducer
 import user from "./reducers/user";
@@ -78,7 +79,8 @@ const TabNavigator = () => {
         tabBarActiveTintColor: "#2c6db4",
         tabBarInactiveTintColor: "gray",
         headerShown: false,
-      })}>
+      })}
+    >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Gallery" component={Gallery} />
       <Tab.Screen name="Cart" component={Cart} />
@@ -97,6 +99,7 @@ export default function App({ navigation }) {
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="Basket" component={Basket} />
           <Stack.Screen name="Adress" component={Adress} />
+          <Stack.Screen name="CreditCards" component={CreditCards} />
           <Stack.Screen
             name="OrderConfirmation"
             component={OrderConfirmation}
