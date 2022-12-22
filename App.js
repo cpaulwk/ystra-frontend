@@ -7,9 +7,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useNavigation } from "@react-navigation/native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-
 import HouseFillIcon from "react-native-bootstrap-icons/icons/house-fill";
 import Basket2FillIcon from "react-native-bootstrap-icons/icons/basket2-fill";
 import PersonCircleIcon from "react-native-bootstrap-icons/icons/person-circle";
@@ -30,9 +27,10 @@ import CreditCards from "./screens/CreditCards";
 //import Reducer
 import user from "./reducers/user";
 import product from "./reducers/product";
+import order from "./reducers/order";
 
 const store = configureStore({
-  reducer: { user, product },
+  reducer: { user, product, order },
 });
 
 //ajoutez la création de la navigation par Stack et par BottomTab
