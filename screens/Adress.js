@@ -121,6 +121,7 @@ export default function Adress({ navigation }) {
                   value={zipCode}
                   style={tw`border border-[#9ca3af] bg-white p-3 pl-5 opacity-90 w-full rounded-2.5 text-4`}
                   onChangeText={(value) => setZipCode(value)}
+                  keyboardType="numeric"
                 />
               </View>
             </View>

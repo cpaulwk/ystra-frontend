@@ -184,20 +184,23 @@ export default function Gallery({ navigation }) {
           />
         </TouchableOpacity>
       </Modal>
+
       <View style={styles.header}>
-        <View style={tw`flex-row justify-center items-center w-full`}>
-          <Text style={tw`mr-2 font-bold`}>Show liked only</Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "#76CA66" }}
-            thumbColor={isFavoriteView ? "#f4f3f4" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={() => {
-              setIsFavoriteView(!isFavoriteView);
-              console.log(isFavoriteView);
-            }}
-            value={isFavoriteView}
-          />
-        </View>
+        <Text style={tw`text-6 font-bold opacity-70`}>Gallery</Text>
+      </View>
+
+      <View style={tw`flex-row justify-end items-center w-full px-5 mt-5`}>
+        <Text style={tw`mr-2 font-bold`}>Show liked only</Text>
+        <Switch
+          trackColor={{ false: "#767577", true: "#76CA66" }}
+          thumbColor={isFavoriteView ? "#f4f3f4" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={() => {
+            setIsFavoriteView(!isFavoriteView);
+            console.log(isFavoriteView);
+          }}
+          value={isFavoriteView}
+        />
       </View>
       <ScrollView style={tw`w-full pt-4`}>
         <View style={tw`flex-1 items-center`}>{tempGallery}</View>
@@ -226,12 +229,13 @@ const styles = StyleSheet.create({
   },
 
   header: {
+    zIndex: 10,
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "#F2EFEA",
-    paddingBottom: 20,
+    paddingBottom: 25,
     height: "15%",
     width: "100%",
     shadowColor: "#000000",
