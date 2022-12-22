@@ -8,6 +8,7 @@ const initialState = {
     addressBilling: null,
     addressDelivery: null,
     paymentType: null,
+    totalPrice: 0,
   },
 };
 
@@ -32,6 +33,9 @@ export const orderSlice = createSlice({
       state.value.basket = action.payload;
       console.log(state.value.basket);
     },
+    addTotal: (state, action) => {
+      state.value.totalPrice = action.payload;
+    },
     addAdress: (state, action) => {
       state.value.addressDelivery = action.payload;
       state.value.addressBilling = action.payload;
@@ -54,6 +58,12 @@ export const orderSlice = createSlice({
   },
 });
 
-export const { addBasket, addAdress, addToken, addpayment, removeOrder } =
-  orderSlice.actions;
+export const {
+  addBasket,
+  addAdress,
+  addToken,
+  addpayment,
+  removeOrder,
+  addTotal,
+} = orderSlice.actions;
 export default orderSlice.reducer;

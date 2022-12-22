@@ -160,6 +160,7 @@ export default function Adress({ navigation }) {
         <View key={index} style={tw`flex-row`}>
           <Text> {elem.orderNumber} </Text>
           <Text> {elem.purchaseDate} </Text>
+          <Text>{elem.totalPrice}</Text>
         </View>
       );
     });

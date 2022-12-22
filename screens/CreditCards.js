@@ -11,7 +11,14 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import React, { useEffect, useState } from "react";
-import { addBasketItem } from "../reducers/user";
+import {
+  addBasket,
+  addToken,
+  addTotal,
+  addpayment,
+  removeOrder,
+} from "../reducers/order";
+import { cleanBasket } from "../reducers/user";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function Basket({ navigation }) {
@@ -20,7 +27,6 @@ export default function Basket({ navigation }) {
   const [selectedSize, setselectedSize] = useState("S");
   const [selectedFrame, setselectedFrame] = useState("none");
   const [selectedFinish, setselectedFinish] = useState("none");
-  const [total, setTotal] = useState(0);
   const [canReturn, setCanReturn] = useState(false);
   const [cardNumber, setCardNumber] = useState("");
   const [name, setName] = useState("");
@@ -30,32 +36,11 @@ export default function Basket({ navigation }) {
   const products = useSelector((state) => state.product.products);
 
   const user = useSelector((state) => state.user.value);
-  // const imageResult = useSelector((state) => state.imageResult.value);
+  const order = useSelector((state) => state.order.value);
+  const total = user.basket.reduce((accu, current) => accu + current.price, 0);
 
-  useEffect(() => {
-    const priceSize = products.find(
-      (elem) => elem.nameProduct === selectedSize && elem.typeProduct === "size"
-    );
-    const priceFrame = products.find(
-      (elem) =>
-        elem.nameProduct === selectedFrame && elem.typeProduct === "frame"
-    );
-    const priceFinish = products.find(
-      (elem) =>
-        elem.nameProduct === selectedFinish && elem.typeProduct === "finish"
-    );
-    console.log(selectedFinish, selectedFrame, selectedSize);
-    console.log(
-      priceSize?.priceProduct +
-        priceFrame?.priceProduct +
-        priceFinish?.priceProduct
-    );
-    setTotal(
-      priceSize?.priceProduct +
-        priceFrame?.priceProduct +
-        priceFinish?.priceProduct
-    );
-  }, [selectedFinish, selectedFrame, selectedSize]);
+  const BackAddress = "https://ystra-backend.vercel.app";
+  // const BackAddress = "http://192.168.10.173:3000";
 
   const handleReturn = () => {
     setCanReturn(false);
@@ -92,49 +77,39 @@ export default function Basket({ navigation }) {
     }
   };
 
-  const handleBasket = (itemId, itemUrl) => {
-    const priceSize = products.find(
-      (elem) => elem.nameProduct === selectedSize && elem.typeProduct === "size"
-    );
-    const priceFrame = products.find(
-      (elem) =>
-        elem.nameProduct === selectedFrame && elem.typeProduct === "frame"
-    );
-    const priceFinish = products.find(
-      (elem) =>
-        elem.nameProduct === selectedFinish && elem.typeProduct === "finish"
-    );
-    console.log("1", priceSize);
+  const initOrder = () => {
+    dispatch(addBasket(user.basket));
+    dispatch(addToken(user.token));
 
-    let additem = Object.assign({}, user.newItem);
-    console.log("2", additem);
+    const totalPrice = user.basket.reduce(
+      (accu, current) => accu + current.price,
+      0
+    );
+    dispatch(addTotal(totalPrice));
+  };
 
-    additem.product = {
-      size: {
-        productID: priceSize?._id,
-        name: priceSize?.nameProduct,
-        price: priceSize?.priceProduct,
-        variation: priceSize?.variationProduct,
-      },
-      finish: {
-        productID: priceFinish?._id,
-        name: priceFinish?.nameProduct,
-        price: priceFinish?.priceProduct,
-        variation: priceFinish?.variationProduct,
-      },
-      frame: {
-        productID: priceFrame?._id,
-        name: priceFrame?.nameProduct,
-        price: priceFrame?.priceProduct,
-        variation: priceFrame?.variationProduct,
-      },
-    };
-    console.log("3", additem);
-    console.log("total", total);
-    additem.price = total;
-    dispatch(addBasketItem(additem));
+  const confirmOrder = async () => {
+    if (!user.token) {
+      return;
+    }
+    await initOrder();
 
-    navigation.navigate("OrderConfirmation");
+    console.log("Kylian", order.token);
+    fetch(`${BackAddress}/orders/new`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(order),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("toto", data);
+        if (data.result) {
+          dispatch(removeOrder());
+          dispatch(cleanBasket());
+
+          navigation.navigate("OrderConfirmation");
+        }
+      });
   };
 
   let showImage = (
@@ -277,7 +252,7 @@ export default function Basket({ navigation }) {
         <View style={tw`flex-row justify-center w-full mb-[20%]`}>
           <TouchableOpacity
             style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%] border-[#161E44]`}
-            onPress={() => handleBasket()}
+            onPress={() => confirmOrder()}
           >
             <Text style={tw`font-medium text-2xl text-[#FFFF]`}>
               Confirm payment

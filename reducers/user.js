@@ -29,9 +29,10 @@ export const userSlice = createSlice({
       state.value.basket.push(action.payload);
     },
     removeBasketItem: (state, action) => {
-      state.value.basket = state.value.basket.filter(
-        (elem) => elem !== action.payload
-      );
+      // state.value.basket = state.value.basket.filter(
+      //   (elem) => elem !== action.payload
+      // );
+      state.value.basket.splice(action.payload, 1);
     },
     cleanBasket: (state, action) => {
       state.value.basket = [];

@@ -9,13 +9,20 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
-import React, { useState } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { removeBasketItem } from "../reducers/user";
 
 export default function Basket({ navigation }) {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const total = user.basket.reduce((accu, current) => accu + current.price, 0);
   console.log("Boucif --->", user.basket);
+
+  const handleDelete = (index) => {
+    dispatch(removeBasketItem(index));
+  };
+
+  // MAP
   const showCart = user.basket.map((element, index) => {
     console.log("ok", element);
 
@@ -64,6 +71,7 @@ export default function Basket({ navigation }) {
           </View>
           <TouchableOpacity
             style={tw` flex justify-center items-center bg-red-700 rounded-4 h-[7.5] w-[7.5] border-[#161E44] mx-0	  `}
+            onPress={() => handleDelete(index)}
             // onPress={() => navigation.navigate("Adress")}
           >
             <FontAwesome
