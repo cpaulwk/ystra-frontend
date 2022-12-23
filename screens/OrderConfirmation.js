@@ -18,18 +18,24 @@ export default function OrderConfirmation({ navigation }) {
       <View style={tw`flex-1 justify-between w-full`}>
         <View style={tw`flex items-center`}>
           <View style={tw`flex w-[80%] mt-[25%]`}>
-            <Text style={tw`text-7 font-medium`}>
-              Your command nº1234567890 is confirmed
+            <Text style={tw`text-6.5 font-medium`}>Your command</Text>
+            <Text style={tw`text-6.5 font-medium`}>
+              nº{" "}
+              <Text style={tw`text-6.5 text-[#76CA66] font-medium`}>
+                1234567890{" "}
+              </Text>
+              is confirmed
             </Text>
-            <Text style={tw`text-7 font-medium mt-[20%]`}>
-              An email confirmation has been sent to your inbox
+            <Text style={tw`text-6.5 font-medium mt-[20%]`}>
+              An order confirmation has been sent to your email inbox.
             </Text>
           </View>
         </View>
         <View style={tw`flex-row justify-center w-full mb-[20%]`}>
           <TouchableOpacity
             style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
-            onPress={() => handlePayment()}>
+            onPress={() => handlePayment()}
+          >
             <Text style={tw`font-medium		 text-2xl text-[#FFFF]`}>
               Return to Home
             </Text>

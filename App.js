@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
+import tw from "twrnc";
 
 // Import des modules react-navigation
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,6 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HouseFillIcon from "react-native-bootstrap-icons/icons/house-fill";
 import Basket2FillIcon from "react-native-bootstrap-icons/icons/basket2-fill";
 import PersonCircleIcon from "react-native-bootstrap-icons/icons/person-circle";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 // Import de HomePage
 // import Welcome from "./screens/Welcome";
@@ -19,7 +21,6 @@ import Gallery from "./screens/Gallery";
 import Basket from "./screens/Basket";
 import Profile from "./screens/Profile";
 import Cart from "./screens/Cart";
-import Payment from "./screens/Payment";
 import Adress from "./screens/Adress";
 import OrderConfirmation from "./screens/OrderConfirmation";
 import CreditCards from "./screens/CreditCards";
@@ -70,6 +71,7 @@ const TabNavigator = () => {
           if (route.name === "Profile") {
             iconName = "user-times"; //'BsPersonCircle';
             return <PersonCircleIcon size={size} color={color} />;
+            // return <FontAwesome name="user-circle" size={size} color={color} />;
           }
           // return <HouseFillIcon size={size} color={color}/>
           // return <FontAwesome name={'camera'} size={size} color={color} />;
