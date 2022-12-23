@@ -11,6 +11,7 @@ import tw from "twrnc";
 import React, { useState } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { logout } from "../reducers/user";
 
 export default function Adress({ navigation }) {
   const [canReturn, setCanReturn] = useState(false);
@@ -18,6 +19,7 @@ export default function Adress({ navigation }) {
   const [listOrder, setListOrder] = useState([]);
   const [acccount, setAccount] = useState([]);
   const [headerTitle, setHeaderTitle] = useState("Settings");
+  const dispatch = useDispatch();
 
   const handleReturn = () => {
     setHeaderTitle("Settings");
@@ -26,6 +28,7 @@ export default function Adress({ navigation }) {
   };
 
   const handleLogOut = () => {
+    dispatch(logout());
     navigation.navigate("Welcome");
   };
   const user = useSelector((state) => state.user.value);

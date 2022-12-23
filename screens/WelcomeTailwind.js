@@ -85,6 +85,9 @@ export default function Welcome({ navigation }) {
           dispatch(login({ userName: username, token: data.token }));
           setCanReturn(false);
           navigation.navigate("TabNavigator", { screen: "Home" });
+          setUsername("");
+          setEmail("");
+          setPassword("");
         } else {
           //message d'erreur
           setErrorMessage(data.error);

@@ -88,11 +88,14 @@ export default function Basket({ navigation }) {
     dispatch(addTotal(totalPrice));
   };
 
+  useEffect(() => {
+    initOrder();
+  }, []);
+
   const confirmOrder = async () => {
     if (!user.token) {
       return;
     }
-    await initOrder();
 
     console.log("Kylian", order.token);
     fetch(`${BackAddress}/orders/new`, {
@@ -129,7 +132,7 @@ export default function Basket({ navigation }) {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={tw`flex-1 justify-between items-center`}>
         <TouchableOpacity
-          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%] opacity-50`}
+          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[7%] opacity-50`}
           onPress={() => handleReturn()}
         >
           <FontAwesome name="chevron-left" size={20} />
