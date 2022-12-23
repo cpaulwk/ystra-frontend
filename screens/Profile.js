@@ -25,6 +25,9 @@ export default function Adress({ navigation }) {
     setChoiceMode("ALL");
   };
 
+  const handleLogOut = () => {
+    navigation.navigate("Welcome");
+  };
   const user = useSelector((state) => state.user.value);
 
   const BackAddress1 = "https://ystra-backend.vercel.app";
@@ -60,10 +63,10 @@ export default function Adress({ navigation }) {
   // };
 
   let showSetting = (
-    <View style={tw`border flex items-center h-full w-full`}>
+    <View style={tw`flex-1 items-center h-full w-full`}>
       <TouchableOpacity
         onPress={() => handleAccount()}
-        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[12%] w-full bg-white`}
+        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white`}
       >
         <View style={tw`flex-row justify-between items-center w-[90%]`}>
           <Text style={tw`text-5 font-bold opacity-70 w-[50%] ml-5`}>
@@ -83,7 +86,7 @@ export default function Adress({ navigation }) {
 
       <TouchableOpacity
         onPress={() => handleOrder()}
-        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[12%] w-full bg-white`}
+        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white`}
       >
         <View style={tw`flex-row justify-between items-center w-[90%]`}>
           <Text style={tw`text-5 font-bold opacity-70 w-[50%] ml-5`}>
@@ -102,7 +105,7 @@ export default function Adress({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[12%] w-full bg-white`}
+        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white`}
       >
         <View style={tw`flex-row justify-between items-center w-[90%]`}>
           <Text style={tw`text-5 font-bold opacity-70 w-[50%] ml-5`}>
@@ -121,7 +124,7 @@ export default function Adress({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[12%] w-full bg-white`}
+        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white`}
       >
         <View style={tw`flex-row justify-between items-center w-[90%]`}>
           <Text style={tw`text-5 font-bold opacity-70 w-[50%] ml-5`}>
@@ -140,7 +143,7 @@ export default function Adress({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[12%] w-full bg-white`}
+        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white`}
       >
         <View style={tw`flex-row justify-between items-center w-[90%]`}>
           <Text style={tw`text-5 font-bold opacity-70 w-[50%] ml-5`}>
@@ -159,7 +162,7 @@ export default function Adress({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[12%] w-full bg-white`}
+        style={tw`border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white`}
       >
         <View style={tw`flex-row justify-between items-center w-[90%]`}>
           <Text style={tw`text-5 font-bold opacity-70 w-[50%] ml-5`}>Help</Text>
@@ -174,6 +177,16 @@ export default function Adress({ navigation }) {
           </View>
         </View>
       </TouchableOpacity>
+      <View style={tw`flex-1 justify-center items-center w-full`}>
+        <TouchableOpacity
+          onPress={() => handleLogOut()}
+          style={tw`border-2 border-[#BA0000] flex justify-center items-center h-12 rounded-2`}
+        >
+          <Text style={tw`text-5 text-[#BA0000] font-bold opacity-70 px-8`}>
+            Log out
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 

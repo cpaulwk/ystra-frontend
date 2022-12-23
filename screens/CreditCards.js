@@ -32,7 +32,7 @@ export default function Basket({ navigation }) {
   const [name, setName] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
   const [cryptogram, setCryptogram] = useState("");
-  const [selectedCard, setSelectedCard] = useState("mastercard");
+  const [selectedCard, setSelectedCard] = useState("");
   const products = useSelector((state) => state.product.products);
 
   const user = useSelector((state) => state.user.value);
