@@ -29,6 +29,7 @@ export default function Welcome({ navigation }) {
   const [canReturn, setCanReturn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isBadUserInput, setIsBadUserInput] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
 
   const handleReturn = () => {
     setCanReturn(false);
@@ -52,6 +53,7 @@ export default function Welcome({ navigation }) {
         if (data.result) {
           setCanReturn(false);
           setShowPages(3);
+          setDisableButton(true);
           dispatch(login({ userName: username, token: data.token }));
         } else {
           dispatch(login({ userName: username, token: data.token }));
@@ -203,6 +205,7 @@ export default function Welcome({ navigation }) {
           <TouchableOpacity
             style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
             onPress={() => handleRegister()}
+            disabled={disableButton}
           >
             <Text style={tw`text-4 text-white font-semibold`}>Sign up</Text>
           </TouchableOpacity>
