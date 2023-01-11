@@ -20,6 +20,7 @@ import {
 } from "../reducers/order";
 import { cleanBasket } from "../reducers/user";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { BACKEND_URL } from "@env";
 
 export default function Basket({ navigation }) {
   const dispatch = useDispatch();
@@ -38,9 +39,6 @@ export default function Basket({ navigation }) {
   const user = useSelector((state) => state.user.value);
   const order = useSelector((state) => state.order.value);
   const total = user.basket.reduce((accu, current) => accu + current.price, 0);
-
-  const BackAddress = "https://ystra-backend.vercel.app";
-  // const BackAddress = "http://192.168.10.173:3000";
 
   const handleReturn = () => {
     setCanReturn(false);
@@ -98,7 +96,7 @@ export default function Basket({ navigation }) {
     }
 
     console.log("Kylian", order.token);
-    fetch(`${BackAddress}/orders/new`, {
+    fetch(`${BACKEND_URL}/orders/new`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(order),

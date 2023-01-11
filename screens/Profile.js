@@ -12,8 +12,10 @@ import React, { useState } from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { logout } from "../reducers/user";
+import { BACKEND_URL } from "@env";
 
 export default function Adress({ navigation }) {
+  console.log("backend =>", BACKEND_URL);
   const [canReturn, setCanReturn] = useState(false);
   const [choiceMode, setChoiceMode] = useState("ALL");
   const [listOrder, setListOrder] = useState([]);
@@ -33,18 +35,6 @@ export default function Adress({ navigation }) {
   };
   const user = useSelector((state) => state.user.value);
 
-  const BackAddress1 = "https://ystra-backend.vercel.app";
-  const LoadORder = () => {
-    console.log("LoadORder");
-    fetch(`${BackAddress1}/orders/${user.token}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          setListOrder(data.allOrders);
-          console.log("ok", listOrder);
-        }
-      });
-  };
 
   // const LoadOrder = () => {
   //   if (!user.token) {
@@ -195,9 +185,21 @@ export default function Adress({ navigation }) {
 
   const handleOrder = () => {
     setHeaderTitle("My Orders");
-    LoadORder();
+    LoadOrder();
     setChoiceMode("ORDER");
     setCanReturn(true);
+  };
+
+  const LoadOrder = () => {
+    console.log("LoadOrder");
+    fetch(`${BACKEND_URL}/orders/all/${user.token}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          setListOrder(data.allOrders);
+          console.log("listOrder =>", listOrder);
+        }
+      });
   };
 
   if (choiceMode === "ORDER") {
@@ -250,12 +252,12 @@ export default function Adress({ navigation }) {
   };
 
   const LoadAccount = () => {
-    fetch(`${BackAddress1}/users/${user.token}`)
+    fetch(`${BACKEND_URL}/users/infos/${user.token}`)
       .then((response) => response.json())
       .then((data) => {
         if (data) {
           setAccount(data.user);
-          console.log("ok", listOrder);
+          console.log("data.user =>", data.user);
         }
       });
   };

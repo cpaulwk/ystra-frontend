@@ -19,6 +19,7 @@ import { addItem } from "../reducers/user";
 import { addProduct } from "../reducers/product";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { BACKEND_URL } from "@env";
 
 // import { enableES5 } from "immer";
 
@@ -35,11 +36,8 @@ export default function Home({ navigation }) {
   const products = useSelector((state) => state.product.products);
   const dispatch = useDispatch();
 
-  const BackAddress = "https://ystra-backend.vercel.app";
-  // const BackAddress = "http://192.168.10.173:3000";
-
   useEffect(() => {
-    fetch(`${BackAddress}/products/all/${user.token}`)
+    fetch(`${BACKEND_URL}/products/all/${user.token}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
@@ -65,7 +63,7 @@ export default function Home({ navigation }) {
 
     console.log(user.token, textQuery);
 
-    fetch(`${BackAddress}/renderimages/`, {
+    fetch(`${BACKEND_URL}/renderimages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -77,7 +75,7 @@ export default function Home({ navigation }) {
       .then((data) => {
         console.log("Boucif", data);
         setIsSearching(data.result ? true : false);
-        setResultQuery(data.data ? data.data : []);
+        setResultQuery(data.imagesUrl ? data.imagesUrl : []);
         setIsLoading(false);
       });
   };
@@ -92,7 +90,7 @@ export default function Home({ navigation }) {
 
   const handleSelected = (itemId, isLiked) => {
     console.log("ID", itemId);
-    fetch(`${BackAddress}/renderimages/checked`, {
+    fetch(`${BACKEND_URL}/renderimages/liked`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -423,52 +421,4 @@ const styles = StyleSheet.create({
 
     elevation: 18,
   },
-  // container: {
-  //   flex: 1,
-  //   height: "100%",
-  //   width: "100%",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   alignContent: "center",
-  // },
-  // searchSection: {
-  //   flexDirection: "row",
-  //   justifyContent: "center",
-  //   alignItems: "flex-end",
-  //   backgroundColor: "#fff",
-  //   borderColor: "red",
-  //   borderWidth: 1,
-  //   width: "100%",
-  //   height: "25%",
-  // },
-  // input: {
-  //   width: "80%",
-  //   borderColor: "gray",
-  //   borderWidth: 1,
-  //   borderRadius: 5,
-  //   padding: 2,
-  // },
-
-  // searchIcon: {
-  //   padding: 10,
-  //   right: 30,
-  //   backgroundColor: "#ffffff",
-  //   opacity: 0.9,
-  // },
-  // galleryContainer: {
-  //   flex: 1,
-  //   width: "100%",
-  //   backgroundColor: "#F2EFEA",
-  //   flexWrap: "wrap",
-  //   flexDirection: "row",
-  //   justifyContent: "center",
-  // },
-  // photoContainer: {
-  //   alignItems: "center",
-  // },
-  // photo: {
-  //   margin: 10,
-  //   width: 150,
-  //   height: 150,
-  // },
 });

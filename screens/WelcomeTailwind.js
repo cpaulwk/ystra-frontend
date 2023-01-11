@@ -15,9 +15,10 @@ import {
 import tw from "twrnc";
 import ChevronLeftIcon from "react-native-bootstrap-icons/icons/chevron-left";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { BACKEND_URL } from "@env";
 
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/user";
 
 export default function Welcome({ navigation }) {
@@ -29,6 +30,14 @@ export default function Welcome({ navigation }) {
   const [canReturn, setCanReturn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isBadUserInput, setIsBadUserInput] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
+  const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{10,}$/;
+  const user = useSelector((state) => state.user.value);
+
+  useEffect(() => {
+    console.log(user.token)
+    user.token && navigation.navigate("TabNavigator", { screen: "Home" });
+    },[]);
 
   const handleReturn = () => {
     setCanReturn(false);
@@ -36,8 +45,35 @@ export default function Welcome({ navigation }) {
     setIsBadUserInput(false);
   };
 
+  const handleChangePwd = (value) => {
+
+    setPassword(value);
+    if(!passwordRegex.test(password)) {
+      setIsBadUserInput(true);
+      setErrorMessage("Password must include:\n     • at least 10 characters\n     • 1 uppercase letter\n     • 1 number\n     • 1 special character");
+    } else {
+      setIsBadUserInput(false);
+      setErrorMessage("");
+    }
+
+  }
+
   const handleRegister = () => {
-    fetch("https://ystra-backend.vercel.app/users/signup", {
+    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if(!emailRegex.test(email)){
+      setErrorMessage("Invalid email address");
+      setIsBadUserInput(true);
+      return;
+    }
+
+    if(!passwordRegex.test(password)){
+      setErrorMessage("Invalid password");
+      setIsBadUserInput(true);
+      return;
+    }
+
+    fetch(`${BACKEND_URL}/users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -52,6 +88,7 @@ export default function Welcome({ navigation }) {
         if (data.result) {
           setCanReturn(false);
           setShowPages(3);
+          setDisableButton(true);
           dispatch(login({ userName: username, token: data.token }));
         } else {
           dispatch(login({ userName: username, token: data.token }));
@@ -66,11 +103,12 @@ export default function Welcome({ navigation }) {
   };
 
   const handleConfirmation = () => {
+    dispatch(login({ userName: username, token: data.token }));
     navigation.navigate("TabNavigator", { screen: "Home" });
   };
 
   const handleLogin = () => {
-    fetch("https://ystra-backend.vercel.app/users/signin", {
+    fetch(`${BACKEND_URL}/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -80,7 +118,7 @@ export default function Welcome({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log("data =>", data);
         if (data.result) {
           dispatch(login({ userName: username, token: data.token }));
           setCanReturn(false);
@@ -169,6 +207,7 @@ export default function Welcome({ navigation }) {
                 value={email}
                 onChangeText={(value) => setEmail(value)}
                 style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
+                autoCapitalize="none"
               />
               <View
                 style={tw`absolute border-r border-[#AFAFAF] flex justify-center items-center rounded-l-2.5 h-full aspect-square pl-1`}
@@ -181,7 +220,7 @@ export default function Welcome({ navigation }) {
                 secureTextEntry={true}
                 placeholder="Password"
                 value={password}
-                onChangeText={(value) => setPassword(value)}
+                onChangeText={(value) => handleChangePwd(value)}
                 style={tw`border border-[#9ca3af] bg-white p-3 pl-13 opacity-90 w-full rounded-2.5 text-4`}
               />
               <View
@@ -190,11 +229,11 @@ export default function Welcome({ navigation }) {
                 <FontAwesome name="lock" size={20} />
               </View>
             </View>
-            <View style={tw`flex-row items-center w-full h-7`}>
-              {isBadUserInput && (
+            {isBadUserInput && (
+              <View style={tw`flex w-full bg-white/80 rounded-2.5 p-2.5`}>
                 <Text style={tw`text-4 text-[#BA0000]`}>{errorMessage}</Text>
-              )}
             </View>
+              )}
           </View>
         </View>
 
@@ -203,6 +242,7 @@ export default function Welcome({ navigation }) {
           <TouchableOpacity
             style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
             onPress={() => handleRegister()}
+            disabled={disableButton}
           >
             <Text style={tw`text-4 text-white font-semibold`}>Sign up</Text>
           </TouchableOpacity>
