@@ -20,8 +20,10 @@ import tw from "twrnc";
 import { addItem } from "../reducers/user";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
+import { BACKEND_URL } from "@env";
 
 export default function Gallery({ navigation }) {
+  console.log("Gallery =>", BACKEND_URL);
   const user = useSelector((state) => state.user.value);
   const isFocused = useIsFocused();
   const [galleryImages, setGalleryImages] = useState([]);
@@ -32,13 +34,12 @@ export default function Gallery({ navigation }) {
   });
   const dispatch = useDispatch();
 
-  const BackAddress = "https://ystra-backend.vercel.app";
-
   useEffect(() => {
-    fetch(`${BackAddress}/gallery/all/${user.token}`)
+    fetch(`${BACKEND_URL}/gallery/all/${user.token}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
+          console.log("data.images", data.Images);
           setGalleryImages(data.Images);
         }
       });
@@ -58,7 +59,7 @@ export default function Gallery({ navigation }) {
 
   const handleSelected = (itemId, isLiked) => {
     console.log("ID", itemId);
-    fetch(`${BackAddress}/renderimages/checked`, {
+    fetch(`${BACKEND_URL}/renderimages/liked`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

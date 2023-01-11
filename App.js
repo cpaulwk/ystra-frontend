@@ -1,8 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Provider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import tw from "twrnc";
+
+//Import redux-persist
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // Import des modules react-navigation
 import { NavigationContainer } from "@react-navigation/native";
@@ -30,9 +35,15 @@ import user from "./reducers/user";
 import product from "./reducers/product";
 import order from "./reducers/order";
 
+const reducers = combineReducers({ user, product, order });
+const persistConfig = { key: 'ystra app', storage: AsyncStorage };
+
 const store = configureStore({
-  reducer: { user, product, order },
+    reducer: persistReducer(persistConfig, reducers),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });
+
+const persistor = persistStore(store);
 
 //ajoutez la création de la navigation par Stack et par BottomTab
 const Stack = createNativeStackNavigator();
@@ -93,19 +104,21 @@ const TabNavigator = () => {
 export default function App({ navigation }) {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Welcome" component={Welcome} />
-          <Stack.Screen name="TabNavigator" component={TabNavigator} />
-          <Stack.Screen name="Basket" component={Basket} />
-          <Stack.Screen name="Adress" component={Adress} />
-          <Stack.Screen name="CreditCards" component={CreditCards} />
-          <Stack.Screen
-            name="OrderConfirmation"
-            component={OrderConfirmation}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <PersistGate persistor={persistor}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Welcome" component={Welcome} />
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            <Stack.Screen name="Basket" component={Basket} />
+            <Stack.Screen name="Adress" component={Adress} />
+            <Stack.Screen name="CreditCards" component={CreditCards} />
+            <Stack.Screen
+              name="OrderConfirmation"
+              component={OrderConfirmation}
+              />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }
