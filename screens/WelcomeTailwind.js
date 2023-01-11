@@ -103,7 +103,6 @@ export default function Welcome({ navigation }) {
   };
 
   const handleConfirmation = () => {
-    dispatch(login({ userName: username, token: data.token }));
     navigation.navigate("TabNavigator", { screen: "Home" });
   };
 
