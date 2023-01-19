@@ -1,24 +1,17 @@
-import {
-Text,
-TouchableOpacity,
-View
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import tw from "twrnc";
 
-import { useState } from "react";
-
-
-export default function WelcomeBlock(){
-  const [canReturn, setCanReturn] = useState(false);
-  const [showPages, setShowPages] = useState(0);
-
-  const handleReturn = () => {
-    setCanReturn(false);
-    setShowPages(0);
-    setIsBadUserInput(false);
+export default function WelcomeBlock({ handleSelectedPage, handleCanReturn }) {
+  const handleGoToRegister = () => {
+    handleSelectedPage("Register");
+    handleCanReturn(true);
+  };
+  const handleGoToLogin = () => {
+    handleSelectedPage("Login");
+    handleCanReturn(true);
   };
 
-  return(
+  return (
     <View style={tw`flex-1 justify-between items-center w-full h-full`}>
       {/* Text */}
       <View style={tw`flex justify-center items-center `}>
@@ -37,8 +30,7 @@ export default function WelcomeBlock(){
         <TouchableOpacity
           style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
           onPress={() => {
-            setCanReturn(true);
-            setShowPages(1); // navigation vers REGISTER
+            handleGoToRegister();
           }}
         >
           <Text style={tw`text-4 text-white font-semibold`}>Register</Text>
@@ -47,8 +39,7 @@ export default function WelcomeBlock(){
         <TouchableOpacity
           style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
           onPress={() => {
-            setCanReturn(true);
-            setShowPages(2); // navigation vers LOGIN
+            handleGoToLogin();
           }}
         >
           <Text style={tw`text-4 text-white font-semibold`}>Login</Text>
@@ -56,4 +47,4 @@ export default function WelcomeBlock(){
       </View>
     </View>
   );
-};
+}
