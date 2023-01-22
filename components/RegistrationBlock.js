@@ -24,9 +24,8 @@ export default function RegistrationBlock({
   };
 
   const handleChangePwd = (value) => {
-    console.log(value);
     setPassword(value);
-    if (!passwordRegex.test(password)) {
+    if (!passwordRegex.test(value)) {
       setIsBadUserInput(true);
       setErrorMessage(
         "Password must include:\n     • at least 10 characters\n     • 1 uppercase letter\n     • 1 number\n     • 1 special character"

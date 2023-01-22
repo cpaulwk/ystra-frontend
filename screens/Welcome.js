@@ -5,10 +5,10 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import WelcomeBlock from "../components/WelcomeBlock";
-import RegistrationBlock from "../components/RegistrationBlock";
-import LoginBlock from "../components/LoginBlock";
 import ConfirmationBlock from "../components/ConfirmationBlock";
+import LoginBlock from "../components/LoginBlock";
+import RegistrationBlock from "../components/RegistrationBlock";
+import WelcomeBlock from "../components/WelcomeBlock";
 
 export default function Welcome({ navigation }) {
   const [canReturn, setCanReturn] = useState(false);
