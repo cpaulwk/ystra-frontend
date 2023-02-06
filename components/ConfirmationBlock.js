@@ -36,7 +36,6 @@ export default function ConfirmationBlock({ handleSelectedPage, navigation }) {
     </View>
   );
 }
-
   return (
     // EMAIL CONFIRMATION BLOCK
     <View style={tw`flex-1 justify-between items-center w-full`}>

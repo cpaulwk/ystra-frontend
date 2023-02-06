@@ -116,7 +116,6 @@ export default function LoginBlock({
     </View>
   );
 }
-
         <TouchableOpacity
           style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
           onPress={() => {

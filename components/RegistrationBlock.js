@@ -24,8 +24,9 @@ export default function RegistrationBlock({
   };
 
   const handleChangePwd = (value) => {
+    console.log(value);
     setPassword(value);
-    if (!passwordRegex.test(value)) {
+    if (!passwordRegex.test(password)) {
       setIsBadUserInput(true);
       setErrorMessage(
         "Password must include:\n     • at least 10 characters\n     • 1 uppercase letter\n     • 1 number\n     • 1 special character"
@@ -167,7 +168,6 @@ export default function RegistrationBlock({
     </View>
   );
 }
-
         <TouchableOpacity
           style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
           onPress={() => {

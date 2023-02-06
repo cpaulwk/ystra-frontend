@@ -15,6 +15,8 @@ import HouseFillIcon from "react-native-bootstrap-icons/icons/house-fill";
 import Basket2FillIcon from "react-native-bootstrap-icons/icons/basket2-fill";
 import PersonCircleIcon from "react-native-bootstrap-icons/icons/person-circle";
 
+// Import de HomePage
+// import Welcome from "./screens/Welcome";
 import Welcome from "./screens/Welcome";
 import Home from "./screens/Home";
 import Gallery from "./screens/Gallery";
@@ -24,6 +26,7 @@ import Cart from "./screens/Cart";
 import Adress from "./screens/Adress";
 import OrderConfirmation from "./screens/OrderConfirmation";
 import CreditCards from "./screens/CreditCards";
+
 
 
 //import Reducer
@@ -108,7 +111,8 @@ export default function App() {
             <Stack.Screen
               name="OrderConfirmation"
               component={OrderConfirmation}
-            />
+              />
+
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
