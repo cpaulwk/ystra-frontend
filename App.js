@@ -1,3 +1,4 @@
+// Import react basic elements
 import { Image } from "react-native";
 import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
