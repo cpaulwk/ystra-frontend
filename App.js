@@ -20,7 +20,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 // Import de HomePage
 // import Welcome from "./screens/Welcome";
-import Welcome from "./screens/WelcomeTailwind";
+import Welcome from "./screens/Welcome";
 import Home from "./screens/Home";
 import Gallery from "./screens/Gallery";
 import Basket from "./screens/Basket";
@@ -29,6 +29,7 @@ import Cart from "./screens/Cart";
 import Adress from "./screens/Adress";
 import OrderConfirmation from "./screens/OrderConfirmation";
 import CreditCards from "./screens/CreditCards";
+
 
 //import Reducer
 import user from "./reducers/user";
@@ -116,6 +117,7 @@ export default function App({ navigation }) {
               name="OrderConfirmation"
               component={OrderConfirmation}
               />
+
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
