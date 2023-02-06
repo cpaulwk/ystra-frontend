@@ -35,7 +35,6 @@ export default function Adress({ navigation }) {
   };
   const user = useSelector((state) => state.user.value);
 
-
   // const LoadOrder = () => {
   //   if (!user.token) {
   //     return;

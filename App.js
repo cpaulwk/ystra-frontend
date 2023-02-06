@@ -1,13 +1,11 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { Image } from "react-native";
 import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import tw from "twrnc";
 
 //Import redux-persist
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { persistStore, persistReducer } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
 // Import des modules react-navigation
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,11 +14,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HouseFillIcon from "react-native-bootstrap-icons/icons/house-fill";
 import Basket2FillIcon from "react-native-bootstrap-icons/icons/basket2-fill";
 import PersonCircleIcon from "react-native-bootstrap-icons/icons/person-circle";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-// Import de HomePage
-// import Welcome from "./screens/Welcome";
-import Welcome from "./screens/WelcomeTailwind";
+import Welcome from "./screens/Welcome";
 import Home from "./screens/Home";
 import Gallery from "./screens/Gallery";
 import Basket from "./screens/Basket";
@@ -36,11 +31,12 @@ import product from "./reducers/product";
 import order from "./reducers/order";
 
 const reducers = combineReducers({ user, product, order });
-const persistConfig = { key: 'ystra app', storage: AsyncStorage };
+const persistConfig = { key: "ystra app", storage: AsyncStorage };
 
 const store = configureStore({
-    reducer: persistReducer(persistConfig, reducers),
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
+  reducer: persistReducer(persistConfig, reducers),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 const persistor = persistStore(store);
@@ -60,7 +56,6 @@ const TabNavigator = () => {
             iconName = "home"; //BsFillHouseFill';
             return <HouseFillIcon size={size} color={color} />;
           } else if (route.name === "Gallery") {
-            //iconName = 'shopping-basket';//'BsBasket2Fill';
             if (focused) {
               return (
                 <Image
@@ -82,10 +77,7 @@ const TabNavigator = () => {
           if (route.name === "Profile") {
             iconName = "user-times"; //'BsPersonCircle';
             return <PersonCircleIcon size={size} color={color} />;
-            // return <FontAwesome name="user-circle" size={size} color={color} />;
           }
-          // return <HouseFillIcon size={size} color={color}/>
-          // return <FontAwesome name={'camera'} size={size} color={color} />;
         },
         tabBarActiveTintColor: "#2c6db4",
         tabBarInactiveTintColor: "gray",
@@ -101,7 +93,7 @@ const TabNavigator = () => {
 };
 
 //
-export default function App({ navigation }) {
+export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
@@ -115,16 +107,10 @@ export default function App({ navigation }) {
             <Stack.Screen
               name="OrderConfirmation"
               component={OrderConfirmation}
-              />
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
     </Provider>
   );
 }
-const styles = StyleSheet.create({
-  logo: {
-    width: "30%",
-    height: "30%",
-  },
-});
