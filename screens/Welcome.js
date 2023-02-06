@@ -89,3 +89,28 @@ export default function Welcome({ navigation }) {
     </ImageBackground>
   );
 }
+
+  return (
+    <ImageBackground
+      style={tw`flex-1`}
+      source={require("../assets/background.jpg")}
+      resizeMode="cover"
+    >
+      {canReturn && (
+        <TouchableOpacity
+          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%] opacity-50`}
+          onPress={() => handleReturn()}
+        >
+          <FontAwesome name="chevron-left" size={20} />
+        </TouchableOpacity>
+      )}
+      <View style={tw`flex items-center h-full w-full`}>
+        <Image
+          style={tw`h-27.125 w-35 mt-16.25`}
+          source={require("../assets/logoystra.png")}
+        />
+        {renderedBlock}
+      </View>
+    </ImageBackground>
+  );
+}
