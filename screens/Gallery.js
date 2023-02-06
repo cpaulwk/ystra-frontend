@@ -21,6 +21,8 @@ import { addItem } from "../reducers/user";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { BACKEND_URL } from "@env";
+import SwitchControl from "../components/uiKit/SwitchControl";
+import CardsGallery from "../components/uiKit/CardsGallery";
 
 export default function Gallery({ navigation }) {
   console.log("Gallery =>", BACKEND_URL);
@@ -45,6 +47,10 @@ export default function Gallery({ navigation }) {
       });
   }, [isFocused]);
 
+  const handleSwitchGallery = (data) => {
+    setIsFavoriteView(data);
+  };
+
   const handleSharing = async (url) => {
     const downloadPath = FileSystem.cacheDirectory + "Ystra.jpg";
     const downloadedFile = await FileSystem.downloadAsync(url, downloadPath);
@@ -58,7 +64,6 @@ export default function Gallery({ navigation }) {
   };
 
   const handleSelected = (itemId, isLiked) => {
-    console.log("ID", itemId);
     fetch(`${BACKEND_URL}/renderimages/liked`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -71,17 +76,12 @@ export default function Gallery({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          const x = galleryImages.map((x) => {
-            for (let i = 0; i < x.imageResult.length; i++) {
-              if (x.imageResult[i]._id === itemId) {
-                x.imageResult[i].isChecked = isLiked;
-              }
-            }
-            return x;
+          const tabTemp = galleryImages.map((item) => {
+            const index = item.imageResult.findIndex((y) => y._id === itemId);
+            if (index > -1) item.imageResult[index].isChecked = isLiked;
+            return item;
           });
-
-          // resultQueryx = x;
-          setGalleryImages(x);
+          setGalleryImages(tabTemp);
         }
       });
   };
@@ -102,69 +102,29 @@ export default function Gallery({ navigation }) {
     navigation.navigate("Basket");
   };
 
-  let tempGallery = [];
-  const gallery = galleryImages.reverse().forEach((element) => {
-    //Images.imageResult
-    tempGallery.push(
-      element.imageResult.map((item, index) => {
-        if (item.isChecked === isFavoriteView) {
-          return (
-            <View style={tw`h-50 w-[95%] m-1 rounded-2.5`} key={index}>
-              {/* <Image source={ require('../assets/homescreen-background.jpg') } style={styles.photo}></Image> */}
-              <TouchableOpacity
-                onPress={() =>
-                  setIsModalVisible({ visible: true, url: item.url })
-                }
-                style={styles.card}
-              >
-                <Image
-                  style={tw`rounded-2.5 border border-[#AFAFAF] flex-row justify-end h-full w-full`}
-                  resizeMode="cover"
-                  source={{ uri: item.url }}
-                />
-              </TouchableOpacity>
-              <View
-                style={tw`absolute right-1 flex justify-around h-full mr-2 my-2`}
-              >
-                <TouchableOpacity
-                  style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.8 pt-0.2`}
-                >
-                  <FontAwesome
-                    onPress={() => handleSharing(item.url)}
-                    name="share-square-o"
-                    size={20}
-                    selectionColor="red"
-                  />
-                </TouchableOpacity>
+  const handleModal = (val) => {
+    setIsModalVisible(val);
+  };
 
-                <TouchableOpacity
-                  style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.2 pt-0.2`}
-                >
-                  <FontAwesome
-                    onPress={() => handleSelected(item._id, !item.isChecked)}
-                    style={tw`mb-0.5`}
-                    name={item.isChecked ? "times" : "heart"}
-                    size={20}
-                  />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.5 pt-0.2`}
-                >
-                  <FontAwesome
-                    onPress={() => handleBasket(item._id, item.url)}
-                    name="shopping-basket"
-                    size={20}
-                    selectionColor="red"
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          );
-        }
-      })
-    );
-  });
+  const showCards = (item) => (
+    <CardsGallery
+      key={item._id}
+      item={item}
+      handleShowModal={handleModal}
+      handleSharing={handleSharing}
+      handleBasket={handleBasket}
+      handleSelected={handleSelected}
+    />
+  );
+  const tempGallery = galleryImages
+    .reverse()
+    .map((element) =>
+      element.imageResult
+        .filter((item) => item.isChecked === isFavoriteView)
+        .map(showCards)
+    )
+    .flat();
+  // La méthode flat() permet de créer un nouveau tableau contenant les éléments des sous-tableaux du tableau passé en argument
 
   return (
     <View style={tw`flex-1 bg-[#F2EFEA] items-center`}>
@@ -190,19 +150,12 @@ export default function Gallery({ navigation }) {
         <Text style={tw`text-6 font-bold opacity-70`}>Gallery</Text>
       </View>
 
-      <View style={tw`flex-row justify-end items-center w-full px-5 mt-5`}>
-        <Text style={tw`mr-2 font-bold`}>Show liked only</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#76CA66" }}
-          thumbColor={isFavoriteView ? "#f4f3f4" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={() => {
-            setIsFavoriteView(!isFavoriteView);
-            console.log(isFavoriteView);
-          }}
-          value={isFavoriteView}
-        />
-      </View>
+      <SwitchControl
+        handleSwitchParent={handleSwitchGallery}
+        currentValue={isFavoriteView}
+        title="Show liked onlyyy"
+      />
+
       <ScrollView style={tw`w-full pt-4`}>
         <View style={tw`flex-1 items-center`}>{tempGallery}</View>
       </ScrollView>
