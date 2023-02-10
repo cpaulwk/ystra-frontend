@@ -21,8 +21,8 @@ import { addItem } from "../reducers/user";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { BACKEND_URL } from "@env";
-import SwitchControl from "../components/uiKit/SwitchControl";
-import CardsGallery from "../components/uiKit/CardsGallery";
+import SwitchControl from "../components/uikit/SwitchControl";
+import CardsGallery from "../components/uikit/CardsGallery";
 
 export default function Gallery({ navigation }) {
   console.log("Gallery =>", BACKEND_URL);
@@ -124,6 +124,7 @@ export default function Gallery({ navigation }) {
         .map(showCards)
     )
     .flat();
+  console.log(tempGallery);
   // La méthode flat() permet de créer un nouveau tableau contenant les éléments des sous-tableaux du tableau passé en argument
 
   return (
@@ -153,7 +154,7 @@ export default function Gallery({ navigation }) {
       <SwitchControl
         handleSwitchParent={handleSwitchGallery}
         currentValue={isFavoriteView}
-        title="Show liked onlyyy"
+        title="Show liked only"
       />
 
       <ScrollView style={tw`w-full pt-4`}>

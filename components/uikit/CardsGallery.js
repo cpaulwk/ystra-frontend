@@ -26,7 +26,7 @@ export default function CardsGallery(props) {
         />
       </TouchableOpacity>
 
-      <View style={tw`absolute right-1 flex justify-around h-full mr-2 my-2`}>
+      <View style={tw`absolute right-1 flex justify-around h-full mr-2`}>
         <ButtonIcon
           onPress={handleSharing.bind(this, item.url)}
           url={props.item.url}
