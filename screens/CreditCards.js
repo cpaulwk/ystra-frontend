@@ -95,6 +95,10 @@ export default function Basket({ navigation }) {
       return;
     }
 
+    navigation.navigate("CheckoutScreen");
+    return;
+
+
     console.log("Kylian", order.token);
     fetch(`${BACKEND_URL}/orders/new`, {
       method: "POST",
