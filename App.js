@@ -26,8 +26,7 @@ import Adress from "./screens/Adress";
 import OrderConfirmation from "./screens/OrderConfirmation";
 import CreditCards from "./screens/CreditCards";
 
-import Paiement from "./screens/Paiement";
-import CheckoutScreen  from "./components/CheckoutScreen";
+import CheckoutScreen from "./components/CheckoutScreen";
 
 //import Reducer
 import user from "./reducers/user";
@@ -113,9 +112,7 @@ export default function App() {
               component={OrderConfirmation}
             />
 
-            <Stack.Screen name="Paiement" component={Paiement}/>
-            <Stack.Screen name="CheckoutScreen" component={CheckoutScreen}/>
-
+            <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
