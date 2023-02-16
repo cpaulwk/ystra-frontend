@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, ImageBackground, Image } from "react-native";
 import tw from "twrnc";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -9,6 +8,7 @@ import ConfirmationBlock from "../components/ConfirmationBlock";
 import LoginBlock from "../components/LoginBlock";
 import RegistrationBlock from "../components/RegistrationBlock";
 import WelcomeBlock from "../components/WelcomeBlock";
+import ReturnButton from "../components/uikit/ReturnButton";
 
 export default function Welcome({ navigation }) {
   const [canReturn, setCanReturn] = useState(false);
@@ -71,14 +71,7 @@ export default function Welcome({ navigation }) {
       source={require("../assets/background.jpg")}
       resizeMode="cover"
     >
-      {canReturn && (
-        <TouchableOpacity
-          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%] opacity-50`}
-          onPress={() => handleReturn()}
-        >
-          <FontAwesome name="chevron-left" size={20} />
-        </TouchableOpacity>
-      )}
+      {canReturn && <ReturnButton onPress={handleReturn} />}
       <View style={tw`flex items-center h-full w-full`}>
         <Image
           style={tw`h-27.125 w-35 mt-16.25`}
