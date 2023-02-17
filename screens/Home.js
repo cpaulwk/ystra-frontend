@@ -36,6 +36,7 @@ export default function Home({ navigation }) {
   const products = useSelector((state) => state.product.products);
   const dispatch = useDispatch();
 
+  console.log('BACKEND_URL', BACKEND_URL);
   useEffect(() => {
     fetch(`${BACKEND_URL}/products/all/${user.token}`)
       .then((response) => response.json())
@@ -62,6 +63,7 @@ export default function Home({ navigation }) {
     }
 
     console.log(user.token, textQuery);
+    console.log('BACKEND_URL', BACKEND_URL);
 
     fetch(`${BACKEND_URL}/renderimages`, {
       method: "POST",
