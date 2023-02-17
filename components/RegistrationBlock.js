@@ -1,10 +1,10 @@
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState } from "react";
 import tw from "twrnc";
 import { BACKEND_URL } from "@env";
 import InputFieldWithIcon from "./uikit/InputFieldWithIcon";
+import ButtonWithText from "./uikit/ButtonWithText";
 import {
   PasswordValidation,
   EmailValidation,
@@ -19,11 +19,6 @@ export default function RegistrationBlock({
   const [errorMessage, setErrorMessage] = useState("");
   const [isBadUserInput, setIsBadUserInput] = useState(false);
   const [form, setForm] = useState({});
-
-  const handleReturn = () => {
-    handleSelectedPage("Welcome");
-    handleCanReturn(true);
-  };
 
   const handleRegister = () => {
     const { result } = EmailValidation(form["Email"]);
@@ -129,24 +124,20 @@ export default function RegistrationBlock({
 
       {/* Buttons */}
       <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
-        <TouchableOpacity
-          style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
-          onPress={() => handleRegister()}
+        <ButtonWithText
+          size="small"
+          color="black"
           disabled={disableButton}
-        >
-          <Text style={tw`text-4 text-white font-semibold`}>Sign up</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
-          onPress={() => {
-            handleReturn();
-          }}
-        >
-          <Text style={tw`text-4 text-white font-semibold`}>
-            Sign up with Google
-          </Text>
-        </TouchableOpacity>
+          margin="mb-15"
+          onPress={handleRegister}
+          text="Sign up"
+        />
+        <ButtonWithText
+          size="small"
+          color="[#2C6DB4]"
+          disabled={disableButton}
+          text="Sign up with Google"
+        />
       </View>
     </View>
   );

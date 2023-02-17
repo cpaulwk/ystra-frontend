@@ -52,7 +52,8 @@ export default function Adress({ navigation }) {
     };
     dispatch(addAdress(deliveryAdress));
 
-    navigation.navigate("CreditCards");
+    // navigation.navigate("CreditCards");
+    navigation.navigate("OrderSummary");
   };
 
  

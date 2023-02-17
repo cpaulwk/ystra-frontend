@@ -3,7 +3,6 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  FlatList,
   ScrollView,
   StyleSheet,
 } from "react-native";
@@ -11,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { removeBasketItem } from "../reducers/user";
+import ButtonWithText from "../components/uikit/ButtonWithText";
 
 export default function Basket({ navigation }) {
   const dispatch = useDispatch();
@@ -105,12 +105,11 @@ export default function Basket({ navigation }) {
           <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
         </View>
         <View style={tw`flex-row justify-center pb-[10%]`}>
-          <TouchableOpacity
-            style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-full border-[#161E44]`}
+          <ButtonWithText
+            color="[#2C6DB4]"
             onPress={() => navigation.navigate("Adress")}
-          >
-            <Text style={tw`font-medium	text-2xl text-[#FFFF]`}>Pay</Text>
-          </TouchableOpacity>
+            text="Pay"
+          />
         </View>
       </View>
       {/* <View

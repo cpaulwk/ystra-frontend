@@ -1,11 +1,11 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { Text, View } from "react-native";
 import { useState } from "react";
 import tw from "twrnc";
 import { BACKEND_URL } from "@env";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/user";
 import InputFieldWithIcon from "./uikit/InputFieldWithIcon";
+import ButtonWithText from "./uikit/ButtonWithText";
 
 export default function LoginBlock({
   navigation,
@@ -98,24 +98,20 @@ export default function LoginBlock({
       </View>
 
       {/* Buttons */}
-      <View style={tw`flex items-center mb-[20%] w-full px-[1%]`}>
-        <TouchableOpacity
-          style={tw`flex justify-center items-center bg-black rounded-1.75 opacity-90 h-13 w-[90%] mb-15`}
-          onPress={() => handleLogin()}
-        >
-          <Text style={tw`text-4 text-white font-semibold`}>Sign in</Text>
-        </TouchableOpacity>
+      <View style={tw`flex justify-end items-center mb-[20%] w-full px-[1%]`}>
+        <ButtonWithText
+          size="small"
+          color="black"
+          margin="mb-15"
+          onPress={handleLogin}
+          text="Sign in"
+        />
 
-        <TouchableOpacity
-          style={tw`flex justify-center items-center bg-[#2C6DB4] rounded-1.75 opacity-90 h-13 w-[90%]`}
-          onPress={() => {
-            handleCanReturn(true);
-          }}
-        >
-          <Text style={tw`text-4 text-white font-semibold`}>
-            Sign in with Google
-          </Text>
-        </TouchableOpacity>
+        <ButtonWithText
+          size="small"
+          color="[#2C6DB4]"
+          text="Sign in with Google"
+        />
       </View>
     </View>
   );

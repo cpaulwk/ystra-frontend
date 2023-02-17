@@ -21,6 +21,8 @@ import {
 import { cleanBasket } from "../reducers/user";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { BACKEND_URL } from "@env";
+import ButtonWithText from "../components/uikit/ButtonWithText";
+import ReturnButton from "../components/uikit/ReturnButton";
 
 export default function Basket({ navigation }) {
   const dispatch = useDispatch();
@@ -98,7 +100,6 @@ export default function Basket({ navigation }) {
     navigation.navigate("CheckoutScreen");
     return;
 
-
     console.log("Kylian", order.token);
     fetch(`${BACKEND_URL}/orders/new`, {
       method: "POST",
@@ -133,12 +134,7 @@ export default function Basket({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={tw`flex-1 justify-between items-center`}>
-        <TouchableOpacity
-          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[7%] opacity-50`}
-          onPress={() => handleReturn()}
-        >
-          <FontAwesome name="chevron-left" size={20} />
-        </TouchableOpacity>
+        <ReturnButton withHeader={true} onPress={handleReturn} />
         <View style={styles.header}>
           <Text style={tw`text-6 font-bold opacity-70`}>Add payment</Text>
         </View>
@@ -249,20 +245,17 @@ export default function Basket({ navigation }) {
           </View>
         </View>
         <View
-          style={tw`flex-row bg-[#F4F3EE] justify-between w-[80%] rounded-2 border border-[#AFAFAF] p-5 mb-5`}
+          style={tw`flex-row bg-[#F4F3EE] justify-between w-[85%] rounded-2 border border-[#AFAFAF] p-5 mb-5`}
         >
           <Text style={tw`text-6 font-medium`}>Total:</Text>
           <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
         </View>
-        <View style={tw`flex-row justify-center w-full mb-[20%]`}>
-          <TouchableOpacity
-            style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%] border-[#161E44]`}
-            onPress={() => confirmOrder()}
-          >
-            <Text style={tw`font-medium text-2xl text-[#FFFF]`}>
-              Confirm payment
-            </Text>
-          </TouchableOpacity>
+        <View style={tw`flex-row justify-center w-[85%] mb-[20%]`}>
+          <ButtonWithText
+            color="[#2C6DB4]"
+            onPress={confirmOrder}
+            text="Confirm payment"
+          />
         </View>
       </View>
     </TouchableWithoutFeedback>
