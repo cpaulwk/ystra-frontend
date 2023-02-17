@@ -116,7 +116,7 @@ export default function Adress({ navigation }) {
         </ScrollView>
 
         {/* Buttons */}
-        <View style={tw`border flex-row justify-center mb-[10%]`}>
+        <View style={tw`flex-row justify-center mb-[10%]`}>
           <TouchableOpacity
             style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
             onPress={() => handleAdress(form)}

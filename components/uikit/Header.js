@@ -5,9 +5,7 @@ import tw from "twrnc";
 export default function Header(props) {
   let returnButtonComponent = <></>;
   if (props.doesContainReturnButtonComponent) {
-    returnButtonComponent = (
-      <ReturnButton withHeader={true} onPress={props.onPress} />
-    );
+    returnButtonComponent = <ReturnButton onPress={props.onPress} />;
   }
   return (
     <View style={styles.header}>

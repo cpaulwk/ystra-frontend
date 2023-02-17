@@ -134,7 +134,7 @@ export default function Basket({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={tw`flex-1 justify-between items-center`}>
-        <ReturnButton withHeader={true} onPress={handleReturn} />
+        <ReturnButton onPress={handleReturn} />
         <View style={styles.header}>
           <Text style={tw`text-6 font-bold opacity-70`}>Add payment</Text>
         </View>
