@@ -289,7 +289,7 @@ export default function OrderSummary({ navigation }) {
     });
     if (!error) {
       // The Proceed to payment button is activated
-      setActiveButtonColor("blue");
+      // setActiveButtonColor("blue");
       setLoading(true);
     }
   };
