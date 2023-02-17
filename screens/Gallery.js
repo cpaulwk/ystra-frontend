@@ -1,18 +1,11 @@
 import {
-  ImageBackground,
-  KeyboardAvoidingView,
   View,
-  Text,
   TouchableOpacity,
   StyleSheet,
-  TextInput,
   Image,
   Modal,
-  Switch,
   ScrollView,
-  SafeAreaView,
 } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
@@ -23,6 +16,7 @@ import * as Sharing from "expo-sharing";
 import { BACKEND_URL } from "@env";
 import SwitchControl from "../components/uikit/SwitchControl";
 import CardsGallery from "../components/uikit/CardsGallery";
+import Header from "../components/uikit/Header";
 
 export default function Gallery({ navigation }) {
   console.log("Gallery =>", BACKEND_URL);
@@ -147,9 +141,7 @@ export default function Gallery({ navigation }) {
         </TouchableOpacity>
       </Modal>
 
-      <View style={styles.header}>
-        <Text style={tw`text-6 font-bold opacity-70`}>Gallery</Text>
-      </View>
+      <Header doesContainReturnButtonComponent={false} title="Gallery" />
 
       <SwitchControl
         handleSwitchParent={handleSwitchGallery}
@@ -171,27 +163,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     height: "100%",
-    width: "100%",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 5.3,
-
-    elevation: 18,
-  },
-
-  header: {
-    zIndex: 10,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    backgroundColor: "#F2EFEA",
-    paddingBottom: 25,
-    height: "15%",
     width: "100%",
     shadowColor: "#000000",
     shadowOffset: {

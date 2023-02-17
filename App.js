@@ -103,6 +103,7 @@ export default function App() {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
             <Stack.Screen name="Adress" component={Adress} />
             <Stack.Screen name="Basket" component={Basket} />
@@ -113,7 +114,6 @@ export default function App() {
               component={OrderConfirmation}
             />
             <Stack.Screen name="OrderSummary" component={OrderSummary} />
-            <Stack.Screen name="Welcome" component={Welcome} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

@@ -59,11 +59,13 @@ export default function LoginBlock({
   const inputFields = [
     {
       name: "Email",
+      placeholder: "Type your email here",
       iconName: "envelope-o",
       secureText: false,
     },
     {
       name: "Password",
+      placeholder: "Type your password here",
       iconName: "lock",
       secureText: true,
     },
@@ -82,8 +84,9 @@ export default function LoginBlock({
           {inputFields.map((e) => (
             <InputFieldWithIcon
               key={e.name}
+              name={e.name}
               secureTextEntry={e.secureText}
-              placeholder={e.name}
+              placeholder={e.placeholder}
               value={form[e.name]}
               onChangeText={handleForm}
               iconName={e.iconName}

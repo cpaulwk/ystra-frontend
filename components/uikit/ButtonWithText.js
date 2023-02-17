@@ -2,7 +2,7 @@ import { Text, TouchableOpacity } from "react-native";
 import tw from "twrnc";
 
 export default function ButtonWithText(props) {
-  console.log("props =>", props);
+  // console.log("props =>", props);
   const buttonSize = {
     fontSize: "",
     fontWeight: "",
