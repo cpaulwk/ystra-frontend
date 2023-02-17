@@ -363,9 +363,7 @@ export default function OrderSummary({ navigation }) {
           <TouchableWithoutFeedback onPress={() => setOpenModal(false)}>
             <View style={tw`absolute w-full h-full bg-black opacity-70`}></View>
           </TouchableWithoutFeedback>
-          <View
-            style={tw`flex h-[70%] w-[40%] items-center bg-white rounded-4 py-2`}
-          >
+          <View style={tw`flex w-[40%] items-center bg-white rounded-4 py-2`}>
             <Text style={tw`mb-2 text-4 font-bold opacity-70`}>Quantity</Text>
             <ScrollView style={tw`w-full`}>
               <View style={tw`flex items-center`}>{quantityList(5)}</View>

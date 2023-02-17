@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, ImageBackground, Image } from "react-native";
+import { View, ImageBackground, Image } from "react-native";
 import tw from "twrnc";
 
 import { useState, useEffect } from "react";
@@ -71,7 +71,9 @@ export default function Welcome({ navigation }) {
       source={require("../assets/background.jpg")}
       resizeMode="cover"
     >
-      {canReturn && <ReturnButton onPress={handleReturn} />}
+      {canReturn && (
+        <ReturnButton withoutHeader={true} onPress={handleReturn} />
+      )}
       <View style={tw`flex items-center h-full w-full`}>
         <Image
           style={tw`h-27.125 w-35 mt-16.25`}

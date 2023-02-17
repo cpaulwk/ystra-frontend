@@ -14,7 +14,7 @@
     "@react-navigation/native": "6",
     "@react-navigation/native-stack": "6",
     "@reduxjs/toolkit": "^1.9.1",
-    "@stripe/stripe-react-native": "^0.23.3",
+    "@stripe/stripe-react-native": "0.19.0",
     "expo": "~47.0.8",
     "expo-file-system": "~15.1.1",
     "expo-sharing": "~11.0.1",
