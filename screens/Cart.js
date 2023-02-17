@@ -1,16 +1,10 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { removeBasketItem } from "../reducers/user";
 import ButtonWithText from "../components/uikit/ButtonWithText";
+import Header from "../components/uikit/Header";
 
 export default function Basket({ navigation }) {
   const dispatch = useDispatch();
@@ -88,9 +82,7 @@ export default function Basket({ navigation }) {
 
   return (
     <View style={tw`flex-1 bg-[#F2EFEA] items-center`}>
-      <View style={styles.header}>
-        <Text style={tw`text-6 font-bold opacity-70`}>Buy Prints</Text>
-      </View>
+      <Header doesContainReturnButtonComponent={false} title="Buy Prints" />
       <ScrollView style={tw`w-full bg-white`}>
         <View style={tw`flex items-center border-b border-[#AFAFAF]`}>
           {showCart}
@@ -112,39 +104,6 @@ export default function Basket({ navigation }) {
           />
         </View>
       </View>
-      {/* <View
-            style={tw`absolute mt-148 justify-center flex-row w-full pt-16`}>
-            <TouchableOpacity
-              style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
-              onPress={() => navigation.navigate("Cart")}>
-              <Text style={tw`font-medium		 text-2xl text-[#FFFF]`}>
-                Add to Cart
-              </Text>
-            </TouchableOpacity>
-          </View> */}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    zIndex: 10,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    backgroundColor: "#F2EFEA",
-    paddingBottom: 25,
-    height: "15%",
-    width: "100%",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 5.3,
-
-    elevation: 18,
-  },
-});

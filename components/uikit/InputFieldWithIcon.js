@@ -15,7 +15,7 @@ export default function InputFieldWithIcon(props) {
         placeholder={props.placeholder}
         value={props.value}
         onChangeText={(value) => {
-          props.onChangeText(value, props.placeholder);
+          props.onChangeText(value, props.name);
         }}
         style={tw`${iconStyle}`}
         autoCapitalize="none"

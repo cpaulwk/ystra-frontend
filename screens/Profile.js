@@ -13,6 +13,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { logout } from "../reducers/user";
 import { BACKEND_URL } from "@env";
+import Header from "../components/uikit/Header";
 
 export default function Adress({ navigation }) {
   console.log("backend =>", BACKEND_URL);
@@ -348,41 +349,12 @@ export default function Adress({ navigation }) {
     <View
       style={tw`flex-1 justify-between items-center w-full h-full bg-[#F2EFEA] 	`}
     >
-      {canReturn && (
-        <TouchableOpacity
-          style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[7%] opacity-50`}
-          onPress={() => handleReturn()}
-        >
-          <FontAwesome name="chevron-left" size={20} />
-        </TouchableOpacity>
-      )}
-      <View style={styles.header}>
-        <Text style={tw`text-6 font-bold opacity-70`}>{headerTitle}</Text>
-      </View>
+      <Header
+        doesContainReturnButtonComponent={canReturn}
+        onPress={handleReturn}
+        title={headerTitle}
+      />
       {showSetting}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    zIndex: 10,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    backgroundColor: "#F2EFEA",
-    paddingBottom: 25,
-    height: "15%",
-    width: "100%",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 5.3,
-
-    elevation: 18,
-  },
-});

@@ -3,7 +3,6 @@ import {
   Alert,
   Image,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -14,7 +13,7 @@ import tw from "twrnc";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { removeBasketItem } from "../reducers/user";
 import ButtonWithText from "../components/uikit/ButtonWithText";
-import ReturnButton from "../components/uikit/ReturnButton";
+import Header from "../components/uikit/Header";
 import { BACKEND_URL } from "@env";
 import { removeOrder } from "../reducers/order";
 import { cleanBasket } from "../reducers/user";
@@ -317,30 +316,33 @@ export default function OrderSummary({ navigation }) {
   return (
     <StripeProvider publishableKey="pk_test_51Ma3OsFo81GGwjYJ2jgvbWDBVfs1qDX95WhLoTvTQ3Fx5CAgCgTmfpWpzU2L0RdZUWvbExD5CnMVXno9vxfGYmAA001xlVdXRt">
       <View style={tw`flex-1 bg-[#F2EFEA] items-center`}>
-        <ReturnButton withHeader={true} onPress={handleReturn} />
-        <View style={styles.header}>
-          <Text style={tw`text-6 font-bold opacity-70`}>Order Summary</Text>
-        </View>
-        <ScrollView style={tw`w-full bg-white`}>
-          <View style={tw`flex items-center border-b border-[#AFAFAF]`}>
-            {showCart}
-          </View>
-        </ScrollView>
+        <Header
+          doesContainReturnButtonComponent={true}
+          onPress={handleReturn}
+          title="Order Summary"
+        />
+        <View style={tw`flex-1 items-center w-full`}>
+          <ScrollView style={tw`w-full bg-white`}>
+            <View style={tw`flex items-center border-b border-[#AFAFAF]`}>
+              {showCart}
+            </View>
+          </ScrollView>
 
-        <View style={tw`w-[80%] mt-5`}>
-          <View
-            style={tw`flex-row bg-[#F4F3EE] justify-between rounded-2 border border-[#AFAFAF] mb-5 p-5`}
-          >
-            <Text style={tw`text-6 font-medium`}>Total:</Text>
-            <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
-          </View>
-          <View style={tw`flex-row justify-center pb-[10%]`}>
-            <ButtonWithText
-              color="[#2C6DB4]"
-              disabled={!loading}
-              onPress={openPaymentSheet}
-              text="Proceed to payment"
-            />
+          <View style={tw`h-[20%] w-[80%] mt-5 mb-10`}>
+            <View
+              style={tw`flex-row bg-[#F4F3EE] justify-between rounded-2 border border-[#AFAFAF] mb-5 p-5`}
+            >
+              <Text style={tw`text-6 font-medium`}>Total:</Text>
+              <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
+            </View>
+            <View style={tw`flex-row justify-center`}>
+              <ButtonWithText
+                color="[#2C6DB4]"
+                disabled={!loading}
+                onPress={openPaymentSheet}
+                text="Proceed to payment"
+              />
+            </View>
           </View>
         </View>
         {/* <View
@@ -374,26 +376,3 @@ export default function OrderSummary({ navigation }) {
     </StripeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    zIndex: 10,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    backgroundColor: "#F2EFEA",
-    paddingBottom: 25,
-    height: "15%",
-    width: "100%",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 5.3,
-
-    elevation: 18,
-  },
-});
