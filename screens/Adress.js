@@ -23,18 +23,9 @@ export default function Adress({ navigation }) {
   };
   const user = useSelector((state) => state.user.value);
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [streetName, setStreetName] = useState("");
-  const [streetName2, setStreetName2] = useState("");
-  const [city, setCity] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
   const { form, handleForm, bind } = useForm();
 
   const handleAdress = (e) => {
-    console.log("form", e);
     const deliveryAdress = {
       addressName: `${e.firstName} ${e.lastName}`,
       street: e.streetName,

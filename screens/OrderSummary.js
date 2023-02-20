@@ -8,7 +8,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { removeBasketItem } from "../reducers/user";
@@ -18,6 +17,7 @@ import { BACKEND_URL } from "@env";
 import { removeOrder } from "../reducers/order";
 import { cleanBasket } from "../reducers/user";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function OrderSummary({ navigation }) {
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ export default function OrderSummary({ navigation }) {
   const [openModal, setOpenModal] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   console.log("Boucif --->", user.basket);
+  console.log("address =>", order.addressDelivery);
 
   const handleReturn = () => {
     setCanReturn(false);
@@ -95,6 +96,38 @@ export default function OrderSummary({ navigation }) {
     }
     return newList;
   };
+
+  const addressBlock = (
+    <TouchableOpacity
+      onPress={() => {}}
+      style={tw`border-t border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white mb-5`}
+    >
+      <View style={tw`flex-row justify-between items-center w-[90%]`}>
+        <View style={tw`flex jusfify-center`}>
+          <Text style={tw`text-5 font-bold opacity-70 ml-5`}>
+            {order.addressDelivery.addressName}
+          </Text>
+          <Text style={tw`text-5 font-bold opacity-70 ml-5`}>
+            {order.addressDelivery.street}
+          </Text>
+          <Text style={tw`text-5 font-bold opacity-70 ml-5`}>
+            {order.addressDelivery.zipCode} {order.addressDelivery.city},{" "}
+            {order.addressDelivery.country}
+          </Text>
+        </View>
+        <View style={tw`flex-row justify-end items-center`}>
+          <FontAwesome
+            style={tw`mr-5`}
+            name="user-circle-o"
+            size={35}
+            selectionColor="red"
+          />
+          <FontAwesome name="chevron-right" size={20} selectionColor="red" />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
   // MAP
   const showCart = user.basket.map((element, index) => {
     console.log("ok", element);
@@ -322,6 +355,12 @@ export default function OrderSummary({ navigation }) {
           title="Order Summary"
         />
         <View style={tw`flex-1 items-center w-full`}>
+          <View style={tw`flex-row items-center w-full mb-2 mt-7`}>
+            <Text style={tw`text-5 font-bold opacity-70 ml-5`}>
+              Shipping Address
+            </Text>
+          </View>
+          {addressBlock}
           <ScrollView style={tw`w-full bg-white`}>
             <View style={tw`flex items-center border-b border-[#AFAFAF]`}>
               {showCart}
@@ -330,10 +369,18 @@ export default function OrderSummary({ navigation }) {
 
           <View style={tw`h-[20%] w-[80%] mt-5 mb-10`}>
             <View
-              style={tw`flex-row bg-[#F4F3EE] justify-between rounded-2 border border-[#AFAFAF] mb-5 p-5`}
+              style={tw`flex bg-[#F4F3EE] justify-between rounded-2 border border-[#AFAFAF] mb-5 px-5 py-3`}
             >
-              <Text style={tw`text-6 font-medium`}>Total:</Text>
-              <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
+              <View
+                style={tw`flex-row justify-between items-center w-full mb-2`}
+              >
+                <Text style={tw`text-6 font-medium`}>Shipping fee:</Text>
+                <Text style={tw`text-6 font-medium`}>Free</Text>
+              </View>
+              <View style={tw`flex-row justify-between items-center w-full`}>
+                <Text style={tw`text-6 font-medium`}>Total:</Text>
+                <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
+              </View>
             </View>
             <View style={tw`flex-row justify-center`}>
               <ButtonWithText

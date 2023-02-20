@@ -8,7 +8,7 @@ export default function ReturnButton(props) {
   let absolute = "";
 
   if (props.withoutHeader) {
-    console.log("Reached this line");
+    // console.log("Reached this line");
     top = "10";
     left = "[5%]";
     absolute = "absolute";
