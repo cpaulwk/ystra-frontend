@@ -1,27 +1,66 @@
-import { View, Text, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  ScrollView,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
-import { removeBasketItem } from "../reducers/user";
+import { changeItemQuantity, removeBasketItem } from "../reducers/user";
 import ButtonWithText from "../components/uikit/ButtonWithText";
 import Header from "../components/uikit/Header";
 import CartItem from "../components/uikit/CartItem";
+import ModalQuantityList from "../components/uikit/ModalQuantityList";
+import { useState, useEffect } from "react";
 
 export default function Basket({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-  const total = user.basket.reduce((accu, current) => accu + current.price, 0);
-  console.log("Boucif --->", user.basket);
+  const total = user.basket.reduce(
+    (accu, current) => accu + current.price * current.quantity,
+    0
+  );
+  const [quantity, setQuantity] = useState("1");
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [cartItemInfo, setCartItemInfo] = useState([]);
 
   const handleDelete = (index) => {
     dispatch(removeBasketItem(index));
   };
 
+  const changeQuantity = (image) => {
+    setOpenModal(true);
+    setSelectedImage(image);
+  };
+
+  const updateItemInfo = (value, image) => {
+    setCartItemInfo(
+      cartItemInfo.filter((item) => {
+        item.imageResult_id = image;
+      })
+    );
+  };
+  const handleSelectedQuantity = (value, image) => {
+    console.log("value =>", value);
+    setQuantity(value);
+    setOpenModal(false);
+    dispatch(changeItemQuantity({ quantity: value, imageResult_id: image }));
+    console.log("user.basket =>", user.basket);
+  };
+
   // MAP
   const showCart = user.basket.map((element, index) => {
-    console.log("element =>", element);
-
     return (
-      <CartItem {...element} key={index} onPress={handleDelete} index={index} />
+      <CartItem
+        {...element}
+        key={index}
+        onPress={handleDelete}
+        index={index}
+        changeQuantity={changeQuantity}
+        handleSelectedQuantity={handleSelectedQuantity}
+      />
     );
   });
 
@@ -49,6 +88,15 @@ export default function Basket({ navigation }) {
           />
         </View>
       </View>
+      {openModal && (
+        <ModalQuantityList
+          quantityList={5}
+          handleSelectedQuantity={handleSelectedQuantity}
+          setOpenModal={setOpenModal}
+          changeItemQuantity={changeItemQuantity}
+          selectedImage={selectedImage}
+        />
+      )}
     </View>
   );
 }

@@ -13,6 +13,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { removeBasketItem } from "../reducers/user";
 import ButtonWithText from "../components/uikit/ButtonWithText";
 import Header from "../components/uikit/Header";
+import CartItem from "../components/uikit/CartItem";
 import { BACKEND_URL } from "@env";
 import { removeOrder } from "../reducers/order";
 import { cleanBasket } from "../reducers/user";
@@ -103,7 +104,7 @@ export default function OrderSummary({ navigation }) {
       style={tw`border-t border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white mb-5`}
     >
       <View style={tw`flex-row justify-between items-center w-[90%]`}>
-        <View style={tw`flex jusfify-center`}>
+        <View style={tw`flex justify-center`}>
           <Text style={tw`text-5 font-bold opacity-70 ml-5`}>
             {order.addressDelivery.addressName}
           </Text>
@@ -130,7 +131,7 @@ export default function OrderSummary({ navigation }) {
 
   // MAP
   const showCart = user.basket.map((element, index) => {
-    console.log("ok", element);
+    console.log("element =>", element);
 
     // Order item component
     return (

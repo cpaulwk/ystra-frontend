@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import tw from "twrnc";

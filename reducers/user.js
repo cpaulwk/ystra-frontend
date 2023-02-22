@@ -37,6 +37,14 @@ export const userSlice = createSlice({
     cleanBasket: (state, action) => {
       state.value.basket = [];
     },
+    changeItemQuantity: (state, action) => {
+      let result = state.value.basket.findIndex(
+        (e) => e.imageResult_id === action.payload.imageResult_id
+      );
+      if (result > -1) {
+        state.value.basket[result].quantity = action.payload.quantity;
+      }
+    },
   },
 });
 
@@ -47,5 +55,6 @@ export const {
   addBasketItem,
   removeBasketItem,
   cleanBasket,
+  changeItemQuantity,
 } = userSlice.actions;
 export default userSlice.reducer;
