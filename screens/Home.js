@@ -1,7 +1,6 @@
 import {
   ActivityIndicator,
   Image,
-  ImageBackground,
   Keyboard,
   KeyboardAvoidingView,
   Modal,
@@ -12,6 +11,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import CardsGallery from "../components/uikit/CardsGallery";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Swiper from "react-native-swiper";
 import tw from "twrnc";
@@ -31,14 +31,16 @@ export default function Home({ navigation }) {
   const [resultQuery, setResultQuery] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState({
+    visible: false,
+    url: "",
+  });
   const user = useSelector((state) => state.user.value);
-  const products = useSelector((state) => state.product.products);
   const dispatch = useDispatch();
 
-  console.log('BACKEND_URL', BACKEND_URL);
   useEffect(() => {
     fetch(`${BACKEND_URL}/products/all/${user.token}`)
+      // fetch(`http://192.168.1.14:3000/products/all/${user.token}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
@@ -59,13 +61,13 @@ export default function Home({ navigation }) {
     setIsLoading(true);
     setIsSearching(true);
     if (!user.token || !textQuery) {
+      setIsLoading(false);
+      setIsSearching(false);
       return;
     }
 
-    console.log(user.token, textQuery);
-    console.log('BACKEND_URL', BACKEND_URL);
-
     fetch(`${BACKEND_URL}/renderimages`, {
+      // fetch(`http://192.168.1.14:3000/renderimages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -75,11 +77,11 @@ export default function Home({ navigation }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Boucif", data);
         setIsSearching(data.result ? true : false);
-        setResultQuery(data.imagesUrl ? data.imagesUrl : []);
+        setResultQuery(data.result ? data.data : []);
         setIsLoading(false);
-      });
+      })
+      .catch((error) => console.log("error =>", error));
   };
 
   // async function shareAsync(url, options = {}){
@@ -91,8 +93,7 @@ export default function Home({ navigation }) {
   // }
 
   const handleSelected = (itemId, isLiked) => {
-    console.log("ID", itemId);
-    fetch(`${BACKEND_URL}/renderimages/liked`, {
+    fetch(`${BACKEND_URL}/renderimages/checked`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -104,16 +105,14 @@ export default function Home({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          const x = resultQuery.map((x) => {
-            if (x._id === itemId) {
-              x.isSelected = isLiked;
+          const x = resultQuery.map((item) => {
+            if (item._id === itemId) {
+              item.isChecked = isLiked;
             }
-            return x;
+            return item;
           });
 
-          resultQueryx = x;
           setResultQuery(x);
-          console.log(resultQueryx);
         }
       });
   };
@@ -175,52 +174,21 @@ export default function Home({ navigation }) {
     },
   ];
 
-  //console.log("resultQuery", resultQuery);
-  const imageIA = resultQuery.map((elem, index) => {
+  const handleShowModal = (val) => {
+    setIsModalVisible(val);
+  };
+
+  const imageIA = resultQuery.map((item, index) => {
     return (
-      <View style={styles.image} key={index}>
-        {/* <Image source={ require('../assets/homescreen-background.jpg') } style={styles.photo}></Image> */}
-        <ImageBackground
-          style={tw`flex-row justify-end h-full w-full`}
-          resizeMode="cover"
-          source={{ uri: elem.url }}
-        >
-          <View style={tw`flex justify-between mr-2 my-2`}>
-            <TouchableOpacity
-              onPress={() => handleSharing(elem.url)}
-              style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.8 pt-0.2`}
-            >
-              <FontAwesome
-                name="share-square-o"
-                size={20}
-                selectionColor="red"
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => handleSelected(elem._id, !elem.isSelected)}
-              style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.2 pt-0.2`}
-            >
-              <FontAwesome
-                name="heart"
-                size={20}
-                color={elem.isSelected ? "red" : "black"}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => handleBasket(elem._id, elem.url)}
-              style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.5 pt-0.2`}
-            >
-              <FontAwesome
-                name="shopping-basket"
-                size={20}
-                selectionColor="red"
-              />
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
-      </View>
+      <CardsGallery
+        key={item._id}
+        item={item}
+        isHome={true}
+        handleShowModal={handleShowModal}
+        handleSharing={handleSharing}
+        handleBasket={handleBasket}
+        handleSelected={handleSelected}
+      />
     );
   });
   // const goTab=()=>{
@@ -232,6 +200,23 @@ export default function Home({ navigation }) {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={tw`bg-[#F2EFEA] flex-1 items-center justify-center h-[100%] w-[100%]`}
       >
+        <Modal
+          style={tw`bg-black w-full h-full`}
+          visible={isModalVisible.visible}
+          animationType="fade"
+          transparent
+        >
+          <TouchableOpacity
+            style={tw`flex-1 w-full justify-center items-center`}
+            onPress={() => setIsModalVisible({ visible: false, url: "" })}
+          >
+            <View style={tw`bg-black h-full w-full opacity-95`}></View>
+            <Image
+              style={tw`absolute w-[90%] aspect-square`}
+              source={{ uri: isModalVisible.url }}
+            />
+          </TouchableOpacity>
+        </Modal>
         <View style={styles.header}>
           <View style={tw`flex-row items-center justify-end w-[90%]`}>
             <TextInput
@@ -397,22 +382,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "25%",
     width: "100%",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 5.3,
-
-    elevation: 18,
-  },
-
-  image: {
-    display: "flex",
-    alignItems: "center",
-    height: "48%",
-    width: "48%",
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,

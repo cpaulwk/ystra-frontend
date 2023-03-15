@@ -59,13 +59,13 @@ export default function LoginBlock({
   const inputFields = [
     {
       name: "Email",
-      placeholder: "Type your email here",
+      placeholder: "Email",
       iconName: "envelope-o",
       secureText: false,
     },
     {
       name: "Password",
-      placeholder: "Type your password here",
+      placeholder: "Password",
       iconName: "lock",
       secureText: true,
     },

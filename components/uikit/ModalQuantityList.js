@@ -13,6 +13,7 @@ export default function ModalQuantityList(props) {
     for (let i = 1; i <= number; i++) {
       newList.push(
         <TouchableOpacity
+          key={i}
           activeOpacity={1}
           style={tw`flex items-center border-t border-[#AFAFAF] w-full py-2`}
           onPress={() => props.handleSelectedQuantity(i, props.selectedImage)}

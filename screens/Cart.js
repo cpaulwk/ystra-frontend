@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import { changeItemQuantity, removeBasketItem } from "../reducers/user";
@@ -12,7 +6,7 @@ import ButtonWithText from "../components/uikit/ButtonWithText";
 import Header from "../components/uikit/Header";
 import CartItem from "../components/uikit/CartItem";
 import ModalQuantityList from "../components/uikit/ModalQuantityList";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Basket({ navigation }) {
   const dispatch = useDispatch();
@@ -43,11 +37,9 @@ export default function Basket({ navigation }) {
     );
   };
   const handleSelectedQuantity = (value, image) => {
-    console.log("value =>", value);
     setQuantity(value);
     setOpenModal(false);
     dispatch(changeItemQuantity({ quantity: value, imageResult_id: image }));
-    console.log("user.basket =>", user.basket);
   };
 
   // MAP
@@ -68,7 +60,9 @@ export default function Basket({ navigation }) {
     <View style={tw`flex-1 bg-[#F2EFEA] items-center`}>
       <Header doesContainReturnButtonComponent={false} title="Buy Prints" />
       <ScrollView style={tw`w-full bg-white`}>
-        <View style={tw`flex items-center border-b border-[#AFAFAF]`}>
+        <View
+          style={tw`flex-col-reverse items-center border-b border-[#AFAFAF]`}
+        >
           {showCart}
         </View>
       </ScrollView>

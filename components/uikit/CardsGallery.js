@@ -1,52 +1,60 @@
 import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { useState } from "react";
 import tw from "twrnc";
 import ButtonIcon from "./ButtonIcon";
 
 export default function CardsGallery(props) {
-  const [isModalVisible, setIsModalVisible] = useState({
-    visible: false,
-    url: "",
-  });
-
-  const { handleShowModal, item, handleSharing, handleBasket, handleSelected } =
-    props;
-  //console.log(item);
+  const {
+    handleShowModal,
+    item,
+    handleSharing,
+    handleBasket,
+    handleSelected,
+    isHome,
+  } = props;
 
   return (
-    <View style={tw`h-50 w-[95%] m-1 rounded-2.5`} key={item._id}>
+    <View
+      style={
+        isHome ? tw`h-[48%] w-[48%]` : tw`border h-50 w-[95%] m-1 rounded-2.5`
+      }
+      key={item._id}
+    >
       <TouchableOpacity
         onPress={() => handleShowModal({ visible: true, url: item.url })}
         style={styles.card}
       >
         <Image
-          style={tw`rounded-2.5 border border-[#AFAFAF] flex-row justify-end h-full w-full`}
+          style={
+            isHome
+              ? tw`flex-row justify-end h-full w-full`
+              : tw`rounded-2.5 border border-[#AFAFAF] flex-row justify-end h-full w-full`
+          }
           resizeMode="cover"
           source={{ uri: item.url }}
         />
       </TouchableOpacity>
 
-      <View style={tw`absolute right-1 flex justify-around h-full mr-2`}>
+      <View style={tw`absolute right-3 flex justify-around h-full`}>
         <ButtonIcon
           onPress={handleSharing.bind(this, item.url)}
-          url={props.item.url}
           name="share-square-o"
           size={20}
-          selectionColor="red"
+          style={tw`pt-0.8 pl-0.5`}
         />
 
         <ButtonIcon
           onPress={handleSelected.bind(this, item._id, !item.isChecked)}
-          name={item.isChecked ? "times" : "heart"}
-          style={tw`mb-0.5`}
+          name={item.isChecked && !isHome ? "times" : "heart"}
           size={20}
+          style={item.isChecked ? tw`pl-0.4` : tw`pt-0.4 pl-0.2`}
+          likedColor={item.isChecked ? "#EE0B4F" : "black"}
         />
 
         <ButtonIcon
           onPress={handleBasket.bind(this, item._id, item.url)}
           name="shopping-basket"
           size={20}
-          selectionColor="red"
+          style={tw`pl-0.2`}
         />
       </View>
     </View>

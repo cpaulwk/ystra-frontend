@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
-import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../reducers/user";
 import tw from "twrnc";
 import { BACKEND_URL } from "@env";
 import InputFieldWithIcon from "./uikit/InputFieldWithIcon";
@@ -22,7 +23,6 @@ export default function RegistrationBlock({
 
   const handleRegister = () => {
     const { result } = EmailValidation(form["Email"]);
-    console.log("result =>", result);
     if (!result) {
       setErrorMessage("Invalid email address");
       setIsBadUserInput(!result);
@@ -30,7 +30,6 @@ export default function RegistrationBlock({
     }
 
     const { result: resultpwd } = PasswordValidation(form["Password"]);
-    console.log("resultpwd =>", resultpwd);
     if (!resultpwd) {
       setErrorMessage("Invalid password");
       setIsBadUserInput(true);
@@ -47,15 +46,15 @@ export default function RegistrationBlock({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log("data of registration => ", data);
         if (data.result) {
+          dispatch(login({ email: form["Email"], token: data.token }));
           handleSelectedPage("Confirmation");
 
           handleCanReturn(false);
           setCanReturn(false);
           handleUpdate(3);
           setDisableButton(true);
-          dispatch(login({ email: form["Email"], token: data.token }));
         } else {
           dispatch(login({ email: form["Email"], token: data.token }));
           //message d'erreur
@@ -107,6 +106,7 @@ export default function RegistrationBlock({
           {inputFields.map((e) => (
             <InputFieldWithIcon
               key={e.name}
+              name={e.name}
               secureTextEntry={e.secureText}
               placeholder={e.name}
               value={form[e.name]}
