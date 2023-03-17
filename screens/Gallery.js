@@ -15,7 +15,7 @@ export default function Gallery({ navigation }) {
   const user = useSelector((state) => state.user.value);
   const isFocused = useIsFocused();
   const [galleryImages, setGalleryImages] = useState([]);
-  const [isFavoriteView, setIsFavoriteView] = useState(true);
+  const [isFavoriteView, setIsFavoriteView] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState({
     visible: false,
     url: "",
