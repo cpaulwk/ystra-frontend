@@ -113,15 +113,28 @@ export default function App() {
                 gestureEnabled: false,
               }}
             />
-            <Stack.Screen name="Adress" component={Adress} />
-            <Stack.Screen name="Basket" component={Basket} />
+            <Stack.Screen
+              name="Adress"
+              component={Adress}
+              options={{ gestureEnabled: false }}
+            />
+            <Stack.Screen
+              name="Basket"
+              component={Basket}
+              options={{ gestureEnabled: false }}
+            />
             <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
             <Stack.Screen name="CreditCards" component={CreditCards} />
             <Stack.Screen
               name="OrderConfirmation"
               component={OrderConfirmation}
+              options={{ gestureEnabled: false }}
             />
-            <Stack.Screen name="OrderSummary" component={OrderSummary} />
+            <Stack.Screen
+              name="OrderSummary"
+              component={OrderSummary}
+              options={{ gestureEnabled: false }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

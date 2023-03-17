@@ -9,9 +9,11 @@ import ModalQuantityList from "../components/uikit/ModalQuantityList";
 import { BACKEND_URL } from "@env";
 import { removeOrder } from "../reducers/order";
 import {
+  changeItem,
   changeItemQuantity,
   cleanBasket,
   removeBasketItem,
+  previousScreen,
 } from "../reducers/user";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -36,9 +38,11 @@ export default function OrderSummary({ navigation }) {
   useEffect(() => {
     if (!total || !user.basket) {
       setLoading(false);
-      return;
+    } else {
+      setLoading(true);
     }
-    initializePaymentSheet();
+    reloadPaymentSheet();
+    console.log("initializePaymentSheet => ", initializePaymentSheet());
   }, [total]);
 
   const handleReturn = () => {
@@ -48,6 +52,27 @@ export default function OrderSummary({ navigation }) {
 
   const handleDelete = (index) => {
     dispatch(removeBasketItem(index));
+  };
+
+  const handleEdit = (itemId, itemUrl) => {
+    const itemToChange = {
+      imageResult_id: itemId,
+      url: itemUrl,
+      price: user.basket.find((item) => item.imageResult_id === itemId).price,
+      product: {
+        size: user.basket.find((item) => item.imageResult_id === itemId).product
+          .size,
+        finish: user.basket.find((item) => item.imageResult_id === itemId)
+          .product.finish,
+        frame: user.basket.find((item) => item.imageResult_id === itemId)
+          .product.frame,
+      },
+      quantity: quantity,
+    };
+    console.log("itemToChange => ", itemToChange);
+    dispatch(changeItem(itemToChange));
+    dispatch(previousScreen("OrderSummary"));
+    navigation.navigate("Basket");
   };
 
   const changeQuantity = (image) => {
@@ -125,7 +150,8 @@ export default function OrderSummary({ navigation }) {
       <CartItem
         {...element}
         key={index}
-        onPress={handleDelete}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
         index={index}
         changeQuantity={changeQuantity}
         handleSelectedQuantity={handleSelectedQuantity}
@@ -184,6 +210,11 @@ export default function OrderSummary({ navigation }) {
     }
   };
 
+  const reloadPaymentSheet = () => {
+    setLoading(false);
+    initializePaymentSheet();
+  };
+
   const openPaymentSheet0 = async () => {
     // see below
   };
@@ -217,7 +248,9 @@ export default function OrderSummary({ navigation }) {
           </View>
           {addressBlock}
           <ScrollView style={tw`w-full bg-white`}>
-            <View style={tw`flex items-center border-b border-[#AFAFAF]`}>
+            <View
+              style={tw`flex-col-reverse items-center border-b border-[#AFAFAF]`}
+            >
               {showCart}
             </View>
           </ScrollView>

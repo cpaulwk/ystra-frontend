@@ -1,16 +1,22 @@
 import { View, Text, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
-import { changeItemQuantity, removeBasketItem } from "../reducers/user";
+import {
+  changeItem,
+  changeItemQuantity,
+  removeBasketItem,
+  previousScreen,
+} from "../reducers/user";
 import ButtonWithText from "../components/uikit/ButtonWithText";
 import Header from "../components/uikit/Header";
 import CartItem from "../components/uikit/CartItem";
 import ModalQuantityList from "../components/uikit/ModalQuantityList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Basket({ navigation }) {
+export default function Cart({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
+  const product = useSelector((state) => state.product.products);
   const total = user.basket.reduce(
     (accu, current) => accu + current.price * current.quantity,
     0
@@ -19,9 +25,39 @@ export default function Basket({ navigation }) {
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [cartItemInfo, setCartItemInfo] = useState([]);
+  const [disableButton, setDisableButton] = useState(false);
+
+  useEffect(() => {
+    if (!total || !user.basket) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [total]);
 
   const handleDelete = (index) => {
     dispatch(removeBasketItem(index));
+  };
+
+  const handleEdit = (itemId, itemUrl) => {
+    const itemToChange = {
+      imageResult_id: itemId,
+      url: itemUrl,
+      price: user.basket.find((item) => item.imageResult_id === itemId).price,
+      product: {
+        size: user.basket.find((item) => item.imageResult_id === itemId).product
+          .size,
+        finish: user.basket.find((item) => item.imageResult_id === itemId)
+          .product.finish,
+        frame: user.basket.find((item) => item.imageResult_id === itemId)
+          .product.frame,
+      },
+      quantity: quantity,
+    };
+    console.log("itemToChange => ", itemToChange);
+    dispatch(changeItem(itemToChange));
+    dispatch(previousScreen("Cart"));
+    navigation.navigate("Basket");
   };
 
   const changeQuantity = (image) => {
@@ -48,7 +84,8 @@ export default function Basket({ navigation }) {
       <CartItem
         {...element}
         key={index}
-        onPress={handleDelete}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
         index={index}
         changeQuantity={changeQuantity}
         handleSelectedQuantity={handleSelectedQuantity}
@@ -79,6 +116,7 @@ export default function Basket({ navigation }) {
             color="[#2C6DB4]"
             onPress={() => navigation.navigate("Adress")}
             text="Pay"
+            disabled={disableButton}
           />
         </View>
       </View>

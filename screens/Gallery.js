@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import tw from "twrnc";
-import { addItem } from "../reducers/user";
+import { addItem, previousScreen } from "../reducers/user";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { BACKEND_URL } from "@env";
@@ -21,6 +21,9 @@ export default function Gallery({ navigation }) {
     url: "",
   });
   const dispatch = useDispatch();
+
+  console.log("user => ", user);
+  console.log("user.changeItem => ", user.changeItem);
 
   useEffect(() => {
     fetch(`${BACKEND_URL}/gallery/all/${user.token}`)
@@ -84,6 +87,7 @@ export default function Gallery({ navigation }) {
       quantity: 1,
     };
     dispatch(addItem(shopp));
+    dispatch(previousScreen("Gallery"));
     navigation.navigate("Basket");
   };
 
