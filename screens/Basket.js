@@ -22,9 +22,6 @@ export default function Basket({ navigation }) {
   const products = useSelector((state) => state.product.products);
   const user = useSelector((state) => state.user.value);
 
-  console.log("user.previousScreen => ", user.previousScreen);
-  console.log("user.changeItem => ", user.changeItem);
-
   useEffect(() => {
     if (user.changeItem) {
       setselectedSize(user.changeItem.product.size.name);
@@ -46,12 +43,12 @@ export default function Basket({ navigation }) {
       (elem) =>
         elem.nameProduct === selectedFinish && elem.typeProduct === "finish"
     );
-    console.log(selectedFinish, selectedFrame, selectedSize);
-    console.log(
-      priceSize?.priceProduct +
-        priceFrame?.priceProduct +
-        priceFinish?.priceProduct
-    );
+    // console.log(selectedFinish, selectedFrame, selectedSize);
+    // console.log(
+    //   priceSize?.priceProduct +
+    //     priceFrame?.priceProduct +
+    //     priceFinish?.priceProduct
+    // );
     setTotal(
       priceSize?.priceProduct +
         priceFrame?.priceProduct +
@@ -81,13 +78,11 @@ export default function Basket({ navigation }) {
       (elem) =>
         elem.nameProduct === selectedFinish && elem.typeProduct === "finish"
     );
-    // console.log("1", priceSize);
 
     let additem = Object.assign(
       {},
       user.changeItem ? user.changeItem : user.newItem
     );
-    // console.log("2", additem);
 
     additem.product = {
       size: {
@@ -112,7 +107,6 @@ export default function Basket({ navigation }) {
     additem.price = total;
     console.log("additem => ", additem);
     if (user.changeItem) {
-      console.log("updated!");
       dispatch(updateChangedItem(additem));
     } else {
       dispatch(addBasketItem(additem));

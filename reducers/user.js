@@ -31,7 +31,6 @@ export const userSlice = createSlice({
       state.value.basket.push(action.payload);
     },
     changeItem: (state, action) => {
-      console.log("itemToChange action.payload => ", action.payload);
       state.value.changeItem = action.payload;
     },
     cancelChangeItem: (state, action) => {
@@ -45,7 +44,6 @@ export const userSlice = createSlice({
       const newItem = action.payload;
       state.value.basket.splice(index, 1, newItem);
       state.value.changeItem = null;
-      console.log("state.value.changeItem => ", state.value.changeItem);
     },
     removeBasketItem: (state, action) => {
       // state.value.basket = state.value.basket.filter(

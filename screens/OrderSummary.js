@@ -34,7 +34,6 @@ export default function OrderSummary({ navigation }) {
   const [selectedImage, setSelectedImage] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
 
-  console.log("user.basket => ", user.basket);
   useEffect(() => {
     if (!total || !user.basket) {
       setLoading(false);
@@ -42,7 +41,6 @@ export default function OrderSummary({ navigation }) {
       setLoading(true);
     }
     reloadPaymentSheet();
-    console.log("initializePaymentSheet => ", initializePaymentSheet());
   }, [total]);
 
   const handleReturn = () => {
@@ -55,21 +53,20 @@ export default function OrderSummary({ navigation }) {
   };
 
   const handleEdit = (itemId, itemUrl) => {
+    const targetItemInfo = user.basket.find(
+      (item) => item.imageResult_id === itemId
+    );
     const itemToChange = {
       imageResult_id: itemId,
       url: itemUrl,
-      price: user.basket.find((item) => item.imageResult_id === itemId).price,
+      price: targetItemInfo.price,
       product: {
-        size: user.basket.find((item) => item.imageResult_id === itemId).product
-          .size,
-        finish: user.basket.find((item) => item.imageResult_id === itemId)
-          .product.finish,
-        frame: user.basket.find((item) => item.imageResult_id === itemId)
-          .product.frame,
+        size: targetItemInfo.product.size,
+        finish: targetItemInfo.product.finish,
+        frame: targetItemInfo.product.frame,
       },
-      quantity: quantity,
+      quantity: targetItemInfo.quantity,
     };
-    console.log("itemToChange => ", itemToChange);
     dispatch(changeItem(itemToChange));
     dispatch(previousScreen("OrderSummary"));
     navigation.navigate("Basket");
@@ -174,9 +171,9 @@ export default function OrderSummary({ navigation }) {
       }),
     });
 
-    console.log("response --->");
+    // console.log("response --->");
     const { paymentIntent, ephemeralKey, customer } = await response.json();
-    console.log("response --->", paymentIntent, ephemeralKey, customer);
+    // console.log("response --->", paymentIntent, ephemeralKey, customer);
     return {
       paymentIntent,
       ephemeralKey,
@@ -188,8 +185,8 @@ export default function OrderSummary({ navigation }) {
     const { paymentIntent, ephemeralKey, customer, publishableKey } =
       await fetchPaymentSheetParams();
 
-    console.log("publishableKey", ephemeralKey, publishableKey);
-    console.log("customer", customer);
+    // console.log("publishableKey", ephemeralKey, publishableKey);
+    // console.log("customer", customer);
 
     const { error } = await initPaymentSheet({
       merchantDisplayName: "Ystra, Inc.",
@@ -223,10 +220,10 @@ export default function OrderSummary({ navigation }) {
     const { error } = await presentPaymentSheet();
 
     if (error) {
-      console.log(`Error code: ${error.code}`, error.message);
+      // console.log(`Error code: ${error.code}`, error.message);
       Alert.alert(`Error code: ${error.code}`, error.message);
     } else {
-      console.log("Success", "Your order is confirmed!");
+      // console.log("Success", "Your order is confirmed!");
       Alert.alert("Success", "Your order is confirmed!");
       navigation.navigate("OrderConfirmation");
     }

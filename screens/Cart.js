@@ -40,21 +40,20 @@ export default function Cart({ navigation }) {
   };
 
   const handleEdit = (itemId, itemUrl) => {
+    const targetItemInfo = user.basket.find(
+      (item) => item.imageResult_id === itemId
+    );
     const itemToChange = {
       imageResult_id: itemId,
       url: itemUrl,
-      price: user.basket.find((item) => item.imageResult_id === itemId).price,
+      price: targetItemInfo.price,
       product: {
-        size: user.basket.find((item) => item.imageResult_id === itemId).product
-          .size,
-        finish: user.basket.find((item) => item.imageResult_id === itemId)
-          .product.finish,
-        frame: user.basket.find((item) => item.imageResult_id === itemId)
-          .product.frame,
+        size: targetItemInfo.product.size,
+        finish: targetItemInfo.product.finish,
+        frame: targetItemInfo.product.frame,
       },
-      quantity: quantity,
+      quantity: targetItemInfo.quantity,
     };
-    console.log("itemToChange => ", itemToChange);
     dispatch(changeItem(itemToChange));
     dispatch(previousScreen("Cart"));
     navigation.navigate("Basket");
