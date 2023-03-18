@@ -125,7 +125,8 @@ export default function OrderSummary({ navigation }) {
             {order.addressDelivery.street}
           </Text>
           <Text style={tw`text-5 font-bold opacity-70 ml-5`}>
-            {order.addressDelivery.zipCode} {order.addressDelivery.city},{" "}
+            {order.addressDelivery.zipCode}{" "}
+            {order.addressDelivery.city ? order.addressDelivery.city + "," : ""}{" "}
             {order.addressDelivery.country}
           </Text>
         </View>

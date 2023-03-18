@@ -26,7 +26,8 @@ export default function Adress({ navigation }) {
 
   const handleAdress = (e) => {
     const deliveryAdress = {
-      addressName: `${e.firstName} ${e.lastName}`,
+      addressName:
+        !e.firstName && !e.lastName ? "" : `${e.firstName} ${e.lastName}`,
       street: e.streetName,
       zipCode: e.zipCode,
       city: e.city,
