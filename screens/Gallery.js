@@ -1,16 +1,9 @@
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  Modal,
-  ScrollView,
-} from "react-native";
+import { View, TouchableOpacity, Image, Modal, ScrollView } from "react-native";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import tw from "twrnc";
-import { addItem } from "../reducers/user";
+import { addItem, previousScreen } from "../reducers/user";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { BACKEND_URL } from "@env";
@@ -19,23 +12,24 @@ import CardsGallery from "../components/uikit/CardsGallery";
 import Header from "../components/uikit/Header";
 
 export default function Gallery({ navigation }) {
-  console.log("Gallery =>", BACKEND_URL);
   const user = useSelector((state) => state.user.value);
   const isFocused = useIsFocused();
   const [galleryImages, setGalleryImages] = useState([]);
-  const [isFavoriteView, setIsFavoriteView] = useState(true);
+  const [isFavoriteView, setIsFavoriteView] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState({
     visible: false,
     url: "",
   });
   const dispatch = useDispatch();
 
+  console.log("user => ", user);
+  console.log("user.changeItem => ", user.changeItem);
+
   useEffect(() => {
     fetch(`${BACKEND_URL}/gallery/all/${user.token}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          console.log("data.images", data.Images);
           setGalleryImages(data.Images);
         }
       });
@@ -58,7 +52,7 @@ export default function Gallery({ navigation }) {
   };
 
   const handleSelected = (itemId, isLiked) => {
-    fetch(`${BACKEND_URL}/renderimages/liked`, {
+    fetch(`${BACKEND_URL}/renderimages/checked`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -93,6 +87,7 @@ export default function Gallery({ navigation }) {
       quantity: 1,
     };
     dispatch(addItem(shopp));
+    dispatch(previousScreen("Gallery"));
     navigation.navigate("Basket");
   };
 
@@ -110,15 +105,16 @@ export default function Gallery({ navigation }) {
       handleSelected={handleSelected}
     />
   );
+
   const tempGallery = galleryImages
-    .reverse()
     .map((element) =>
       element.imageResult
         .filter((item) => item.isChecked === isFavoriteView)
         .map(showCards)
     )
     .flat();
-  console.log(tempGallery);
+  console.log("galleryImages => ", galleryImages);
+  console.log("tempGallery => ", tempGallery);
   // La méthode flat() permet de créer un nouveau tableau contenant les éléments des sous-tableaux du tableau passé en argument
 
   return (
@@ -149,29 +145,9 @@ export default function Gallery({ navigation }) {
         title="Show liked only"
       />
 
-      <ScrollView style={tw`w-full pt-4`}>
-        <View style={tw`flex-1 items-center`}>{tempGallery}</View>
+      <ScrollView style={tw`w-full mt-2`}>
+        <View style={tw`flex-col-reverse items-center`}>{tempGallery}</View>
       </ScrollView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    height: "100%",
-    width: "100%",
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 5.3,
-
-    elevation: 18,
-  },
-});

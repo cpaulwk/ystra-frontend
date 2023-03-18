@@ -6,14 +6,18 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 export default function ButtonIcon(props) {
   return (
     <TouchableOpacity
-      style={tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8 pl-0.2 pt-0.2`}
+      style={
+        props.isCartItem
+          ? tw`flex justify-center items-center w-8 h-8`
+          : tw`border flex justify-center items-center bg-white opacity-70 rounded-50 w-8 h-8`
+      }
+      onPress={() => props.onPress()}
     >
       <FontAwesome
-        onPress={() => props.onPress()}
         name={props.name}
-        size={props.size || 20}
-        style={props.style || null}
-        selectionColor={props.selectionColor || null}
+        size={props.size}
+        style={props.style}
+        color={props.likedColor || props.color}
       />
     </TouchableOpacity>
   );

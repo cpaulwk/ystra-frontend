@@ -1,8 +1,14 @@
-import { Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import tw from "twrnc";
 
 export default function ButtonWithText(props) {
   // console.log("props =>", props);
+  let color = props.color;
+
+  if (props.disabled) {
+    color = "[#AFAFAF]";
+  }
+
   const buttonSize = {
     fontSize: "",
     fontWeight: "",
@@ -30,13 +36,17 @@ export default function ButtonWithText(props) {
 
   return (
     <TouchableOpacity
-      style={tw`flex justify-center items-center bg-${props.color} rounded-1.75 ${opacity} h-${height} w-${width} ${props.margin}`}
+      style={tw`flex justify-center items-center bg-${color} rounded-1.75 ${opacity} h-${height} w-${width} ${props.margin}`}
       onPress={props.onPress}
       disabled={props.disabled}
     >
-      <Text style={tw`text-${fontSize} text-white font-${fontWeight}`}>
-        {props.text}
-      </Text>
+      {props.isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <Text style={tw`text-${fontSize} text-white font-${fontWeight}`}>
+          {props.text}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 }

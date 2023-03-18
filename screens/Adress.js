@@ -5,38 +5,29 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   ScrollView,
-  TextInput,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import tw from "twrnc";
 import React, { useState } from "react";
 import { addAdress } from "../reducers/order";
 import useForm from "../hooks/useForm";
 import Header from "../components/uikit/Header";
+import FormInputField from "../components/uikit/FormInputField";
 
 export default function Adress({ navigation }) {
   const dispatch = useDispatch();
   const [canReturn, setCanReturn] = useState(false);
+  const { form, handleForm } = useForm();
+
   const handleReturn = () => {
     setCanReturn(false);
     navigation.navigate("Cart");
   };
-  const user = useSelector((state) => state.user.value);
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [streetName, setStreetName] = useState("");
-  const [streetName2, setStreetName2] = useState("");
-  const [city, setCity] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const { form, handleForm, bind } = useForm();
 
   const handleAdress = (e) => {
-    console.log("form", e);
     const deliveryAdress = {
-      addressName: `${e.firstName} ${e.lastName}`,
+      addressName:
+        !e.firstName && !e.lastName ? "" : `${e.firstName} ${e.lastName}`,
       street: e.streetName,
       zipCode: e.zipCode,
       city: e.city,
@@ -50,11 +41,10 @@ export default function Adress({ navigation }) {
     };
     dispatch(addAdress(deliveryAdress));
 
-    // navigation.navigate("CreditCards");
     navigation.navigate("OrderSummary");
   };
 
-  const adressField = [
+  const addressField = [
     {
       name: "firstName",
       placeholder: "Firstname",
@@ -84,47 +74,71 @@ export default function Adress({ navigation }) {
     { name: "country", placeholder: "Country", type: "text" },
   ];
 
-  console.log("useForm", form);
+  const fieldContainers = addressField.map((item, index, array) => {
+    if (!item.position) {
+      return (
+        <View key={index} style={tw`flex w-full m-1`}>
+          <FormInputField
+            key={item.name}
+            placeholder={item.placeholder}
+            name={item.name}
+            width="full"
+            onChangeText={handleForm}
+          />
+        </View>
+      );
+    } else if (item.position[1] === 1) {
+      return (
+        <View key={index} style={tw`flex-row justify-between w-full m-1`}>
+          <FormInputField
+            key={item.name}
+            placeholder={item.placeholder}
+            name={item.name}
+            width="[48%]"
+            onChangeText={handleForm}
+          />
+          <FormInputField
+            key={array[index + 1].name}
+            placeholder={array[index + 1].placeholder}
+            name={array[index + 1].name}
+            width="[48%]"
+            onChangeText={handleForm}
+          />
+        </View>
+      );
+    }
+  });
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={tw`flex-1  items-center w-full h-full bg-[#F2EFEA] 	`}>
+      <View style={tw`flex items-center w-full h-full bg-[#F2EFEA]`}>
         <Header
           doesContainReturnButtonComponent={true}
           onPress={handleReturn}
           title="Shipping Address"
         />
-        <ScrollView style={tw`w-full bg-white`}>
-          <View style={tw`flex items-center border-[#AFAFAF] w-full`}>
-            <View style={tw`flex  w-[90%] `}>
-              {adressField.map((data) => {
-                // console.log(data);
-                return (
-                  <View key={data.name} style={tw`flex-row items-center m-1 `}>
-                    <TextInput
-                      placeholder={data.placeholder}
-                      name={data.name}
-                      style={tw`border border-[#9ca3af] bg-white p-3 pl-5 opacity-90 w-full rounded-2.5 text-4`}
-                      onChangeText={(e) => handleForm(data.name, e)}
-                      // {...bind}
-                    />
-                  </View>
-                );
-              })}
-            </View>
+        <View style={tw`flex-1 justify-between w-full`}>
+          <View>
+            <ScrollView style={tw`bg-white`}>
+              <View style={tw`flex items-center`}>
+                <View style={tw`flex items-center w-[90%] py-10`}>
+                  {fieldContainers}
+                </View>
+              </View>
+            </ScrollView>
           </View>
-        </ScrollView>
 
-        {/* Buttons */}
-        <View style={tw`flex-row justify-center mb-[10%]`}>
-          <TouchableOpacity
-            style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
-            onPress={() => handleAdress(form)}
-          >
-            <Text style={tw`font-medium text-2xl text-[#FFFF]`}>
-              Confirm address
-            </Text>
-          </TouchableOpacity>
+          {/* Buttons */}
+          <View style={tw`flex-row justify-center mb-[10%]`}>
+            <TouchableOpacity
+              style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
+              onPress={() => handleAdress(form)}
+            >
+              <Text style={tw`font-medium text-2xl text-[#FFFF]`}>
+                Confirm address
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </TouchableWithoutFeedback>

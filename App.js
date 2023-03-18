@@ -102,18 +102,39 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator
+            screenOptions={{ headerShown: false, animation: "none" }}
+          >
             <Stack.Screen name="Welcome" component={Welcome} />
-            <Stack.Screen name="TabNavigator" component={TabNavigator} />
-            <Stack.Screen name="Adress" component={Adress} />
-            <Stack.Screen name="Basket" component={Basket} />
+            <Stack.Screen
+              name="TabNavigator"
+              component={TabNavigator}
+              options={{
+                gestureEnabled: false,
+              }}
+            />
+            <Stack.Screen
+              name="Adress"
+              component={Adress}
+              options={{ gestureEnabled: false }}
+            />
+            <Stack.Screen
+              name="Basket"
+              component={Basket}
+              options={{ gestureEnabled: false }}
+            />
             <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
             <Stack.Screen name="CreditCards" component={CreditCards} />
             <Stack.Screen
               name="OrderConfirmation"
               component={OrderConfirmation}
+              options={{ gestureEnabled: false }}
             />
-            <Stack.Screen name="OrderSummary" component={OrderSummary} />
+            <Stack.Screen
+              name="OrderSummary"
+              component={OrderSummary}
+              options={{ gestureEnabled: false }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

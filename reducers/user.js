@@ -6,6 +6,8 @@ const initialState = {
     token: null,
     basket: [],
     newItem: {},
+    changeItem: null,
+    previousScreen: null,
   },
 };
 
@@ -28,6 +30,21 @@ export const userSlice = createSlice({
     addBasketItem: (state, action) => {
       state.value.basket.push(action.payload);
     },
+    changeItem: (state, action) => {
+      state.value.changeItem = action.payload;
+    },
+    cancelChangeItem: (state, action) => {
+      state.value.changeItem = null;
+    },
+    updateChangedItem: (state, action) => {
+      const elementToFind = state.value.basket.find(
+        (item) => item.imageResult_id === action.payload.imageResult_id
+      );
+      const index = state.value.basket.indexOf(elementToFind);
+      const newItem = action.payload;
+      state.value.basket.splice(index, 1, newItem);
+      state.value.changeItem = null;
+    },
     removeBasketItem: (state, action) => {
       // state.value.basket = state.value.basket.filter(
       //   (elem) => elem !== action.payload
@@ -37,6 +54,20 @@ export const userSlice = createSlice({
     cleanBasket: (state, action) => {
       state.value.basket = [];
     },
+    changeItemQuantity: (state, action) => {
+      let result = state.value.basket.findIndex(
+        (e) => e.imageResult_id === action.payload.imageResult_id
+      );
+      if (result > -1) {
+        state.value.basket[result].quantity = action.payload.quantity;
+      }
+    },
+    previousScreen: (state, action) => {
+      state.value.previousScreen = action.payload;
+    },
+    cleanPreviousScreen: (state, action) => {
+      state.value.previousScreen = null;
+    },
   },
 });
 
@@ -45,7 +76,13 @@ export const {
   logout,
   addItem,
   addBasketItem,
+  changeItem,
+  cancelChangeItem,
+  updateChangedItem,
   removeBasketItem,
   cleanBasket,
+  changeItemQuantity,
+  previousScreen,
+  cleanPreviousScreen,
 } = userSlice.actions;
 export default userSlice.reducer;

@@ -2,7 +2,12 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import React, { useEffect, useState } from "react";
-import { addBasketItem } from "../reducers/user";
+import {
+  addBasketItem,
+  cancelChangeItem,
+  updateChangedItem,
+  cleanPreviousScreen,
+} from "../reducers/user";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function Basket({ navigation }) {
@@ -12,14 +17,21 @@ export default function Basket({ navigation }) {
   const [selectedFinish, setselectedFinish] = useState("none");
   const [total, setTotal] = useState(0);
   const [canReturn, setCanReturn] = useState(false);
-  const products = useSelector((state) => state.product.products);
-
-  const user = useSelector((state) => state.user.value);
-  // const imageResult = useSelector((state) => state.imageResult.value);
 
   const dispatch = useDispatch();
+  const products = useSelector((state) => state.product.products);
+  const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
+    if (user.changeItem) {
+      setselectedSize(user.changeItem.product.size.name);
+      setselectedFrame(user.changeItem.product.frame.name);
+      setselectedFinish(user.changeItem.product.finish.name);
+    }
+  }, []);
+
+  useEffect(() => {
+    // const priceSize = user.basket ? user.basket : products.find(
     const priceSize = products.find(
       (elem) => elem.nameProduct === selectedSize && elem.typeProduct === "size"
     );
@@ -31,12 +43,12 @@ export default function Basket({ navigation }) {
       (elem) =>
         elem.nameProduct === selectedFinish && elem.typeProduct === "finish"
     );
-    console.log(selectedFinish, selectedFrame, selectedSize);
-    console.log(
-      priceSize?.priceProduct +
-        priceFrame?.priceProduct +
-        priceFinish?.priceProduct
-    );
+    // console.log(selectedFinish, selectedFrame, selectedSize);
+    // console.log(
+    //   priceSize?.priceProduct +
+    //     priceFrame?.priceProduct +
+    //     priceFinish?.priceProduct
+    // );
     setTotal(
       priceSize?.priceProduct +
         priceFrame?.priceProduct +
@@ -46,7 +58,12 @@ export default function Basket({ navigation }) {
 
   const handleReturn = () => {
     setCanReturn(false);
-    navigation.navigate("TabNavigator", { screen: "Gallery" });
+    dispatch(cancelChangeItem());
+    dispatch(cleanPreviousScreen());
+
+    // Dirty navigation??
+    navigation.navigate("TabNavigator", { screen: `${user.previousScreen}` });
+    navigation.navigate(`${user.previousScreen}`);
   };
 
   const handleBasket = (itemId, itemUrl) => {
@@ -61,10 +78,11 @@ export default function Basket({ navigation }) {
       (elem) =>
         elem.nameProduct === selectedFinish && elem.typeProduct === "finish"
     );
-    console.log("1", priceSize);
 
-    let additem = Object.assign({}, user.newItem);
-    console.log("2", additem);
+    let additem = Object.assign(
+      {},
+      user.changeItem ? user.changeItem : user.newItem
+    );
 
     additem.product = {
       size: {
@@ -86,13 +104,18 @@ export default function Basket({ navigation }) {
         variation: priceFrame?.variationProduct,
       },
     };
-    console.log("3", additem);
-    console.log("total", total);
     additem.price = total;
-    dispatch(addBasketItem(additem));
+    console.log("additem => ", additem);
+    if (user.changeItem) {
+      dispatch(updateChangedItem(additem));
+    } else {
+      dispatch(addBasketItem(additem));
+    }
+    // console.log("user.basket => ", user.basket);
+    dispatch(cleanPreviousScreen());
 
-    navigation.navigate("TabNavigator", { screen: "Cart" });
-    // navigation.navigate("OrderConfirmation");
+    navigation.navigate("TabNavigator", { screen: `${user.previousScreen}` });
+    navigation.navigate(`${user.previousScreen}`);
   };
 
   let showImage = (
@@ -100,10 +123,16 @@ export default function Basket({ navigation }) {
       <Text>No selected item</Text>
     </View>
   );
-  if (user.newItem) {
+  // if (user.newItem) {
+  if (user.newItem || user.changeItem) {
     showImage = (
       <View>
-        <Image style={tw`h-75 w-75`} source={{ uri: user.newItem.url }} />
+        <Image
+          style={tw`h-75 w-75`}
+          source={{
+            uri: user.changeItem ? user.changeItem.url : user.newItem.url,
+          }}
+        />
       </View>
     );
   }
@@ -414,7 +443,9 @@ export default function Basket({ navigation }) {
           style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
           onPress={() => handleBasket()}
         >
-          <Text style={tw`font-medium text-2xl text-[#FFFF]`}>Add to Cart</Text>
+          <Text style={tw`font-medium text-2xl text-[#FFFF]`}>
+            {user.changeItem ? "Update Item" : "Add to Cart"}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
