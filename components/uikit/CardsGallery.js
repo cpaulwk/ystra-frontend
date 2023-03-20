@@ -2,22 +2,19 @@ import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import tw from "twrnc";
 import ButtonIcon from "./ButtonIcon";
 
-export default function CardsGallery(props) {
-  const {
-    handleShowModal,
-    item,
-    handleSharing,
-    handleBasket,
-    handleSelected,
-    isHome,
-  } = props;
-
+export default function CardsGallery({
+  handleShowModal,
+  item,
+  handleSharing,
+  handleBasket,
+  handleSelected,
+  isHome,
+}) {
   return (
     <View
       style={
         isHome ? tw`h-[48%] w-[48%]` : tw`border h-50 w-[95%] m-1 rounded-2.5`
       }
-      key={item._id}
     >
       <TouchableOpacity
         onPress={() => handleShowModal({ visible: true, url: item.url })}

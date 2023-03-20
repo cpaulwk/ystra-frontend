@@ -1,15 +1,19 @@
 import { TextInput } from "react-native";
 import tw from "twrnc";
 
-export default function FormInputField(props) {
+export default function FormInputField({
+  placeholder,
+  name,
+  width,
+  onChangeText,
+}) {
   return (
     <TextInput
-      key={props.name}
-      placeholder={props.placeholder}
-      name={props.name}
-      style={tw`border border-[#9ca3af] bg-white p-3 pl-5 opacity-90 w-${props.width} rounded-2.5 text-4`}
-      onChangeText={(e) => props.onChangeText(props.name, e)}
-      // {...bind}
+      placeholder={placeholder}
+      name={name}
+      style={tw`border border-[#9ca3af] bg-white p-3 pl-5 opacity-90 w-${width} rounded-2.5 text-4`}
+      onChangeText={(value) => onChangeText(name, value)}
+    // {...bind}
     />
   );
 }

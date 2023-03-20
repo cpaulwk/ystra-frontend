@@ -8,10 +8,12 @@ import {
   updateChangedItem,
   cleanPreviousScreen,
 } from "../reducers/user";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import ReturnButton from "../components/uikit/ReturnButton";
+import ProductButton from "../components/uikit/ProductButton";
+import CustomizationButton from "../components/uikit/CustomizationButton";
 
 export default function Basket({ navigation }) {
-  const [selectedOptButton, setSelecteOptdButton] = useState("size");
+  const [selectedOptButton, setSelectedOptButton] = useState("size");
   const [selectedSize, setselectedSize] = useState("S");
   const [selectedFrame, setselectedFrame] = useState("none");
   const [selectedFinish, setselectedFinish] = useState("none");
@@ -51,10 +53,72 @@ export default function Basket({ navigation }) {
     // );
     setTotal(
       priceSize?.priceProduct +
-        priceFrame?.priceProduct +
-        priceFinish?.priceProduct
+      priceFrame?.priceProduct +
+      priceFinish?.priceProduct
     );
   }, [selectedFinish, selectedFrame, selectedSize]);
+
+  const imageFrame = (
+    <View style={selectedFrame === "none" ? tw`hidden` : tw`absolute z-100`}>
+      <View
+        style={
+          (selectedFrame === "dark" && tw`h-78 w-78 border-[2]`) ||
+          (selectedFrame === "light" &&
+            tw`h-78 w-78 border-[2] border-[#f9e8d5]`)
+        }
+      ></View>
+    </View>
+  );
+
+  const imageEffect = (
+    <View
+      style={selectedFinish === "none" ? tw`hidden` : tw`absolute opacity-20`}
+    >
+      <Image
+        style={tw`h-78 w-78`}
+        source={
+          (selectedFinish === "gloss" &&
+            require("../assets/glossfinish.png")) ||
+          (selectedFinish === "matte" && require("../assets/mattefinish.jpg"))
+        }
+      />
+    </View>
+  );
+
+  const customizationButtonList = ["size", "frame", "finish"];
+
+  const customizationButtons = customizationButtonList.map((item) => {
+    return (
+      <CustomizationButton
+        key={item}
+        item={item}
+        selectedOptButton={selectedOptButton}
+        setSelectedOptButton={setSelectedOptButton}
+      />
+    );
+  });
+
+  const productButtonList = {
+    size: ["S", "M", "L"],
+    frame: ["none", "dark", "light"],
+    finish: ["none", "gloss", "matte"],
+  };
+
+  const productButtons = productButtonList[selectedOptButton].map((item) => {
+    return (
+      <ProductButton
+        key={item}
+        item={item}
+        selectedOptButton={selectedOptButton}
+        selectedSize={selectedSize}
+        selectedFrame={selectedFrame}
+        selectedFinish={selectedFinish}
+        setselectedSize={setselectedSize}
+        setselectedFrame={setselectedFrame}
+        setselectedFinish={setselectedFinish}
+      />
+    );
+  });
 
   const handleReturn = () => {
     setCanReturn(false);
@@ -139,297 +203,26 @@ export default function Basket({ navigation }) {
 
   return (
     <View style={tw`flex-1 justify-between items-center`}>
-      <TouchableOpacity
-        style={tw`absolute flex justify-center items-center z-100 top-10 bottom-10 bg-[#AFAFAF] h-15 w-15 rounded-6 left-[5%] top-[8%] opacity-50`}
-        onPress={() => handleReturn()}
-      >
-        <FontAwesome name="chevron-left" size={20} />
-      </TouchableOpacity>
+      <ReturnButton withoutHeader={true} onPress={handleReturn} />
       <View style={tw`flex-1 justify-around items-center w-full pt-40`}>
         <View style={tw`flex justify-center items-center rounded-1 w-full`}>
           {showImage}
-          {/* DARK FRAME */}
-          <View
-            style={selectedFrame == "dark" ? tw`absolute z-100` : tw`hidden`}
-          >
-            <View style={tw`h-78 w-78 border-[2]`}></View>
-          </View>
 
-          {/* LIGHT FRAME */}
-          <View
-            style={selectedFrame == "light" ? tw`absolute z-100` : tw`hidden`}
-          >
-            <View style={tw`h-78 w-78 border-[2] border-[#f9e8d5]`}></View>
-          </View>
+          {imageFrame}
 
-          {/* >GLOSSY EFFECT */}
-          <View
-            style={
-              selectedFinish == "gloss" ? tw`absolute opacity-20` : tw`hidden`
-            }
-          >
-            <Image
-              style={tw`h-78 w-78`}
-              source={require("../assets/glossfinish.png")}
-            />
-          </View>
-          {/* >MATTE EFFECT */}
-
-          <View
-            style={
-              selectedFinish == "matte" ? tw`absolute opacity-20` : tw`hidden`
-            }
-          >
-            <Image
-              style={tw`h-78 w-78`}
-              source={require("../assets/mattefinish.jpg")}
-            />
-          </View>
+          {imageEffect}
         </View>
+
         <View
           style={tw`flex-row justify-center items-center border-[1.5px] border-[#161E44] bg-white rounded-1 h-11 w-[70%] mt-20`}
         >
-          <TouchableOpacity
-            style={[
-              tw`flex-1 justify-center items-center rounded-r`,
-              selectedOptButton === "size"
-                ? tw`bg-[#161E44] w-full h-full border border-[#161E44]`
-                : tw`w-full h-full`,
-            ]}
-            onPress={() => setSelecteOptdButton("size")}
-          >
-            <Text
-              style={[
-                tw`text-2xl font-medium`,
-                selectedOptButton === "size"
-                  ? tw`text-[#FFFFFF]`
-                  : tw`text-[#161E44]`,
-              ]}
-            >
-              Size
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              tw`flex-1 justify-center items-center rounded-1`,
-              selectedOptButton === "frame"
-                ? tw`bg-[#161E44] w-full h-full border border-[#161E44]`
-                : tw`w-full h-full`,
-            ]}
-            onPress={() => setSelecteOptdButton("frame")}
-          >
-            <Text
-              style={[
-                tw`text-2xl font-medium`,
-                selectedOptButton === "frame"
-                  ? tw`text-[#FFFFFF]`
-                  : tw`text-[#161E44]`,
-              ]}
-            >
-              Frame
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              tw`flex-1 justify-center items-center rounded-l`,
-              selectedOptButton === "finish"
-                ? tw`bg-[#161E44] w-full h-full border border-[#161E44]`
-                : tw`w-full h-full`,
-            ]}
-            onPress={() => setSelecteOptdButton("finish")}
-          >
-            <Text
-              style={[
-                tw`text-2xl font-medium`,
-                selectedOptButton === "finish"
-                  ? tw`text-[#FFFFFF]`
-                  : tw`text-[#161E44]`,
-              ]}
-            >
-              Finish
-            </Text>
-          </TouchableOpacity>
+          {customizationButtons}
         </View>
+
         <View style={tw`w-full my-10 w-[70%]`}>
-          {selectedOptButton === "size" && (
-            <View style={tw`flex-row justify-around`}>
-              <TouchableOpacity
-                style={[
-                  tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 aspect-square border-[#161E44]`,
-                  selectedSize === "S" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
-                ]}
-                onPress={() => setselectedSize("S")}
-              >
-                <Text
-                  style={[
-                    tw`font-black text-3xl`,
-                    selectedSize === "S"
-                      ? tw`text-[#FFFF]`
-                      : tw`text-[#161E44]`,
-                  ]}
-                >
-                  S
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 aspect-square border-[#161E44]`,
-                  selectedSize === "M" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
-                ]}
-                onPress={() => setselectedSize("M")}
-              >
-                <Text
-                  style={[
-                    tw`font-black text-3xl`,
-                    selectedSize === "M"
-                      ? tw`text-[#FFFF]`
-                      : tw`text-[#161E44]`,
-                  ]}
-                >
-                  M
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 aspect-square border-[#161E44]`,
-                  selectedSize === "L" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
-                ]}
-                onPress={() => setselectedSize("L")}
-              >
-                <Text
-                  style={[
-                    tw`font-black text-3xl`,
-                    selectedSize === "L"
-                      ? tw`text-[#FFFF]`
-                      : tw`text-[#161E44]`,
-                  ]}
-                >
-                  L
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          {selectedOptButton === "frame" && (
-            <View style={tw`flex-row justify-around`}>
-              <TouchableOpacity
-                style={[
-                  tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
-                  selectedFrame === "none" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
-                ]}
-                onPress={() => setselectedFrame("none")}
-              >
-                <Text
-                  style={[
-                    tw`font-black `,
-                    selectedFrame === "none"
-                      ? tw`text-[#FFFF]`
-                      : tw`text-[#161E44]`,
-                  ]}
-                >
-                  None
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
-                  selectedFrame === "dark" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
-                ]}
-                onPress={() => setselectedFrame("dark")}
-              >
-                <Text
-                  style={[
-                    tw`font-black`,
-                    selectedFrame === "dark"
-                      ? tw`text-[#FFFF]`
-                      : tw`text-[#161E44]`,
-                  ]}
-                >
-                  Dark
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
-                  selectedFrame === "light" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
-                ]}
-                onPress={() => setselectedFrame("light")}
-              >
-                <Text
-                  style={[
-                    tw`font-black`,
-                    selectedFrame === "light"
-                      ? tw`text-[#FFFF]`
-                      : tw`text-[#161E44]`,
-                  ]}
-                >
-                  Light
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          {selectedOptButton === "finish" && (
-            <View style={tw`flex-row justify-around`}>
-              <TouchableOpacity
-                style={[
-                  tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
-                  selectedFinish === "none" ? tw`bg-[#161E44]` : tw`bg-[#ffff]`,
-                ]}
-                onPress={() => setselectedFinish("none")}
-              >
-                <Text
-                  style={[
-                    tw`font-black`,
-                    selectedFinish === "none"
-                      ? tw`text-[#FFFF]`
-                      : tw`text-[#161E44]`,
-                  ]}
-                >
-                  None
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
-                  selectedFinish === "gloss"
-                    ? tw`bg-[#161E44]`
-                    : tw`bg-[#ffff]`,
-                ]}
-                onPress={() => setselectedFinish("gloss")}
-              >
-                <Text
-                  style={[
-                    tw`font-black `,
-                    selectedFinish === "gloss"
-                      ? tw`text-[#FFFF]`
-                      : tw`text-[#161E44]`,
-                  ]}
-                >
-                  Gloss
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  tw`flex border-[1.5px] justify-center items-center rounded-1.75 h-12 w-[20%] border-[#161E44]`,
-                  selectedFinish === "matte"
-                    ? tw`bg-[#161E44]`
-                    : tw`bg-[#ffff]`,
-                ]}
-                onPress={() => setselectedFinish("matte")}
-              >
-                <Text
-                  style={[
-                    tw`font-black`,
-                    selectedFinish === "matte"
-                      ? tw`text-[#FFFF]`
-                      : tw`text-[#161E44]`,
-                  ]}
-                >
-                  Matte
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          <View style={tw`flex-row justify-around`}>{productButtons}</View>
         </View>
+
         <View
           style={tw`flex-row bg-[#F4F3EE] justify-between w-[80%] rounded-2 border border-[#AFAFAF] mb-10 p-5`}
         >
@@ -437,7 +230,6 @@ export default function Basket({ navigation }) {
           <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
         </View>
       </View>
-
       <View style={tw`flex-row justify-center w-full mb-[20%]`}>
         <TouchableOpacity
           style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}

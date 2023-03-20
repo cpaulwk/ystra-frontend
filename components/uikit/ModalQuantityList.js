@@ -7,7 +7,11 @@ import {
 } from "react-native";
 import tw from "twrnc";
 
-export default function ModalQuantityList(props) {
+export default function ModalQuantityList({
+  handleSelectedQuantity,
+  selectedImage,
+  setOpenModal,
+}) {
   const quantityList = (number) => {
     let newList = [];
     for (let i = 1; i <= number; i++) {
@@ -16,7 +20,7 @@ export default function ModalQuantityList(props) {
           key={i}
           activeOpacity={1}
           style={tw`flex items-center border-t border-[#AFAFAF] w-full py-2`}
-          onPress={() => props.handleSelectedQuantity(i, props.selectedImage)}
+          onPress={() => handleSelectedQuantity(i, selectedImage)}
         >
           <Text style={tw`text-4 font-medium opacity-70`}>{i}</Text>
         </TouchableOpacity>
@@ -29,7 +33,7 @@ export default function ModalQuantityList(props) {
     <View
       style={tw`absolute border flex justify-center items-center w-full h-full`}
     >
-      <TouchableWithoutFeedback onPress={() => props.setOpenModal(false)}>
+      <TouchableWithoutFeedback onPress={() => setOpenModal(false)}>
         <View style={tw`absolute w-full h-full bg-black opacity-70`}></View>
       </TouchableWithoutFeedback>
       <View style={tw`flex w-[40%] items-center bg-white rounded-4 py-2`}>

@@ -6,7 +6,7 @@ function PasswordValidation(value) {
   if (!passwordRegex.test(value)) {
     const errorMessage =
       // "Password must include:\n     • at least 10 characters\n     • 1 uppercase letter\n     • 1 number\n     • 1 special character";
-      "Password must include:\n     • at least 8 characters\n     • 1 uppercase letter\n     • 1 number\n";
+      "Password must include:\n     • at least 8 characters\n     • 1 uppercase letter\n     • 1 number";
     return { result: false, errorMessage: errorMessage };
   } else {
     return { result: true };

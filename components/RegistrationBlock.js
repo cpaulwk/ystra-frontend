@@ -2,6 +2,7 @@ import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/user";
+import useForm from "../hooks/useForm";
 import tw from "twrnc";
 import { BACKEND_URL } from "@env";
 import InputFieldWithIcon from "./uikit/InputFieldWithIcon";
@@ -20,7 +21,7 @@ export default function RegistrationBlock({
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isBadUserInput, setIsBadUserInput] = useState(false);
-  const [form, setForm] = useState({});
+  const { form, handleForm } = useForm();
 
   const handleRegister = () => {
     setIsLoading(true);
@@ -73,16 +74,10 @@ export default function RegistrationBlock({
       });
   };
 
-  // WIP
-  const handleForm = (val, name) => {
-    setForm({ ...form, [name]: val });
-
-    if (name === "Password") {
-      const { result, errorMessage } = PasswordValidation(val);
-      setErrorMessage(errorMessage);
-      setIsBadUserInput(!result);
-    }
-    console.log("form =>", form);
+  const handlePasswordRegex = (val) => {
+    const { result, errorMessage } = PasswordValidation(val);
+    setErrorMessage(errorMessage);
+    setIsBadUserInput(!result);
   };
 
   const inputFields = [
@@ -97,6 +92,8 @@ export default function RegistrationBlock({
       secureText: true,
     },
   ];
+
+  console.log("form => ", form);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -117,7 +114,11 @@ export default function RegistrationBlock({
                 secureTextEntry={e.secureText}
                 placeholder={e.name}
                 value={form[e.name]}
-                onChangeText={handleForm}
+                onChangeText={{
+                  handleForm: handleForm,
+                  handlePasswordRegex:
+                    e.name === "Password" ? handlePasswordRegex : null,
+                }}
                 iconName={e.iconName}
               />
             ))}
