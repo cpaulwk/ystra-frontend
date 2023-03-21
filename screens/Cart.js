@@ -103,21 +103,19 @@ export default function Cart({ navigation }) {
         </View>
       </ScrollView>
 
-      <View style={tw`w-[80%] mt-5`}>
+      <View style={tw`flex w-[80%] mt-5 mb-8`}>
         <View
           style={tw`flex-row bg-[#F4F3EE] justify-between rounded-2 border border-[#AFAFAF] mb-5 p-5`}
         >
           <Text style={tw`text-6 font-medium`}>Total:</Text>
           <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
         </View>
-        <View style={tw`flex-row justify-center pb-[10%]`}>
-          <ButtonWithText
-            color="[#2C6DB4]"
-            onPress={() => navigation.navigate("Adress")}
-            text="Pay"
-            disabled={disableButton}
-          />
-        </View>
+        <ButtonWithText
+          color="[#2C6DB4]"
+          onPress={() => navigation.navigate("Adress")}
+          text="Pay"
+          disabled={disableButton}
+        />
       </View>
       {openModal && (
         <ModalQuantityList

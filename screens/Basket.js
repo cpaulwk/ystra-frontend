@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import React, { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ import ProductButton from "../components/uikit/ProductButton";
 import CustomizationButton from "../components/uikit/CustomizationButton";
 import ImageFinish from "../components/uikit/ImageFinish";
 import ImageFrame from "../components/uikit/ImageFrame";
+import ButtonWithText from "../components/uikit/ButtonWithText";
 
 export default function Basket({ navigation }) {
   const [selectedOptButton, setSelectedOptButton] = useState("size");
@@ -102,17 +103,17 @@ export default function Basket({ navigation }) {
     navigation.navigate(`${user.previousScreen}`);
   };
 
-  const handleBasket = (itemId, itemUrl) => {
+  const handleBasket = () => {
     const priceSize = products.find(
-      (elem) => elem.nameProduct === selectedSize && elem.typeProduct === "size"
+      (item) => item.nameProduct === selectedSize && item.typeProduct === "size"
     );
     const priceFrame = products.find(
-      (elem) =>
-        elem.nameProduct === selectedFrame && elem.typeProduct === "frame"
+      (item) =>
+        item.nameProduct === selectedFrame && item.typeProduct === "frame"
     );
     const priceFinish = products.find(
-      (elem) =>
-        elem.nameProduct === selectedFinish && elem.typeProduct === "finish"
+      (item) =>
+        item.nameProduct === selectedFinish && item.typeProduct === "finish"
     );
 
     let additem = Object.assign(
@@ -194,22 +195,19 @@ export default function Basket({ navigation }) {
           <View style={tw`flex-row justify-around`}>{productButtons}</View>
         </View>
 
-        <View
-          style={tw`flex-row bg-[#F4F3EE] justify-between w-[80%] rounded-2 border border-[#AFAFAF] mb-10 p-5`}
-        >
-          <Text style={tw`text-6 font-medium`}>Total:</Text>
-          <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
+        <View style={tw`flex w-[80%] mt-5 mb-10`}>
+          <View
+            style={tw`flex-row bg-[#F4F3EE] justify-between rounded-2 border border-[#AFAFAF] mb-5 p-5`}
+          >
+            <Text style={tw`text-6 font-medium`}>Total:</Text>
+            <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
+          </View>
+          <ButtonWithText
+            color="[#2C6DB4]"
+            onPress={handleBasket}
+            text={user.changeItem ? "Update Item" : "Add to Cart"}
+          />
         </View>
-      </View>
-      <View style={tw`flex-row justify-center w-full mb-[20%]`}>
-        <TouchableOpacity
-          style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
-          onPress={() => handleBasket()}
-        >
-          <Text style={tw`font-medium text-2xl text-[#FFFF]`}>
-            {user.changeItem ? "Update Item" : "Add to Cart"}
-          </Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

@@ -25,6 +25,7 @@ export default function ButtonWithText({
   };
 
   let { height, width, fontSize, fontWeight, opacity } = buttonSize;
+
   switch (size) {
     case "small":
       fontSize = "4";

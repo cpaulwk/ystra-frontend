@@ -226,7 +226,8 @@ export default function Home({ navigation }) {
               autoCapitalize="none" // https://reactnative.dev/docs/textinput#autocapitalize
               value={textQuery}
               onChangeText={(value) => setTextQuery(value)}
-              keyboardType={Platform.OS === "ios" ? "web-search" : "default"}
+              returnKeyType="search"
+              onSubmitEditing={handleSearch}
             />
             <TouchableOpacity
               style={tw`flex justify-center items-center absolute h-10 w-10`}
