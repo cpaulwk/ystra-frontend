@@ -11,6 +11,8 @@ import {
 import ReturnButton from "../components/uikit/ReturnButton";
 import ProductButton from "../components/uikit/ProductButton";
 import CustomizationButton from "../components/uikit/CustomizationButton";
+import ImageFinish from "../components/uikit/ImageFinish";
+import ImageFrame from "../components/uikit/ImageFrame";
 
 export default function Basket({ navigation }) {
   const [selectedOptButton, setSelectedOptButton] = useState("size");
@@ -33,7 +35,6 @@ export default function Basket({ navigation }) {
   }, []);
 
   useEffect(() => {
-    // const priceSize = user.basket ? user.basket : products.find(
     const priceSize = products.find(
       (elem) => elem.nameProduct === selectedSize && elem.typeProduct === "size"
     );
@@ -45,45 +46,16 @@ export default function Basket({ navigation }) {
       (elem) =>
         elem.nameProduct === selectedFinish && elem.typeProduct === "finish"
     );
-    // console.log(selectedFinish, selectedFrame, selectedSize);
-    // console.log(
-    //   priceSize?.priceProduct +
-    //     priceFrame?.priceProduct +
-    //     priceFinish?.priceProduct
-    // );
     setTotal(
       priceSize?.priceProduct +
-      priceFrame?.priceProduct +
-      priceFinish?.priceProduct
+        priceFrame?.priceProduct +
+        priceFinish?.priceProduct
     );
   }, [selectedFinish, selectedFrame, selectedSize]);
 
-  const imageFrame = (
-    <View style={selectedFrame === "none" ? tw`hidden` : tw`absolute z-100`}>
-      <View
-        style={
-          (selectedFrame === "dark" && tw`h-78 w-78 border-[2]`) ||
-          (selectedFrame === "light" &&
-            tw`h-78 w-78 border-[2] border-[#f9e8d5]`)
-        }
-      ></View>
-    </View>
-  );
+  const imageFrame = <ImageFrame selectedFrame={selectedFrame} />;
 
-  const imageEffect = (
-    <View
-      style={selectedFinish === "none" ? tw`hidden` : tw`absolute opacity-20`}
-    >
-      <Image
-        style={tw`h-78 w-78`}
-        source={
-          (selectedFinish === "gloss" &&
-            require("../assets/glossfinish.png")) ||
-          (selectedFinish === "matte" && require("../assets/mattefinish.jpg"))
-        }
-      />
-    </View>
-  );
+  const imageFinish = <ImageFinish selectedFinish={selectedFinish} />;
 
   const customizationButtonList = ["size", "frame", "finish"];
 
@@ -187,7 +159,6 @@ export default function Basket({ navigation }) {
       <Text>No selected item</Text>
     </View>
   );
-  // if (user.newItem) {
   if (user.newItem || user.changeItem) {
     showImage = (
       <View>
@@ -210,7 +181,7 @@ export default function Basket({ navigation }) {
 
           {imageFrame}
 
-          {imageEffect}
+          {imageFinish}
         </View>
 
         <View
