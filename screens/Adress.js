@@ -1,21 +1,17 @@
-import {
-  Keyboard,
-  View,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native";
-import { useDispatch } from "react-redux";
+import { Keyboard, View, TouchableWithoutFeedback } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import tw from "twrnc";
 import React, { useState } from "react";
-import { addAdress } from "../reducers/order";
+import { addAdress, clearAddress } from "../reducers/order";
 import useForm from "../hooks/useForm";
-import Header from "../components/uikit/Header";
-import FormInputField from "../components/uikit/FormInputField";
+import Header from "../components/organisms/Header";
+import FormInputField from "../components/atoms/FormInputField";
+import ButtonWithText from "../components/atoms/ButtonWithText";
 
 export default function Adress({ navigation }) {
   const dispatch = useDispatch();
+  const order = useSelector((state) => state.order.value);
+  console.log("order => ", order);
   const [canReturn, setCanReturn] = useState(false);
   const { form, handleForm } = useForm();
 
@@ -27,7 +23,9 @@ export default function Adress({ navigation }) {
   const handleAdress = (e) => {
     const deliveryAdress = {
       addressName:
-        !e.firstName && !e.lastName ? "" : `${e.firstName} ${e.lastName}`,
+        !e.firstName && !e.lastName
+          ? undefined
+          : `${e.firstName ? e.firstName : ""} ${e.lastName ? e.lastName : ""}`,
       street: e.streetName,
       zipCode: e.zipCode,
       city: e.city,
@@ -40,6 +38,7 @@ export default function Adress({ navigation }) {
       isDeleted: false,
     };
     dispatch(addAdress(deliveryAdress));
+    // dispatch(clearAddress());
 
     navigation.navigate("OrderSummary");
   };
@@ -111,34 +110,24 @@ export default function Adress({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={tw`flex items-center w-full h-full bg-[#F2EFEA]`}>
+      <View style={tw`flex items-center h-full bg-[#F2EFEA]`}>
         <Header
           doesContainReturnButtonComponent={true}
           onPress={handleReturn}
           title="Shipping Address"
         />
-        <View style={tw`flex-1 justify-between w-full`}>
-          <View>
-            <ScrollView style={tw`bg-white`}>
-              <View style={tw`flex items-center`}>
-                <View style={tw`flex items-center w-[90%] py-10`}>
-                  {fieldContainers}
-                </View>
-              </View>
-            </ScrollView>
+        <View style={tw`shrink items-center w-full bg-white`}>
+          <View style={tw`flex items-center w-[90%] py-10`}>
+            {fieldContainers}
           </View>
-
-          {/* Buttons */}
-          <View style={tw`flex-row justify-center mb-[10%]`}>
-            <TouchableOpacity
-              style={tw` flex justify-center items-center bg-[#2C6DB4] rounded-1.75 h-15 w-[85%]  border-[#161E44]`}
-              onPress={() => handleAdress(form)}
-            >
-              <Text style={tw`font-medium text-2xl text-[#FFFF]`}>
-                Confirm address
-              </Text>
-            </TouchableOpacity>
-          </View>
+        </View>
+        {/* Buttons */}
+        <View style={tw`flex-1 justify-end items-center mt-5 mb-10  w-[80%]`}>
+          <ButtonWithText
+            color="[#2C6DB4]"
+            onPress={() => handleAdress(form)}
+            text="Confirm address"
+          />
         </View>
       </View>
     </TouchableWithoutFeedback>

@@ -1,5 +1,5 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import ButtonWithText from "./uikit/ButtonWithText";
+import { Text, View } from "react-native";
+import ButtonWithText from "../atoms/ButtonWithText";
 import tw from "twrnc";
 
 export default function WelcomeBlock({ handleSelectedPage, handleCanReturn }) {

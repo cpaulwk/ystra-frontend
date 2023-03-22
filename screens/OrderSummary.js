@@ -2,10 +2,10 @@ import { useStripe, StripeProvider } from "@stripe/stripe-react-native";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import tw from "twrnc";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import ButtonWithText from "../components/uikit/ButtonWithText";
-import Header from "../components/uikit/Header";
-import CartItem from "../components/uikit/CartItem";
-import ModalQuantityList from "../components/uikit/ModalQuantityList";
+import ButtonWithText from "../components/atoms/ButtonWithText";
+import Header from "../components/organisms/Header";
+import CartItem from "../components/molecules/CartItem";
+import ModalQuantityList from "../components/atoms/ModalQuantityList";
 import { BACKEND_URL } from "@env";
 import { removeOrder } from "../reducers/order";
 import {
@@ -32,7 +32,6 @@ export default function OrderSummary({ navigation }) {
   const [quantity, setQuantity] = useState("1");
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
-  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
     if (!total || !user.basket) {
@@ -232,7 +231,7 @@ export default function OrderSummary({ navigation }) {
 
   return (
     <StripeProvider publishableKey="pk_test_51Ma3OsFo81GGwjYJ2jgvbWDBVfs1qDX95WhLoTvTQ3Fx5CAgCgTmfpWpzU2L0RdZUWvbExD5CnMVXno9vxfGYmAA001xlVdXRt">
-      <View style={tw`flex-1 bg-[#F2EFEA] items-center`}>
+      <View style={tw`flex bg-[#F2EFEA] h-full w-full items-center`}>
         <Header
           doesContainReturnButtonComponent={true}
           onPress={handleReturn}
@@ -253,7 +252,7 @@ export default function OrderSummary({ navigation }) {
             </View>
           </ScrollView>
 
-          <View style={tw`h-[20%] w-[80%] mt-5 mb-10`}>
+          <View style={tw`flex w-[80%] mt-5 mb-10`}>
             <View
               style={tw`flex bg-[#F4F3EE] justify-between rounded-2 border border-[#AFAFAF] mb-5 px-5 py-3`}
             >

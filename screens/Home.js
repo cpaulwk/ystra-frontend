@@ -12,7 +12,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import CardsGallery from "../components/uikit/CardsGallery";
+import CardsGallery from "../components/molecules/CardsGallery";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Swiper from "react-native-swiper";
 import tw from "twrnc";
@@ -226,7 +226,8 @@ export default function Home({ navigation }) {
               autoCapitalize="none" // https://reactnative.dev/docs/textinput#autocapitalize
               value={textQuery}
               onChangeText={(value) => setTextQuery(value)}
-              keyboardType={Platform.OS === "ios" ? "web-search" : "default"}
+              returnKeyType="search"
+              onSubmitEditing={handleSearch}
             />
             <TouchableOpacity
               style={tw`flex justify-center items-center absolute h-10 w-10`}

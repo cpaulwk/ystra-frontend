@@ -27,7 +27,7 @@ import OrderConfirmation from "./screens/OrderConfirmation";
 import CreditCards from "./screens/CreditCards";
 import OrderSummary from "./screens/OrderSummary";
 
-import CheckoutScreen from "./components/CheckoutScreen";
+import CheckoutScreen from "./components/templates/CheckoutScreen";
 
 //import Reducer
 import user from "./reducers/user";

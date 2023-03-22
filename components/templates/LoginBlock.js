@@ -3,9 +3,10 @@ import { useState } from "react";
 import tw from "twrnc";
 import { BACKEND_URL } from "@env";
 import { useDispatch } from "react-redux";
-import { login } from "../reducers/user";
-import InputFieldWithIcon from "./uikit/InputFieldWithIcon";
-import ButtonWithText from "./uikit/ButtonWithText";
+import { login } from "../../reducers/user";
+import useForm from "../../hooks/useForm";
+import InputFieldWithIcon from "../atoms/InputFieldWithIcon";
+import ButtonWithText from "../atoms/ButtonWithText";
 
 export default function LoginBlock({
   navigation,
@@ -15,8 +16,8 @@ export default function LoginBlock({
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState("");
   const [isBadUserInput, setIsBadUserInput] = useState(false);
-  const [form, setForm] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const { form, handleForm } = useForm();
 
   const handleLogin = () => {
     // Ajouter une fonction checkBody (pour vérifier s'il y a bien une valeur)
@@ -54,12 +55,6 @@ export default function LoginBlock({
       .catch((error) => {
         // gérer les erreurs
       });
-  };
-
-  const handleForm = (val, name) => {
-    setForm({ ...form, [name]: val });
-
-    console.log("form =>", form);
   };
 
   const inputFields = [

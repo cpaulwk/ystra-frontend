@@ -2,8 +2,11 @@ import React from "react";
 import { View, Text, Switch } from "react-native";
 import tw from "twrnc";
 
-export default function SwitchControl(props) {
-  const { handleSwitchParent, currentValue, title } = props;
+export default function SwitchControl({
+  handleSwitchParent,
+  currentValue,
+  title,
+}) {
   const handleSwitch = () => {
     handleSwitchParent(!currentValue);
   };

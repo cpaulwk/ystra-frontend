@@ -1,11 +1,15 @@
 import { View, StyleSheet, Text } from "react-native";
-import ReturnButton from "./ReturnButton";
+import ReturnButton from "../atoms/ReturnButton";
 import tw from "twrnc";
 
-export default function Header(props) {
+export default function Header({
+  doesContainReturnButtonComponent,
+  onPress,
+  title,
+}) {
   let returnButtonComponent = <></>;
-  if (props.doesContainReturnButtonComponent) {
-    returnButtonComponent = <ReturnButton onPress={props.onPress} />;
+  if (doesContainReturnButtonComponent) {
+    returnButtonComponent = <ReturnButton onPress={onPress} />;
   }
   return (
     <View style={styles.header}>
@@ -13,7 +17,7 @@ export default function Header(props) {
         {returnButtonComponent}
       </View>
       <Text style={tw`text-6 font-bold opacity-70 w-[60%] text-center`}>
-        {props.title}
+        {title}
       </Text>
       <View style={tw`w-[20%]`}></View>
     </View>

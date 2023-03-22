@@ -7,10 +7,10 @@ import {
   removeBasketItem,
   previousScreen,
 } from "../reducers/user";
-import ButtonWithText from "../components/uikit/ButtonWithText";
-import Header from "../components/uikit/Header";
-import CartItem from "../components/uikit/CartItem";
-import ModalQuantityList from "../components/uikit/ModalQuantityList";
+import ButtonWithText from "../components/atoms/ButtonWithText";
+import Header from "../components/organisms/Header";
+import CartItem from "../components/molecules/CartItem";
+import ModalQuantityList from "../components/atoms/ModalQuantityList";
 import { useState, useEffect } from "react";
 
 export default function Cart({ navigation }) {
@@ -103,21 +103,19 @@ export default function Cart({ navigation }) {
         </View>
       </ScrollView>
 
-      <View style={tw`w-[80%] mt-5`}>
+      <View style={tw`flex w-[80%] mt-5 mb-8`}>
         <View
           style={tw`flex-row bg-[#F4F3EE] justify-between rounded-2 border border-[#AFAFAF] mb-5 p-5`}
         >
           <Text style={tw`text-6 font-medium`}>Total:</Text>
           <Text style={tw`text-6 font-medium`}>{`${total}€`}</Text>
         </View>
-        <View style={tw`flex-row justify-center pb-[10%]`}>
-          <ButtonWithText
-            color="[#2C6DB4]"
-            onPress={() => navigation.navigate("Adress")}
-            text="Pay"
-            disabled={disableButton}
-          />
-        </View>
+        <ButtonWithText
+          color="[#2C6DB4]"
+          onPress={() => navigation.navigate("Adress")}
+          text="Pay"
+          disabled={disableButton}
+        />
       </View>
       {openModal && (
         <ModalQuantityList
