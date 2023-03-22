@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text } from "react-native";
-import ReturnButton from "./ReturnButton";
+import ReturnButton from "../atoms/ReturnButton";
 import tw from "twrnc";
 
 export default function Header({

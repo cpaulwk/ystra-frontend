@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import tw from "twrnc";
-import ButtonIcon from "./ButtonIcon";
+import ButtonIcon from "../atoms/ButtonIcon";
 
 export default function CardsGallery({
   handleShowModal,

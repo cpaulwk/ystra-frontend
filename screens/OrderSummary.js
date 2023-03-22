@@ -2,10 +2,10 @@ import { useStripe, StripeProvider } from "@stripe/stripe-react-native";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import tw from "twrnc";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import ButtonWithText from "../components/uikit/ButtonWithText";
-import Header from "../components/uikit/Header";
-import CartItem from "../components/uikit/CartItem";
-import ModalQuantityList from "../components/uikit/ModalQuantityList";
+import ButtonWithText from "../components/atoms/ButtonWithText";
+import Header from "../components/organisms/Header";
+import CartItem from "../components/molecules/CartItem";
+import ModalQuantityList from "../components/atoms/ModalQuantityList";
 import { BACKEND_URL } from "@env";
 import { removeOrder } from "../reducers/order";
 import {
@@ -112,7 +112,7 @@ export default function OrderSummary({ navigation }) {
 
   const addressBlock = (
     <TouchableOpacity
-      onPress={() => { }}
+      onPress={() => {}}
       style={tw`border-t border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white mb-5`}
     >
       <View style={tw`flex-row justify-between items-center w-[90%]`}>

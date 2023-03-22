@@ -1,22 +1,17 @@
-import {
-  Keyboard,
-  View,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native";
-import { useDispatch } from "react-redux";
+import { Keyboard, View, TouchableWithoutFeedback } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import tw from "twrnc";
 import React, { useState } from "react";
-import { addAdress } from "../reducers/order";
+import { addAdress, clearAddress } from "../reducers/order";
 import useForm from "../hooks/useForm";
-import Header from "../components/uikit/Header";
-import FormInputField from "../components/uikit/FormInputField";
-import ButtonWithText from "../components/uikit/ButtonWithText";
+import Header from "../components/organisms/Header";
+import FormInputField from "../components/atoms/FormInputField";
+import ButtonWithText from "../components/atoms/ButtonWithText";
 
 export default function Adress({ navigation }) {
   const dispatch = useDispatch();
+  const order = useSelector((state) => state.order.value);
+  console.log("order => ", order);
   const [canReturn, setCanReturn] = useState(false);
   const { form, handleForm } = useForm();
 
@@ -28,7 +23,9 @@ export default function Adress({ navigation }) {
   const handleAdress = (e) => {
     const deliveryAdress = {
       addressName:
-        `${e.firstName ? e.firstName : ""} ${e.lastName ? e.lastName : ""}`,
+        !e.firstName && !e.lastName
+          ? undefined
+          : `${e.firstName ? e.firstName : ""} ${e.lastName ? e.lastName : ""}`,
       street: e.streetName,
       zipCode: e.zipCode,
       city: e.city,
@@ -41,6 +38,7 @@ export default function Adress({ navigation }) {
       isDeleted: false,
     };
     dispatch(addAdress(deliveryAdress));
+    // dispatch(clearAddress());
 
     navigation.navigate("OrderSummary");
   };

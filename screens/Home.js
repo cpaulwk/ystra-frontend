@@ -12,7 +12,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import CardsGallery from "../components/uikit/CardsGallery";
+import CardsGallery from "../components/molecules/CardsGallery";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Swiper from "react-native-swiper";
 import tw from "twrnc";

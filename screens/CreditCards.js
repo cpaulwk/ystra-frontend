@@ -21,8 +21,8 @@ import {
 import { cleanBasket } from "../reducers/user";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { BACKEND_URL } from "@env";
-import ButtonWithText from "../components/uikit/ButtonWithText";
-import ReturnButton from "../components/uikit/ReturnButton";
+import ButtonWithText from "../components/atoms/ButtonWithText";
+import ReturnButton from "../components/atoms/ReturnButton";
 
 export default function Basket({ navigation }) {
   const dispatch = useDispatch();

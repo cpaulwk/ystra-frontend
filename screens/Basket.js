@@ -8,12 +8,12 @@ import {
   updateChangedItem,
   cleanPreviousScreen,
 } from "../reducers/user";
-import ReturnButton from "../components/uikit/ReturnButton";
-import ProductButton from "../components/uikit/ProductButton";
-import CustomizationButton from "../components/uikit/CustomizationButton";
-import ImageFinish from "../components/uikit/ImageFinish";
-import ImageFrame from "../components/uikit/ImageFrame";
-import ButtonWithText from "../components/uikit/ButtonWithText";
+import ReturnButton from "../components/atoms/ReturnButton";
+import ProductButton from "../components/atoms/ProductButton";
+import CustomizationButton from "../components/atoms/CustomizationButton";
+import ImageFinish from "../components/atoms/ImageFinish";
+import ImageFrame from "../components/atoms/ImageFrame";
+import ButtonWithText from "../components/atoms/ButtonWithText";
 
 export default function Basket({ navigation }) {
   const [selectedOptButton, setSelectedOptButton] = useState("size");

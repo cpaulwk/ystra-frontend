@@ -40,6 +40,10 @@ export const orderSlice = createSlice({
       state.value.addressDelivery = action.payload;
       state.value.addressBilling = action.payload;
     },
+    clearAddress: (state, action) => {
+      state.value.addressDelivery = null;
+      state.value.addressBilling = null;
+    },
     addToken: (state, action) => {
       state.value.token = action.payload;
       console.log("token", state.value.token);
@@ -61,6 +65,7 @@ export const orderSlice = createSlice({
 export const {
   addBasket,
   addAdress,
+  clearAddress,
   addToken,
   addpayment,
   removeOrder,

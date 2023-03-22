@@ -5,8 +5,8 @@ import { BACKEND_URL } from "@env";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/user";
 import useForm from "../hooks/useForm";
-import InputFieldWithIcon from "./uikit/InputFieldWithIcon";
-import ButtonWithText from "./uikit/ButtonWithText";
+import InputFieldWithIcon from "./atoms/InputFieldWithIcon";
+import ButtonWithText from "./atoms/ButtonWithText";
 
 export default function LoginBlock({
   navigation,

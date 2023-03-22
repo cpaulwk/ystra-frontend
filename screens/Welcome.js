@@ -8,7 +8,7 @@ import ConfirmationBlock from "../components/ConfirmationBlock";
 import LoginBlock from "../components/LoginBlock";
 import RegistrationBlock from "../components/RegistrationBlock";
 import WelcomeBlock from "../components/WelcomeBlock";
-import ReturnButton from "../components/uikit/ReturnButton";
+import ReturnButton from "../components/atoms/ReturnButton";
 
 export default function Welcome({ navigation }) {
   const [canReturn, setCanReturn] = useState(false);

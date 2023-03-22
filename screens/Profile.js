@@ -6,7 +6,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { logout } from "../reducers/user";
 import { BACKEND_URL } from "@env";
-import Header from "../components/uikit/Header";
+import Header from "../components/organisms/Header";
 
 export default function Adress({ navigation }) {
   console.log("backend =>", BACKEND_URL);

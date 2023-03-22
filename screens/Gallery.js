@@ -7,9 +7,9 @@ import { addItem, previousScreen } from "../reducers/user";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { BACKEND_URL } from "@env";
-import SwitchControl from "../components/uikit/SwitchControl";
-import CardsGallery from "../components/uikit/CardsGallery";
-import Header from "../components/uikit/Header";
+import SwitchControl from "../components/atoms/SwitchControl";
+import CardsGallery from "../components/molecules/CardsGallery";
+import Header from "../components/organisms/Header";
 
 export default function Gallery({ navigation }) {
   const user = useSelector((state) => state.user.value);

@@ -1,6 +1,6 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import ButtonIcon from "./ButtonIcon";
+import ButtonIcon from "../atoms/ButtonIcon";
 import tw from "twrnc";
 
 export default function CartItem({

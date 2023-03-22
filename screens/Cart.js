@@ -7,10 +7,10 @@ import {
   removeBasketItem,
   previousScreen,
 } from "../reducers/user";
-import ButtonWithText from "../components/uikit/ButtonWithText";
-import Header from "../components/uikit/Header";
-import CartItem from "../components/uikit/CartItem";
-import ModalQuantityList from "../components/uikit/ModalQuantityList";
+import ButtonWithText from "../components/atoms/ButtonWithText";
+import Header from "../components/organisms/Header";
+import CartItem from "../components/molecules/CartItem";
+import ModalQuantityList from "../components/atoms/ModalQuantityList";
 import { useState, useEffect } from "react";
 
 export default function Cart({ navigation }) {

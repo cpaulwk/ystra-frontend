@@ -5,8 +5,8 @@ import { login } from "../reducers/user";
 import useForm from "../hooks/useForm";
 import tw from "twrnc";
 import { BACKEND_URL } from "@env";
-import InputFieldWithIcon from "./uikit/InputFieldWithIcon";
-import ButtonWithText from "./uikit/ButtonWithText";
+import InputFieldWithIcon from "./atoms/InputFieldWithIcon";
+import ButtonWithText from "./atoms/ButtonWithText";
 import {
   PasswordValidation,
   EmailValidation,
