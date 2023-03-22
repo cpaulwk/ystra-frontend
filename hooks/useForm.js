@@ -7,9 +7,15 @@ export default function useForm() {
     setForm({ ...form, [name]: value });
   };
 
+  const updateForm = (newObject) => {
+    console.log("newObject => ", newObject);
+    newObject && setForm(Object.assign(form, newObject));
+  };
+
   return {
     form,
     handleForm,
+    updateForm,
     bind: {
       //onChangeText : handleForm,
     },

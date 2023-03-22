@@ -1,7 +1,7 @@
 import { Keyboard, View, TouchableWithoutFeedback } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import tw from "twrnc";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { addAdress, clearAddress } from "../reducers/order";
 import useForm from "../hooks/useForm";
 import Header from "../components/organisms/Header";
@@ -13,7 +13,28 @@ export default function Adress({ navigation }) {
   const order = useSelector((state) => state.order.value);
   console.log("order => ", order);
   const [canReturn, setCanReturn] = useState(false);
-  const { form, handleForm } = useForm();
+  const { form, handleForm, updateForm } = useForm();
+
+  console.log("form => ", form);
+  // useEffect(() => {
+  //   const { addressDelivery } = order;
+  //   if (addressDelivery) {
+  //     const retainedAddress = {
+  //       addressName: addressDelivery.addressName,
+  //       street: addressDelivery.streetName,
+  //       zipCode: addressDelivery.zipCode,
+  //       city: addressDelivery.city,
+  //       state: addressDelivery.state,
+  //       country: addressDelivery.country,
+  //       phoneNumber: "",
+  //       isForBilling: false,
+  //       isForDelivery: true,
+  //       isDefault: false,
+  //       isDeleted: false,
+  //     };
+  //     updateForm(retainedAddress);
+  //   }
+  // }, []);
 
   const handleReturn = () => {
     setCanReturn(false);
@@ -83,6 +104,7 @@ export default function Adress({ navigation }) {
             name={item.name}
             width="full"
             onChangeText={handleForm}
+            // defaultValue={form !== {} ? form[item.name] : ""}
           />
         </View>
       );
@@ -95,6 +117,7 @@ export default function Adress({ navigation }) {
             name={item.name}
             width="[48%]"
             onChangeText={handleForm}
+            // defaultValue={form !== {} ? form[item.name] : ""}
           />
           <FormInputField
             key={array[index + 1].name}
@@ -102,6 +125,7 @@ export default function Adress({ navigation }) {
             name={array[index + 1].name}
             width="[48%]"
             onChangeText={handleForm}
+            // defaultValue={form !== {} ? form[array[index + 1]] : ""}
           />
         </View>
       );
