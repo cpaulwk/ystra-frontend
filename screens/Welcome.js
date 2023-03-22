@@ -4,10 +4,10 @@ import tw from "twrnc";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import ConfirmationBlock from "../components/ConfirmationBlock";
-import LoginBlock from "../components/LoginBlock";
-import RegistrationBlock from "../components/RegistrationBlock";
-import WelcomeBlock from "../components/WelcomeBlock";
+import ConfirmationBlock from "../components/templates/ConfirmationBlock";
+import LoginBlock from "../components/templates/LoginBlock";
+import RegistrationBlock from "../components/templates/RegistrationBlock";
+import WelcomeBlock from "../components/templates/WelcomeBlock";
 import ReturnButton from "../components/atoms/ReturnButton";
 
 export default function Welcome({ navigation }) {
