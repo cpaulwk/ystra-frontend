@@ -16,7 +16,7 @@ import CardsGallery from "../components/molecules/CardsGallery";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Swiper from "react-native-swiper";
 import tw from "twrnc";
-import { addItem } from "../reducers/user";
+import { addItem, previousScreen } from "../reducers/user";
 import { addProduct } from "../reducers/product";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -149,6 +149,7 @@ export default function Home({ navigation }) {
       quantity: 1,
     };
     dispatch(addItem(shopp));
+    dispatch(previousScreen("Home"));
     navigation.navigate("Basket");
   };
 
