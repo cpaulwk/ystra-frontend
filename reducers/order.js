@@ -40,7 +40,7 @@ export const orderSlice = createSlice({
       state.value.addressDelivery = action.payload;
       state.value.addressBilling = action.payload;
     },
-    clearAddress: (state, action) => {
+    clearAddress: (state) => {
       state.value.addressDelivery = null;
       state.value.addressBilling = null;
     },

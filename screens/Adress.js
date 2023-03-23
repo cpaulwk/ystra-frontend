@@ -2,7 +2,8 @@ import { Keyboard, View, TouchableWithoutFeedback } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import tw from "twrnc";
 import { useState, useEffect } from "react";
-import { addAdress, clearAddress } from "../reducers/order";
+import { addAdress } from "../reducers/order";
+import { previousScreen } from "../reducers/user";
 import useForm from "../hooks/useForm";
 import Header from "../components/organisms/Header";
 import FormInputField from "../components/atoms/FormInputField";
@@ -11,33 +12,39 @@ import ButtonWithText from "../components/atoms/ButtonWithText";
 export default function Adress({ navigation }) {
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order.value);
-  console.log("order => ", order);
   const [canReturn, setCanReturn] = useState(false);
   const { form, handleForm, updateForm } = useForm();
 
-  console.log("form => ", form);
-  // useEffect(() => {
-  //   const { addressDelivery } = order;
-  //   if (addressDelivery) {
-  //     const retainedAddress = {
-  //       addressName: addressDelivery.addressName,
-  //       street: addressDelivery.streetName,
-  //       zipCode: addressDelivery.zipCode,
-  //       city: addressDelivery.city,
-  //       state: addressDelivery.state,
-  //       country: addressDelivery.country,
-  //       phoneNumber: "",
-  //       isForBilling: false,
-  //       isForDelivery: true,
-  //       isDefault: false,
-  //       isDeleted: false,
-  //     };
-  //     updateForm(retainedAddress);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const { addressDelivery } = order;
+    if (addressDelivery) {
+      const retainedAddress = {
+        addressName:
+          !addressDelivery.firstName && !addressDelivery.lastName
+            ? undefined
+            : `${addressDelivery.firstName ? addressDelivery.firstName : ""} ${addressDelivery.lastName ? addressDelivery.lastName : ""
+            }`,
+        firstName: addressDelivery.firstName,
+        lastName: addressDelivery.lastName,
+        streetName1: addressDelivery.streetName1,
+        streetName2: addressDelivery.streetName2,
+        zipCode: addressDelivery.zipCode,
+        city: addressDelivery.city,
+        state: addressDelivery.state,
+        country: addressDelivery.country,
+        phoneNumber: "",
+        isForBilling: false,
+        isForDelivery: true,
+        isDefault: false,
+        isDeleted: false,
+      };
+      updateForm(retainedAddress);
+    }
+  }, []);
 
   const handleReturn = () => {
     setCanReturn(false);
+    dispatch(previousScreen("Adress"));
     navigation.navigate("Cart");
   };
 
@@ -47,7 +54,10 @@ export default function Adress({ navigation }) {
         !e.firstName && !e.lastName
           ? undefined
           : `${e.firstName ? e.firstName : ""} ${e.lastName ? e.lastName : ""}`,
-      street: e.streetName,
+      firstName: e.firstName,
+      lastName: e.lastName,
+      streetName1: e.streetName1,
+      streetName2: e.streetName2,
       zipCode: e.zipCode,
       city: e.city,
       state: e.state,
@@ -60,6 +70,7 @@ export default function Adress({ navigation }) {
     };
     dispatch(addAdress(deliveryAdress));
     // dispatch(clearAddress());
+    dispatch(previousScreen("Adress"));
 
     navigation.navigate("OrderSummary");
   };
@@ -77,19 +88,19 @@ export default function Adress({ navigation }) {
       type: "text",
       position: [1, 2],
     },
-    { name: "streetName", placeholder: "Street name", type: "text" },
+    { name: "streetName1", placeholder: "Street name", type: "text" },
     {
       name: "streetName2",
       placeholder: "Additional address information",
       type: "text",
     },
-    { name: "city", placeholder: "City", type: "text", position: [2, 1] },
     {
       name: "zipCode",
       placeholder: "Zip code",
       type: "text",
-      position: [2, 2],
+      position: [2, 1],
     },
+    { name: "city", placeholder: "City", type: "text", position: [2, 2] },
     { name: "state", placeholder: "State", type: "text" },
     { name: "country", placeholder: "Country", type: "text" },
   ];
@@ -104,7 +115,8 @@ export default function Adress({ navigation }) {
             name={item.name}
             width="full"
             onChangeText={handleForm}
-            // defaultValue={form !== {} ? form[item.name] : ""}
+            value={order.addressDelivery[item.name]}
+          // value={form !== {} ? form[item.name] : ""}
           />
         </View>
       );
@@ -117,7 +129,8 @@ export default function Adress({ navigation }) {
             name={item.name}
             width="[48%]"
             onChangeText={handleForm}
-            // defaultValue={form !== {} ? form[item.name] : ""}
+            value={order.addressDelivery[item.name]}
+          // value={form !== {} ? form[item.name] : ""}
           />
           <FormInputField
             key={array[index + 1].name}
@@ -125,7 +138,8 @@ export default function Adress({ navigation }) {
             name={array[index + 1].name}
             width="[48%]"
             onChangeText={handleForm}
-            // defaultValue={form !== {} ? form[array[index + 1]] : ""}
+            value={order.addressDelivery[array[index + 1].name]}
+          // value={form !== {} ? form[array[index + 1].name] : ""}
           />
         </View>
       );

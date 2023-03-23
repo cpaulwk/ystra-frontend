@@ -8,7 +8,6 @@ export default function useForm() {
   };
 
   const updateForm = (newObject) => {
-    console.log("newObject => ", newObject);
     newObject && setForm(Object.assign(form, newObject));
   };
 

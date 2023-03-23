@@ -118,14 +118,21 @@ export default function OrderSummary({ navigation }) {
       <View style={tw`flex-row justify-between items-center w-[90%]`}>
         <View style={tw`flex justify-center`}>
           <Text style={tw`text-5 font-bold opacity-70 ml-5`}>
-            {order.addressDelivery.addressName}
+            {order.addressDelivery.firstName} {order.addressDelivery.lastName}
           </Text>
           <Text style={tw`text-5 font-bold opacity-70 ml-5`}>
-            {order.addressDelivery.street}
+            {order.addressDelivery.streetName2
+              ? order.addressDelivery.streetName2 + ", "
+              : ""}
+            {order.addressDelivery.streetName1}
           </Text>
           <Text style={tw`text-5 font-bold opacity-70 ml-5`}>
-            {order.addressDelivery.zipCode}{" "}
-            {order.addressDelivery.city ? order.addressDelivery.city + "," : ""}{" "}
+            {order.addressDelivery.zipCode
+              ? order.addressDelivery.zipCode + " "
+              : ""}
+            {order.addressDelivery.city
+              ? order.addressDelivery.city + ", "
+              : ""}
             {order.addressDelivery.country}
           </Text>
         </View>
