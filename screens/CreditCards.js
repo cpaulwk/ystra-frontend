@@ -44,7 +44,7 @@ export default function Basket({ navigation }) {
 
   const handleReturn = () => {
     setCanReturn(false);
-    navigation.navigate("Adress");
+    navigation.navigate("Address");
   };
 
   const showDate = (date) => {

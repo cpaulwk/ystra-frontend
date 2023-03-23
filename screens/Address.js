@@ -2,14 +2,14 @@ import { Keyboard, View, TouchableWithoutFeedback } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import tw from "twrnc";
 import { useState, useEffect } from "react";
-import { addAdress } from "../reducers/order";
+import { addAddress } from "../reducers/order";
 import { previousScreen } from "../reducers/user";
 import useForm from "../hooks/useForm";
 import Header from "../components/organisms/Header";
 import FormInputField from "../components/atoms/FormInputField";
 import ButtonWithText from "../components/atoms/ButtonWithText";
 
-export default function Adress({ navigation }) {
+export default function Address({ navigation }) {
   const dispatch = useDispatch();
   const order = useSelector((state) => state.order.value);
   const [canReturn, setCanReturn] = useState(false);
@@ -22,8 +22,9 @@ export default function Adress({ navigation }) {
         addressName:
           !addressDelivery.firstName && !addressDelivery.lastName
             ? undefined
-            : `${addressDelivery.firstName ? addressDelivery.firstName : ""} ${addressDelivery.lastName ? addressDelivery.lastName : ""
-            }`,
+            : `${addressDelivery.firstName ? addressDelivery.firstName : ""} ${
+                addressDelivery.lastName ? addressDelivery.lastName : ""
+              }`,
         firstName: addressDelivery.firstName,
         lastName: addressDelivery.lastName,
         streetName1: addressDelivery.streetName1,
@@ -44,12 +45,12 @@ export default function Adress({ navigation }) {
 
   const handleReturn = () => {
     setCanReturn(false);
-    dispatch(previousScreen("Adress"));
+    dispatch(previousScreen("Address"));
     navigation.navigate("Cart");
   };
 
-  const handleAdress = (e) => {
-    const deliveryAdress = {
+  const handleAddress = (e) => {
+    const deliveryAddress = {
       addressName:
         !e.firstName && !e.lastName
           ? undefined
@@ -68,9 +69,9 @@ export default function Adress({ navigation }) {
       isDefault: false,
       isDeleted: false,
     };
-    dispatch(addAdress(deliveryAdress));
+    dispatch(addAdrdess(deliveryAddress));
     // dispatch(clearAddress());
-    dispatch(previousScreen("Adress"));
+    dispatch(previousScreen("Address"));
 
     navigation.navigate("OrderSummary");
   };
@@ -116,7 +117,7 @@ export default function Adress({ navigation }) {
             width="full"
             onChangeText={handleForm}
             value={order.addressDelivery[item.name]}
-          // value={form !== {} ? form[item.name] : ""}
+            // value={form !== {} ? form[item.name] : ""}
           />
         </View>
       );
@@ -130,7 +131,7 @@ export default function Adress({ navigation }) {
             width="[48%]"
             onChangeText={handleForm}
             value={order.addressDelivery[item.name]}
-          // value={form !== {} ? form[item.name] : ""}
+            // value={form !== {} ? form[item.name] : ""}
           />
           <FormInputField
             key={array[index + 1].name}
@@ -139,7 +140,7 @@ export default function Adress({ navigation }) {
             width="[48%]"
             onChangeText={handleForm}
             value={order.addressDelivery[array[index + 1].name]}
-          // value={form !== {} ? form[array[index + 1].name] : ""}
+            // value={form !== {} ? form[array[index + 1].name] : ""}
           />
         </View>
       );
@@ -163,7 +164,7 @@ export default function Adress({ navigation }) {
         <View style={tw`flex-1 justify-end items-center mt-5 mb-10  w-[80%]`}>
           <ButtonWithText
             color="[#2C6DB4]"
-            onPress={() => handleAdress(form)}
+            onPress={() => handleAddress(form)}
             text="Confirm address"
           />
         </View>

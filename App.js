@@ -22,7 +22,7 @@ import Gallery from "./screens/Gallery";
 import Basket from "./screens/Basket";
 import Profile from "./screens/Profile";
 import Cart from "./screens/Cart";
-import Adress from "./screens/Adress";
+import Address from "./screens/Address";
 import OrderConfirmation from "./screens/OrderConfirmation";
 import CreditCards from "./screens/CreditCards";
 import OrderSummary from "./screens/OrderSummary";
@@ -114,8 +114,8 @@ export default function App() {
               }}
             />
             <Stack.Screen
-              name="Adress"
-              component={Adress}
+              name="Address"
+              component={Address}
               options={{ gestureEnabled: false }}
             />
             <Stack.Screen

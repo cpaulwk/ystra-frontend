@@ -44,7 +44,7 @@ export default function OrderSummary({ navigation }) {
 
   const handleReturn = () => {
     setCanReturn(false);
-    navigation.navigate("Adress");
+    navigation.navigate("Address");
   };
 
   const handleDelete = (index) => {
@@ -112,7 +112,7 @@ export default function OrderSummary({ navigation }) {
 
   const addressBlock = (
     <TouchableOpacity
-      onPress={() => {}}
+      onPress={() => { }}
       style={tw`border-t border-b border-[#AFAFAF] flex justify-center items-center h-[15%] w-full bg-white mb-5`}
     >
       <View style={tw`flex-row justify-between items-center w-[90%]`}>

@@ -8,7 +8,7 @@ import { logout } from "../reducers/user";
 import { BACKEND_URL } from "@env";
 import Header from "../components/organisms/Header";
 
-export default function Adress({ navigation }) {
+export default function Address({ navigation }) {
   console.log("backend =>", BACKEND_URL);
   const [canReturn, setCanReturn] = useState(false);
   const [choiceMode, setChoiceMode] = useState("ALL");

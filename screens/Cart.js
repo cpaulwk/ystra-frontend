@@ -112,7 +112,7 @@ export default function Cart({ navigation }) {
         </View>
         <ButtonWithText
           color="[#2C6DB4]"
-          onPress={() => navigation.navigate("Adress")}
+          onPress={() => navigation.navigate("Address")}
           text="Pay"
           disabled={disableButton}
         />
